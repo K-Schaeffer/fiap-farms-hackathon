@@ -2,6 +2,7 @@
 module.exports = {
   extends: [
     'expo',
+    'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended'
   ],
   ignorePatterns: ['/dist/*'],
