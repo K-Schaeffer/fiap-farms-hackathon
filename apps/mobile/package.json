@@ -1,18 +1,17 @@
 {
-  "name": "native",
+  "name": "mobile",
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "expo start --web",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
-    "web": "expo start --web",
+    "start": "expo start --android",
+    "dev": "expo run:android",
+    "lint": "expo lint",
     "eject": "expo eject"
   },
   "dependencies": {
-    "@repo/ui": "*",
-    "expo": "~52.0.46",
+    "@fiap-farms/ui": "*",
+    "expo": "~52.0.47",
     "expo-constants": "~17.0.8",
     "expo-linking": "~7.0.5",
     "expo-router": "~4.0.21",
@@ -27,9 +26,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
-    "@expo/webpack-config": "19.0.1",
-    "@types/react": "~18.3.12",
-    "typescript": "5.8.3"
+    "@types/react": "~18.3.23",
+    "typescript": "5.8.3",
+    "eslint-config-expo": "~8.0.1"
   },
   "expo": {
     "doctor": {
