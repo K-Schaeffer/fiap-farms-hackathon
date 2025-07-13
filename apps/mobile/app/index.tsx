@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Button } from "../components/button";
+import { Button } from '../components/button';
 
 export default function Native() {
   return (
