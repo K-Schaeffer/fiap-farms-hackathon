@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "expo start --android",
     "android": "expo run:android",
-    "lint": "expo lint",
+    "lint": "eslint ./ --ext .ts,.tsx",
+    "lint:fix": "eslint ./ --ext .ts,.tsx --fix",
     "eject": "expo eject"
   },
   "dependencies": {

@@ -12,7 +12,7 @@
       "persistent": true
     },
     "lint": {
-      "inputs": ["src/**", "lib/**"]
+      "inputs": ["src/**", "lib/**", "app/**", "components/**"]
     },
     "clean": {
       "cache": false
