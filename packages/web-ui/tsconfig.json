@@ -1,6 +1,6 @@
 {
-  "extends": "@fiap-farms/typescript-config/react-native-library",
-  "include": ["."],
+  "extends": "@fiap-farms/typescript-config/react-library",
+  "include": ["src"],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
     "strict": true
