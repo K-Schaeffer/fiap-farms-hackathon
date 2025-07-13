@@ -7,7 +7,7 @@ import styles from '../styles/index.module.css';
 export default function Web() {
   return (
     <div className={styles.container}>
-      <h1>Web Sales</h1>
+      <h1>Web Shell</h1>
       <Button onClick={() => console.log('Pressed!')} text="Boop" />
     </div>
   );

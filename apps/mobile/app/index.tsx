@@ -5,7 +5,7 @@ import { Button } from '@fiap-farms/ui';
 export default function Native() {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Native</Text>
+      <Text style={styles.header}>Mobile</Text>
       <Button
         onClick={() => {
           console.log('Pressed!');
