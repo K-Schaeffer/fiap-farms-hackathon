@@ -1,26 +1,21 @@
 {
   "name": "@repo/ui",
   "version": "0.0.0",
-  "private": true,
-  "exports": {
-    "./*": "./src/*.tsx"
-  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component",
-    "check-types": "tsc --noEmit"
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@types/node": "^22.15.3",
-    "@types/react": "19.1.0",
-    "@types/react-dom": "19.1.1",
-    "eslint": "^9.30.0",
-    "typescript": "5.8.2"
+    "@types/react": "^18.2.14",
+    "tsup": "^8.0.1",
+    "typescript": "5.5.4"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^18.2.0",
+    "react-native": "0.76.9"
   }
 }
