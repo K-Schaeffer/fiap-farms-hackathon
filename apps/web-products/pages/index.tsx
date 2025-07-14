@@ -1,5 +1,3 @@
-'use client';
-
 import { FButton } from '@fiap-farms/web-ui';
 
 import styles from '../styles/index.module.css';
