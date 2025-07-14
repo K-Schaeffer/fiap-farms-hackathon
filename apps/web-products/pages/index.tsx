@@ -6,7 +6,9 @@ export default function Web() {
   return (
     <div className={styles.container}>
       <h1>Web Products</h1>
-      <FButton onClick={() => console.log('Pressed!')}>Component Web</FButton>
+      <FButton onClick={() => console.log('Pressed!')}>
+        Component Products
+      </FButton>
     </div>
   );
 }
