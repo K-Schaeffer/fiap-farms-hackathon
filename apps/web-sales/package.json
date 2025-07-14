@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 4000",
-    "build": "next build",
-    "start": "next start",
+    "dev": "cross-env NEXT_PRIVATE_LOCAL_WEBPACK=true next dev -p 4000",
+    "build": "cross-env NEXT_PRIVATE_LOCAL_WEBPACK=true next build",
     "lint": "eslint ./ --ext .ts,.tsx",
     "lint:fix": "eslint ./ --ext .ts,.tsx --fix"
   },
   "dependencies": {
     "@fiap-farms/web-ui": "*",
+    "@module-federation/nextjs-mf": "^8.8.32",
     "next": "^14.2.30",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -20,6 +20,7 @@
     "@types/node": "^20.19.7",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
+    "cross-env": "^7.0.3",
     "eslint-config-next": "14.2.30",
     "typescript": "5.5.4"
   }
