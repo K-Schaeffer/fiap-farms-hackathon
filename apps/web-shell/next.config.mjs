@@ -1,0 +1,22 @@
+import { NextFederationPlugin } from '@module-federation/nextjs-mf';
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  webpack: config => {
+    config.output.publicPath = '/_next/';
+    config.plugins.push(
+      new NextFederationPlugin({
+        name: 'rootApp',
+        filename: 'static/chunks/remoteEntry.js',
+        remotes: {
+          salesApp: `salesApp@http://localhost:4000/_next/static/chunks/remoteEntry.js`,
+          productsApp: `productsApp@http://localhost:5000/_next/static/chunks/remoteEntry.js`,
+        },
+      })
+    );
+    return config;
+  },
+  reactStrictMode: true,
+};
+
+export default nextConfig;
