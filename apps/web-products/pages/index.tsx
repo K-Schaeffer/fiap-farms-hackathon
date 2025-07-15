@@ -1,14 +1,10 @@
-import { FButton } from '@fiap-farms/web-ui';
-
 import styles from '../styles/index.module.css';
+import { Typography } from '@mui/material';
 
 export default function Web() {
   return (
     <div className={styles.container}>
-      <h1>Web Products</h1>
-      <FButton onClick={() => console.log('Pressed!')}>
-        Component Products
-      </FButton>
+      <Typography variant="h1">Web Products</Typography>
     </div>
   );
 }

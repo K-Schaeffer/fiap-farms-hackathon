@@ -1,11 +1,11 @@
 import type { AppProps } from 'next/app';
-import '../styles/global.css';
+import '@fiap-farms/web-ui/global.css';
+import { AppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div>
-      <h1>Web Shell</h1>
+    <AppCacheProvider {...pageProps}>
       <Component {...pageProps} />
-    </div>
+    </AppCacheProvider>
   );
 }
