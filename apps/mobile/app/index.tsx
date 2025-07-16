@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Button } from '../components/button';
+import { Avatar, Card, IconButton } from 'react-native-paper';
 
 export default function Native() {
   return (
@@ -12,6 +13,14 @@ export default function Native() {
           alert('Pressed!');
         }}
         text="Boop"
+      />
+      <Card.Title
+        title="Card Title"
+        subtitle="Card Subtitle"
+        left={props => <Avatar.Icon {...props} icon="folder" />}
+        right={props => (
+          <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
+        )}
       />
       <StatusBar style="auto" />
     </View>
