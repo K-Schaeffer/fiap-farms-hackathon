@@ -21,8 +21,10 @@ function getDaysInMonth(month: number, year: number) {
   return days;
 }
 
+const precomputedDays = getDaysInMonth(4, 2024);
+
 function renderSparklineCell(params: GridCellParams<SparkLineData, any>) {
-  const data = getDaysInMonth(4, 2024);
+  const data = precomputedDays;
   const { value, colDef } = params;
 
   if (!value || value.length === 0) {
