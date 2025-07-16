@@ -1,42 +1,32 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Button } from '../components/button';
-import { Avatar, Card, IconButton } from 'react-native-paper';
+import { MD3LightTheme, PaperProvider } from 'react-native-paper';
+import MainGrid from '../components/MainGrid';
+
+const theme = {
+  ...MD3LightTheme,
+};
 
 export default function Native() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Mobile</Text>
-      <Button
-        onClick={() => {
-          console.log('Pressed!');
-          alert('Pressed!');
-        }}
-        text="Boop"
-      />
-      <Card.Title
-        title="Card Title"
-        subtitle="Card Subtitle"
-        left={props => <Avatar.Icon {...props} icon="folder" />}
-        right={props => (
-          <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
-        )}
-      />
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider theme={theme}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.content}>
+          <MainGrid />
+        </View>
+        <StatusBar style="auto" />
+      </SafeAreaView>
+    </PaperProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#f5f5f5',
   },
-  header: {
-    fontWeight: 'bold',
-    marginBottom: 20,
-    fontSize: 36,
+  content: {
+    flex: 1,
   },
 });
