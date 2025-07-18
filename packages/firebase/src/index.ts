@@ -5,7 +5,8 @@ import {
   Auth,
   Persistence,
   browserSessionPersistence,
-  // @ts-expect-error missing type from Firebase React Native
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore missing type from Firebase React Native
   getReactNativePersistence,
 } from 'firebase/auth';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
