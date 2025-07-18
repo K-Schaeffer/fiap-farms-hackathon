@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { getFirebase } from '@fiap-farms/firebase-config';
+import { getFirebase } from '@fiap-farms/firebase';
 import { useAuth } from '@fiap-farms/auth-store';
 
 export default function Dashboard() {

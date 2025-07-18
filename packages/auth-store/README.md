@@ -9,7 +9,7 @@ A global authentication store for managing Firebase authentication state across 
 - **Cross-Platform**: Works with web applications and React Native
 - **TypeScript Support**: Fully typed for better development experience
 - **Simple API**: Just two hooks for all your auth needs
-- **Persistence**: Authentication persistence is handled by `@fiap-farms/firebase-config`
+- **Persistence**: Authentication persistence is handled by `@fiap-farms/firebase`
 
 ## Installation
 
@@ -19,7 +19,7 @@ npm install @fiap-farms/auth-store
 
 ## Setup
 
-Authentication persistence is configured in the `@fiap-farms/firebase-config` package. The auth store automatically uses whatever Firebase Auth instance is provided by the config.
+Authentication persistence is configured in the `@fiap-farms/firebase` package. The auth store automatically uses whatever Firebase Auth instance is provided by the config.
 
 ### Initialize Auth Listener
 
@@ -164,6 +164,6 @@ export default function App() {
 ## Dependencies
 
 - `zustand`: State management
-- `@fiap-farms/firebase-config`: Firebase configuration
+- `@fiap-farms/firebase`: Firebase configuration
 - `firebase`: Firebase SDK
 - `react`: React (peer dependency)

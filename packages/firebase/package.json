@@ -1,5 +1,5 @@
 {
-  "name": "@fiap-farms/firebase-config",
+  "name": "@fiap-farms/firebase",
   "version": "0.0.0",
   "description": "Firebase configuration for Fiap Farms",
   "main": "./dist/index.js",
