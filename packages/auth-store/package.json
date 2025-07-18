@@ -1,0 +1,34 @@
+{
+  "name": "@fiap-farms/auth-store",
+  "version": "0.0.0",
+  "description": "Store to handle authentication state.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix"
+  },
+  "dependencies": {
+    "zustand": "^5.0.6",
+    "@fiap-farms/firebase-config": "*"
+  },
+  "devDependencies": {
+    "@fiap-farms/typescript-config": "*",
+    "typescript": "5.5.4"
+  }
+}
