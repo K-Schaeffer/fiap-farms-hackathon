@@ -1,7 +1,7 @@
 {
   "name": "@fiap-farms/firebase-config",
   "version": "0.0.0",
-  "description": "Firebase cconfiguration for Fiap Farms",
+  "description": "Firebase configuration for Fiap Farms",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
