@@ -11,7 +11,7 @@ export default defineConfig({
   clean: true,
   external: [
     'firebase/auth',
-    '@fiap-farms/firebase-config',
+    '@fiap-farms/firebase',
     'zustand',
     'zustand/middleware',
     'react',

@@ -12,7 +12,7 @@ const nextConfig = {
           './Index': './pages/index.tsx',
         },
         shared: {
-          '@fiap-farms/firebase-config': {
+          '@fiap-farms/firebase': {
             singleton: true,
             eager: false,
           },

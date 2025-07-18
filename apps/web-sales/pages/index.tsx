@@ -1,5 +1,5 @@
 import { MainGrid } from '@fiap-farms/web-ui';
-import { getFirebase } from '@fiap-farms/firebase-config';
+import { getFirebase } from '@fiap-farms/firebase';
 import { useAuth } from '@fiap-farms/auth-store';
 
 export default function Dashboard() {

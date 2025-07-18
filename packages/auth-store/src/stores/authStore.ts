@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   User,
 } from 'firebase/auth';
-import { getFirebaseAuth } from '@fiap-farms/firebase-config';
+import { getFirebaseAuth } from '@fiap-farms/firebase';
 import { AuthStore } from '../types';
 
 export const createAuthStore = () => {
