@@ -1,5 +1,14 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
-import { getAuth, initializeAuth, Auth, Persistence } from 'firebase/auth';
+import {
+  getAuth,
+  initializeAuth,
+  Auth,
+  Persistence,
+  browserSessionPersistence,
+  // @ts-expect-error missing type from Firebase React Native
+  getReactNativePersistence,
+} from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, Firestore } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -17,25 +26,69 @@ export interface FirebaseInstance {
   db: Firestore;
 }
 
-export const getFirebase = (
-  authPersistence?: Persistence
-): FirebaseInstance => {
+// Singleton instance
+let firebaseInstance: FirebaseInstance | null = null;
+
+const _isReactNative = (): boolean => {
+  // Check if running in React Native environment
+  return (
+    typeof navigator !== 'undefined' && navigator.product === 'ReactNative'
+  );
+};
+
+// Helper function to get appropriate persistence
+const _getPersistence = (): Persistence => {
+  if (_isReactNative()) {
+    return getReactNativePersistence(ReactNativeAsyncStorage);
+  }
+
+  return browserSessionPersistence;
+};
+
+const _initializeFirebase = (): FirebaseInstance => {
   let app: FirebaseApp;
   let auth: Auth;
 
-  const hasApp = getApps().length > 0;
-
-  if (!hasApp) {
-    app = initializeApp(firebaseConfig);
-    auth = initializeAuth(app, {
-      persistence: authPersistence,
-    });
-  } else {
+  // Check if Firebase app already exists
+  if (getApps().length > 0) {
     app = getApp();
     auth = getAuth(app);
+  } else {
+    // Initialize new app
+    app = initializeApp(firebaseConfig);
+    auth = initializeAuth(app, {
+      persistence: _getPersistence(),
+    });
   }
 
   const db: Firestore = getFirestore(app);
 
-  return { app, auth, db };
+  // Store singleton instance
+  firebaseInstance = { app, auth, db };
+
+  return firebaseInstance;
 };
+
+export const getFirebase = (): FirebaseInstance => {
+  // Initialize with default persistence if not already done
+  if (!firebaseInstance) {
+    console.log('Firebase not initialized, calling initializeFirebase');
+    return _initializeFirebase();
+  }
+
+  console.log('Firebase already initialized, returning instance');
+
+  return firebaseInstance;
+};
+
+// Utility to check if Firebase is initialized
+export const isFirebaseInitialized = (): boolean => {
+  return firebaseInstance !== null;
+};
+
+// Re-export utilities
+export {
+  getFirebaseAuth,
+  getFirebaseDb,
+  getFirebaseApp,
+} from './utils/getFirebase';
