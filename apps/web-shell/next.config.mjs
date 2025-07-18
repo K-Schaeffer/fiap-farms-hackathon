@@ -19,6 +19,16 @@ const nextConfig = {
           salesApp: `salesApp@http://localhost:4000/_next/static/chunks/remoteEntry.js`,
           productsApp: `productsApp@http://localhost:5000/_next/static/chunks/remoteEntry.js`,
         },
+        shared: {
+          '@fiap-farms/firebase-config': {
+            singleton: true,
+            eager: false,
+          },
+          '@fiap-farms/auth-store': {
+            singleton: true,
+            eager: false,
+          },
+        },
       })
     );
     return config;

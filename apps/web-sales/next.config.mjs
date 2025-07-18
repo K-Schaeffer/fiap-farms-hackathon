@@ -18,6 +18,16 @@ const nextConfig = {
         exposes: {
           './Index': './pages/index.tsx',
         },
+        shared: {
+          '@fiap-farms/firebase-config': {
+            singleton: true,
+            eager: false,
+          },
+          '@fiap-farms/auth-store': {
+            singleton: true,
+            eager: false,
+          },
+        },
       })
     );
     return config;
