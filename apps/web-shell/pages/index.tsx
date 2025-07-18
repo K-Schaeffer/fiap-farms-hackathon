@@ -10,37 +10,29 @@ import {
   CircularProgress,
 } from '@mui/material';
 import Link from 'next/link';
-import { getFirebase } from '@fiap-farms/firebase-config';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useAuth } from '@fiap-farms/auth-store';
 
 export default function Web() {
+  // Get auth state and actions from the store
+  const { user, isLoading, isAuthenticated, error, signIn, clearError } =
+    useAuth();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const firebase = getFirebase();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
+    clearError();
 
     try {
-      await signInWithEmailAndPassword(firebase.auth, email, password);
-      setIsLoggedIn(true);
-      setError('');
+      await signIn(email, password);
     } catch (err: unknown) {
-      const errorMessage =
-        err instanceof Error ? err.message : 'Failed to sign in';
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
+      // Error is already handled by the auth store
+      console.error('Login failed:', err);
     }
   };
 
-  if (isLoggedIn) {
+  if (isAuthenticated) {
     return (
       <Container maxWidth="sm" sx={{ mt: 8 }}>
         <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
@@ -50,7 +42,7 @@ export default function Web() {
             gutterBottom
             color="success.main"
           >
-            Welcome! You&apos;re logged in.
+            Welcome, {user?.email}! You&apos;re logged in.
           </Typography>
           <Box
             sx={{ mt: 3, display: 'flex', gap: 2, justifyContent: 'center' }}
@@ -93,7 +85,7 @@ export default function Web() {
             onChange={e => setEmail(e.target.value)}
             margin="normal"
             required
-            disabled={loading}
+            disabled={isLoading}
           />
 
           <TextField
@@ -104,7 +96,7 @@ export default function Web() {
             onChange={e => setPassword(e.target.value)}
             margin="normal"
             required
-            disabled={loading}
+            disabled={isLoading}
           />
 
           <Button
@@ -112,9 +104,9 @@ export default function Web() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            disabled={loading}
+            disabled={isLoading}
           >
-            {loading ? <CircularProgress size={24} /> : 'Sign In'}
+            {isLoading ? <CircularProgress size={24} /> : 'Sign In'}
           </Button>
         </Box>
       </Paper>
