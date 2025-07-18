@@ -1,5 +1,5 @@
 {
-  "extends": "@fiap-farms/typescript-config/react-library",
+  "extends": "@fiap-farms/typescript-config/base",
   "include": ["src"],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
