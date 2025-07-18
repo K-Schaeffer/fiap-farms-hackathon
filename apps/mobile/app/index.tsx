@@ -11,58 +11,71 @@ import {
   Snackbar,
   ActivityIndicator,
 } from 'react-native-paper';
-import { getFirebase } from '@fiap-farms/firebase-config';
-import {
-  // @ts-expect-error missing type from Firebase React Native
-  getReactNativePersistence,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
+import { useAuth } from '@fiap-farms/auth-store';
 import MainGrid from '../components/MainGrid';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 const theme = {
   ...MD3LightTheme,
 };
 
 export default function Native() {
+  // Get auth state and actions from the store
+  const { isLoading, isAuthenticated, error, signIn, clearError, signOut } =
+    useAuth();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [error, setError] = useState('');
   const [showError, setShowError] = useState(false);
 
   const handleLogin = async () => {
     if (!email.trim() || !password.trim()) {
-      setError('Please fill in all fields');
-      setShowError(true);
       return;
     }
 
-    setLoading(true);
-    setError('');
+    clearError();
 
     try {
-      const firebase = getFirebase(
-        getReactNativePersistence(ReactNativeAsyncStorage)
-      );
-      await signInWithEmailAndPassword(firebase.auth, email, password);
-      setIsLoggedIn(true);
+      await signIn(email, password);
     } catch (err: unknown) {
-      const errorMessage =
-        err instanceof Error ? err.message : 'Failed to sign in';
-      setError(errorMessage);
+      // Error is already handled by the auth store
+      console.error('Login failed:', err);
       setShowError(true);
-    } finally {
-      setLoading(false);
     }
   };
 
-  if (isLoggedIn) {
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (err: unknown) {
+      console.error('Logout failed:', err);
+    }
+  };
+
+  // Show error when auth store error changes
+  React.useEffect(() => {
+    if (error) {
+      setShowError(true);
+    }
+  }, [error]);
+
+  if (isAuthenticated) {
     return (
       <PaperProvider theme={theme}>
         <SafeAreaView style={styles.container}>
           <View style={styles.content}>
+            <View style={styles.header}>
+              <Text variant="headlineSmall" style={styles.welcomeText}>
+                Welcome to FIAP Farms!
+              </Text>
+              <Button
+                mode="outlined"
+                onPress={handleLogout}
+                style={styles.logoutButton}
+                disabled={isLoading}
+              >
+                Logout
+              </Button>
+            </View>
             <MainGrid />
           </View>
           <StatusBar style="auto" />
@@ -93,7 +106,7 @@ export default function Native() {
                   keyboardType="email-address"
                   autoCapitalize="none"
                   style={styles.input}
-                  disabled={loading}
+                  disabled={isLoading}
                 />
 
                 <TextInput
@@ -103,17 +116,17 @@ export default function Native() {
                   mode="outlined"
                   secureTextEntry
                   style={styles.input}
-                  disabled={loading}
+                  disabled={isLoading}
                 />
 
                 <Button
                   mode="contained"
                   onPress={handleLogin}
                   style={styles.button}
-                  disabled={loading}
+                  disabled={isLoading}
                   contentStyle={styles.buttonContent}
                 >
-                  {loading ? (
+                  {isLoading ? (
                     <ActivityIndicator size="small" color="#ffffff" />
                   ) : (
                     'Sign In'
@@ -125,7 +138,7 @@ export default function Native() {
         </ScrollView>
 
         <Snackbar
-          visible={showError}
+          visible={showError && !!error}
           onDismiss={() => setShowError(false)}
           duration={4000}
           action={{
@@ -149,6 +162,28 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#ffffff',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
+  welcomeText: {
+    flex: 1,
+    fontWeight: 'bold',
+  },
+  logoutButton: {
+    marginLeft: 16,
   },
   scrollContent: {
     flexGrow: 1,
