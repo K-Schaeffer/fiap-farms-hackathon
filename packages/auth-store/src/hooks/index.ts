@@ -1,16 +1,15 @@
 import { useEffect } from 'react';
-import { useAuthStore, setupAuthListener } from '../stores/authStore';
-import type { AuthStore } from '../types';
+import { setupAuthListener, useAuthStore } from '../stores/authStore';
 
-// Hook for using the default auth store - returns complete auth state and actions
-export const useAuth = (): AuthStore => {
+// Hook for using the auth store - returns complete auth state and actions
+export const useAuth = () => {
   return useAuthStore();
 };
 
 // Hook for setting up auth listener
 export const useAuthListener = () => {
   useEffect(() => {
-    const unsubscribe = setupAuthListener(useAuthStore);
+    const unsubscribe = setupAuthListener();
     return () => unsubscribe();
   }, []);
 };
