@@ -116,5 +116,6 @@ consume shared module (default) @fiap-farms/auth-store@* (singleton) (fallback:
 ```
 
 On Firebase JS SDK:
-  - https://github.com/firebase/firebase-js-sdk/issues/7615
-  - https://github.com/firebase/firebase-js-sdk/issues/7584
+
+- https://github.com/firebase/firebase-js-sdk/issues/7615
+- https://github.com/firebase/firebase-js-sdk/issues/7584

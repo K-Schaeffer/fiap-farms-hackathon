@@ -44,7 +44,15 @@ function App() {
 import { useAuth, useAuthListener } from '@fiap-farms/auth-store';
 
 function LoginComponent() {
-  const { user, isLoading, isAuthenticated, error, signIn, signOut, clearError } = useAuth();
+  const {
+    user,
+    isLoading,
+    isAuthenticated,
+    error,
+    signIn,
+    signOut,
+    clearError,
+  } = useAuth();
 
   // Set up auth state listener (typically done once in your app root)
   useAuthListener();
@@ -58,7 +66,7 @@ function LoginComponent() {
   };
 
   if (isLoading) return <div>Loading...</div>;
-  
+
   if (isAuthenticated) {
     return (
       <div>
@@ -81,12 +89,12 @@ function LoginComponent() {
 
 ### Direct Store Access (Advanced)
 
-```tsx
+````tsx
 import { useAuthStore } from '@fiap-farms/auth-store';
 
 function DirectStoreAccess() {
   const authStore = useAuthStore();
-  
+
   // Access any property or method directly
   const { user, signIn, signOut } = authStore;
 }
@@ -123,7 +131,7 @@ interface AuthActions {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 }
-```
+````
 
 ## Integration Examples
 
@@ -149,7 +157,7 @@ import { useAuth, useAuthListener } from '@fiap-farms/auth-store';
 
 export default function App() {
   const { isAuthenticated, isLoading } = useAuth();
-  
+
   // Set up auth listener
   useAuthListener();
 
