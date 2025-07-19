@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { AppNavbar, Header, SideMenu } from '@fiap-farms/web-ui';
+import { WebAppNavbar, WebHeader, WebSideMenu } from '@fiap-farms/web-ui';
 import { useAuth } from '@fiap-farms/auth-store';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -35,8 +35,8 @@ export default function ShellView() {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <SideMenu />
-      <AppNavbar />
+      <WebSideMenu />
+      <WebAppNavbar />
       <Box component="main">
         <Stack
           spacing={2}
@@ -47,7 +47,7 @@ export default function ShellView() {
             mt: { xs: 8, md: 0 },
           }}
         >
-          <Header />
+          <WebHeader />
           <SalesApp />
         </Stack>
       </Box>
