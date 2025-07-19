@@ -8,11 +8,5 @@ module.exports = {
   ignorePatterns: ['/dist/*'],
   rules: {
     'prettier/prettier': 'error',
-    'import/no-unresolved': [
-      'error',
-      {
-        ignore: ['^@fiap-farms/'],
-      },
-    ],
   },
 };
