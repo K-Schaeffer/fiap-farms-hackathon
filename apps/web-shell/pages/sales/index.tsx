@@ -1,9 +1,7 @@
 import dynamic from 'next/dynamic';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { AppNavbar } from '@fiap-farms/web-ui';
-import { Header } from '@fiap-farms/web-ui';
-import { SideMenu } from '@fiap-farms/web-ui';
+import { AppNavbar, Header, SideMenu } from '@fiap-farms/web-ui';
 import { useAuth } from '@fiap-farms/auth-store';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
