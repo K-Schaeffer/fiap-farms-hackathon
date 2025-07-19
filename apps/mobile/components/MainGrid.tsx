@@ -5,7 +5,7 @@ import StatCard, { StatCardProps } from './StatCard';
 import CustomizedDataGrid from './CustomizedDataGrid';
 import SessionsChart from './SessionsChart';
 import PageViewsBarChart from './PageViewsBarChart';
-import ChartUserByCountry from './ChartUserByCountry';
+import UserByCountryChart from './UserByCountryChart';
 
 const data: StatCardProps[] = [
   {
@@ -64,7 +64,7 @@ export default function MainGrid() {
           <PageViewsBarChart />
         </View>
         <View style={styles.sideSection}>
-          <ChartUserByCountry />
+          <UserByCountryChart />
         </View>
       </View>
 

@@ -13,7 +13,7 @@ export {
 } from './shell';
 
 // Chart components - Data visualization and analytics
-export { ChartUserByCountry, PageViewsBarChart, SessionsChart } from './charts';
+export { UserByCountryChart, PageViewsBarChart, SessionsChart } from './charts';
 
 // Grid components - Data tables and layouts
 export { CustomizedDataGrid, renderAvatar, columns, rows } from './grids';

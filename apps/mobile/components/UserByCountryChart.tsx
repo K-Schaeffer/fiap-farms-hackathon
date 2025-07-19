@@ -32,7 +32,7 @@ const pieData = countries.map(country => ({
   text: `${country.value}%`,
 }));
 
-export default function ChartUserByCountry() {
+export default function UserByCountryChart() {
   const totalUsers = 100000;
 
   const renderLegendItem = (country: (typeof countries)[0]) => (
