@@ -2,12 +2,12 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import UserByCountryChart from '../charts/UserByCountryChart';
-import CustomizedDataGrid from '../grids/CustomizedDataGrid';
-import HighlightedCard from '../common/HighlightedCard';
-import PageViewsBarChart from '../charts/PageViewsBarChart';
-import SessionsChart from '../charts/SessionsChart';
-import StatCard, { StatCardProps } from '../common/StatCard';
+import WebUserByCountryChart from '../charts/WebUserByCountryChart';
+import WebCustomizedDataGrid from '../grids/WebCustomizedDataGrid';
+import WebHighlightedCard from '../common/WebHighlightedCard';
+import WebPageViewsBarChart from '../charts/WebPageViewsBarChart';
+import WebSessionsChart from '../charts/WebSessionsChart';
+import WebStatCard, { StatCardProps } from '../common/WebStatCard';
 
 const data: StatCardProps[] = [
   {
@@ -43,7 +43,7 @@ const data: StatCardProps[] = [
   },
 ];
 
-export default function MainGrid() {
+export default function WebMainGrid() {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       {/* cards */}
@@ -58,17 +58,17 @@ export default function MainGrid() {
       >
         {data.map((card, index) => (
           <Grid key={index} size={{ xs: 12, sm: 6, lg: 3 }}>
-            <StatCard {...card} />
+            <WebStatCard {...card} />
           </Grid>
         ))}
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <HighlightedCard />
+          <WebHighlightedCard />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <SessionsChart />
+          <WebSessionsChart />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <PageViewsBarChart />
+          <WebPageViewsBarChart />
         </Grid>
       </Grid>
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
@@ -76,12 +76,12 @@ export default function MainGrid() {
       </Typography>
       <Grid container spacing={2} columns={12}>
         <Grid size={{ xs: 12, lg: 9 }}>
-          <CustomizedDataGrid />
+          <WebCustomizedDataGrid />
         </Grid>
         <Grid size={{ xs: 12, lg: 3 }}>
           <Stack gap={2} direction={{ xs: 'column', sm: 'row', lg: 'column' }}>
             {/* <CustomizedTreeView /> */}
-            <UserByCountryChart />
+            <WebUserByCountryChart />
           </Stack>
         </Grid>
       </Grid>

@@ -6,15 +6,15 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
-import MenuButton from './MenuButton';
-import MenuContent from './MenuContent';
+import MenuButton from './WebMenuButton';
+import MenuContent from './WebMenuContent';
 
 interface SideMenuMobileProps {
   open: boolean | undefined;
   toggleDrawer: (newOpen: boolean) => () => void;
 }
 
-export default function SideMenuMobile({
+export default function WebSideMenuMobile({
   open,
   toggleDrawer,
 }: SideMenuMobileProps) {

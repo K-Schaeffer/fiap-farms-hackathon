@@ -1,4 +1,4 @@
 // Chart components - Data visualization and analytics charts
-export { default as UserByCountryChart } from './UserByCountryChart';
-export { default as PageViewsBarChart } from './PageViewsBarChart';
-export { default as SessionsChart } from './SessionsChart';
+export { default as WebUserByCountryChart } from './WebUserByCountryChart';
+export { default as WebPageViewsBarChart } from './WebPageViewsBarChart';
+export { default as WebSessionsChart } from './WebSessionsChart';

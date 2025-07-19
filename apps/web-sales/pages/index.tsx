@@ -1,4 +1,4 @@
-import { MainGrid } from '@fiap-farms/web-ui';
+import { WebMainGrid } from '@fiap-farms/web-ui';
 import { getFirebase } from '@fiap-farms/firebase';
 import { useAuth } from '@fiap-farms/auth-store';
 
@@ -13,5 +13,5 @@ export default function Dashboard() {
   console.log('Current user context:', user?.email);
   console.log('Current user firebase:', firebase.auth.currentUser?.email);
 
-  return <MainGrid />;
+  return <WebMainGrid />;
 }

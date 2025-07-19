@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { useTheme } from '@mui/material/styles';
 
-export default function PageViewsBarChart() {
+export default function WebPageViewsBarChart() {
   const theme = useTheme();
   const colorPalette = [
     (theme.vars || theme).palette.primary.dark,

@@ -32,7 +32,7 @@ function getDaysInMonth(month: number, year: number) {
   return days;
 }
 
-export default function SessionsChart() {
+export default function WebSessionsChart() {
   const theme = useTheme();
   const data = getDaysInMonth(4, 2024);
 

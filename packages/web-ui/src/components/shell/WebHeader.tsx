@@ -1,10 +1,10 @@
 import Stack from '@mui/material/Stack';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 // import CustomDatePicker from './CustomDatePicker';
-import NavbarBreadcrumbs from './NavbarBreadcrumbs';
-import MenuButton from './MenuButton';
+import WebNavbarBreadcrumbs from './WebNavbarBreadcrumbs';
+import WebMenuButton from './WebMenuButton';
 
-export default function Header() {
+export default function WebHeader() {
   return (
     <Stack
       direction="row"
@@ -18,12 +18,12 @@ export default function Header() {
       }}
       spacing={2}
     >
-      <NavbarBreadcrumbs />
+      <WebNavbarBreadcrumbs />
       <Stack direction="row" sx={{ gap: 1 }}>
         {/* <CustomDatePicker /> */}
-        <MenuButton showBadge aria-label="Open notifications">
+        <WebMenuButton showBadge aria-label="Open notifications">
           <NotificationsRoundedIcon />
-        </MenuButton>
+        </WebMenuButton>
       </Stack>
     </Stack>
   );
