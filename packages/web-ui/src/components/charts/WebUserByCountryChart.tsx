@@ -119,7 +119,7 @@ const colors = [
   'hsl(220, 20%, 25%)',
 ];
 
-export default function UserByCountryChart() {
+export default function WebUserByCountryChart() {
   return (
     <Card
       variant="outlined"
@@ -160,7 +160,6 @@ export default function UserByCountryChart() {
             direction="row"
             sx={{ alignItems: 'center', gap: 2, pb: 2 }}
           >
-            {country.flag}
             <Stack sx={{ gap: 1, flexGrow: 1 }}>
               <Stack
                 direction="row"

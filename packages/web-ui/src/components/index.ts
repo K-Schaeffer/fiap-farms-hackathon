@@ -2,26 +2,30 @@
 
 // Shell components - Navigation, menus, and shell-level UI
 export {
-  AppNavbar,
-  Header,
-  SideMenu,
-  SideMenuMobile,
-  MenuButton,
-  MenuContent,
-  NavbarBreadcrumbs,
-  OptionsMenu,
+  WebAppNavbar,
+  WebHeader,
+  WebSideMenu,
+  WebSideMenuMobile,
+  WebMenuButton,
+  WebMenuContent,
+  WebNavbarBreadcrumbs,
+  WebOptionsMenu,
 } from './shell';
 
 // Chart components - Data visualization and analytics
-export { UserByCountryChart, PageViewsBarChart, SessionsChart } from './charts';
+export {
+  WebUserByCountryChart,
+  WebPageViewsBarChart,
+  WebSessionsChart,
+} from './charts';
 
 // Grid components - Data tables and layouts
-export { CustomizedDataGrid, renderAvatar, columns, rows } from './grids';
+export { WebCustomizedDataGrid, renderAvatar, columns, rows } from './grids';
 
 // Page components - Complete page layouts
-export { MainGrid } from './pages';
+export { WebMainGrid } from './pages';
 
 // Common/reusable components - Shared UI elements
-export { HighlightedCard, StatCard } from './common';
+export { WebHighlightedCard, WebStatCard } from './common';
 
 export type { StatCardProps } from './common';

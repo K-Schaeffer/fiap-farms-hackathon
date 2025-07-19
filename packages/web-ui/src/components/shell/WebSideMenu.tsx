@@ -5,8 +5,8 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import MenuContent from './MenuContent';
-import OptionsMenu from './OptionsMenu';
+import WebMenuContent from './WebMenuContent';
+import WebOptionsMenu from './WebOptionsMenu';
 
 const drawerWidth = 240;
 
@@ -21,7 +21,7 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function SideMenu() {
+export default function WebSideMenu() {
   return (
     <Drawer
       variant="permanent"
@@ -41,7 +41,7 @@ export default function SideMenu() {
           flexDirection: 'column',
         }}
       >
-        <MenuContent />
+        <WebMenuContent />
       </Box>
       <Stack
         direction="row"
@@ -69,7 +69,7 @@ export default function SideMenu() {
             riley@email.com
           </Typography>
         </Box>
-        <OptionsMenu />
+        <WebOptionsMenu />
       </Stack>
     </Drawer>
   );
