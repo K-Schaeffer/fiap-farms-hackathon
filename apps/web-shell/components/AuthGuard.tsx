@@ -2,6 +2,7 @@ import { useAuth } from '@fiap-farms/auth-store';
 import { useRouter } from 'next/router';
 import { useEffect, ReactNode } from 'react';
 import { CircularProgress, Container } from '@mui/material';
+import { usePublicRoute } from '../hooks/usePublicRoute';
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -14,19 +15,19 @@ interface AuthGuardProps {
 export function AuthGuard({ children }: AuthGuardProps) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
+  const { isPublic } = usePublicRoute();
 
   // Protect all routes that are not public
-  const isProtectedRoute = !router.pathname.includes('public');
 
   useEffect(() => {
     // Only redirect if we're on a protected route and user is not authenticated
-    if (isProtectedRoute && !isLoading && !isAuthenticated) {
+    if (!isPublic && !isLoading && !isAuthenticated) {
       router.push('/');
     }
-  }, [isProtectedRoute, isAuthenticated, isLoading, router]);
+  }, [isPublic, isAuthenticated, isLoading, router]);
 
   // Show loading spinner while checking authentication on protected routes
-  if (isProtectedRoute && isLoading) {
+  if (!isPublic && isLoading) {
     return (
       <Container
         maxWidth={false}
@@ -44,7 +45,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
   }
 
   // Don't render protected content if user is not authenticated (will redirect)
-  if (isProtectedRoute && !isAuthenticated && !isLoading) {
+  if (!isPublic && !isAuthenticated && !isLoading) {
     return null;
   }
 
