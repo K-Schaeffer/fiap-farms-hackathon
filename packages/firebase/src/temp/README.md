@@ -37,6 +37,17 @@ Before implementing the current workaround, several approaches were tried:
 - Attempted to override module resolution in `tsconfig.json` and Next.js config
 - Firebase SDK's internal dependencies still caused conflicts
 
+### 5. Dynamic Imports with Environment Detection
+
+- Considered dynamically importing React Native persistence only in React Native environments
+- This approach could potentially work by conditionally loading the persistence mechanism
+- However, it would make the entire `getFirebase` singleton usage asynchronous
+- This would complicate the codebase significantly, requiring `await` calls throughout the application
+- The complexity added would be disproportionate to the problem, especially since:
+  - The required persistence files are small dependencies
+  - These files are available in the Firebase SDK, just not exported from `firebase/auth`
+  - The current workaround maintains synchronous Firebase initialization
+
 ## Solution
 
 As none of the above approaches provided a stable solution, we implemented a temporary workaround by copying the necessary persistence-related files directly from the Firebase SDK source code to our local codebase:
