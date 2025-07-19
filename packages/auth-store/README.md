@@ -38,7 +38,7 @@ function App() {
 
 ## Usage
 
-### Using Hooks (Simple & Clean)
+### Using the Auth Hook
 
 ```tsx
 import { useAuth, useAuthListener } from '@fiap-farms/auth-store';
@@ -51,17 +51,23 @@ function LoginComponent() {
     error,
     signIn,
     signOut,
+    signUp,
     clearError,
   } = useAuth();
-
-  // Set up auth state listener (typically done once in your app root)
-  useAuthListener();
 
   const handleLogin = async (email: string, password: string) => {
     try {
       await signIn(email, password);
     } catch (error) {
       console.error('Login failed:', error);
+    }
+  };
+
+  const handleSignUp = async (email: string, password: string) => {
+    try {
+      await signUp(email, password);
+    } catch (error) {
+      console.error('Sign up failed:', error);
     }
   };
 
@@ -82,22 +88,13 @@ function LoginComponent() {
       <button onClick={() => handleLogin('user@example.com', 'password')}>
         Sign In
       </button>
+      <button onClick={() => handleSignUp('user@example.com', 'password')}>
+        Sign Up
+      </button>
     </div>
   );
 }
 ```
-
-### Direct Store Access (Advanced)
-
-````tsx
-import { useAuthStore } from '@fiap-farms/auth-store';
-
-function DirectStoreAccess() {
-  const authStore = useAuthStore();
-
-  // Access any property or method directly
-  const { user, signIn, signOut } = authStore;
-}
 
 ## API Reference
 
@@ -105,12 +102,6 @@ function DirectStoreAccess() {
 
 - `useAuth()`: Returns complete auth state and actions
 - `useAuthListener()`: Sets up Firebase auth state listener
-
-### Store
-
-- `useAuthStore`: Default auth store instance
-- `createAuthStore()`: Create custom auth store
-- `setupAuthListener(store)`: Set up auth state listener for a store
 
 ### Types
 
@@ -131,7 +122,7 @@ interface AuthActions {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 }
-````
+```
 
 ## Integration Examples
 
