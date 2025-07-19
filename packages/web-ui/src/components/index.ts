@@ -23,7 +23,7 @@ export {
 export { WebCustomizedDataGrid, renderAvatar, columns, rows } from './grids';
 
 // Page components - Complete page layouts
-export { WebMainGrid } from './pages';
+export { WebMainGrid, WebLoginPage, WebSignUpPage } from './pages';
 
 // Common/reusable components - Shared UI elements
 export { WebHighlightedCard, WebStatCard } from './common';

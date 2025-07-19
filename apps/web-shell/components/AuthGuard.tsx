@@ -15,8 +15,8 @@ export function AuthGuard({ children }: AuthGuardProps) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
-  // Protect all routes except the index page
-  const isProtectedRoute = router.pathname !== '/';
+  // Protect all routes that are not public
+  const isProtectedRoute = !router.pathname.includes('public');
 
   useEffect(() => {
     // Only redirect if we're on a protected route and user is not authenticated
@@ -28,8 +28,17 @@ export function AuthGuard({ children }: AuthGuardProps) {
   // Show loading spinner while checking authentication on protected routes
   if (isProtectedRoute && isLoading) {
     return (
-      <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-        <CircularProgress />
+      <Container
+        maxWidth={false}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          width: '100vw',
+        }}
+      >
+        <CircularProgress size={160} thickness={4} />
       </Container>
     );
   }
