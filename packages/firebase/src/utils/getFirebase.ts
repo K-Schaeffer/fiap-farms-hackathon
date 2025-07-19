@@ -1,13 +1,16 @@
+import { Auth } from 'firebase/auth';
 import { getFirebase } from '../index';
+import { Firestore } from 'firebase/firestore';
+import { FirebaseApp } from 'firebase/app';
 
-export function getFirebaseAuth() {
+export function getFirebaseAuth(): Auth {
   return getFirebase().auth;
 }
 
-export function getFirebaseDb() {
+export function getFirebaseDb(): Firestore {
   return getFirebase().db;
 }
 
-export function getFirebaseApp() {
+export function getFirebaseApp(): FirebaseApp {
   return getFirebase().app;
 }
