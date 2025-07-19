@@ -14,7 +14,7 @@ export default function SignUpPage() {
       setError(null);
       setIsLoading(true);
       await signUp(email, password);
-      router.push('/products');
+      router.push('/');
     } catch (err) {
       console.error('Sign up error:', err);
       setError('Failed to create account. Please try again.');
@@ -24,7 +24,7 @@ export default function SignUpPage() {
   };
 
   const handleLoginRedirect = () => {
-    router.push('/auth/login');
+    router.push('/login');
   };
 
   return (

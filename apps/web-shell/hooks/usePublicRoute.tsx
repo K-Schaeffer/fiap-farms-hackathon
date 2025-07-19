@@ -5,7 +5,9 @@ export function usePublicRoute() {
   const router = useRouter();
 
   const isPublic = useMemo(() => {
-    return router.pathname.startsWith('/public');
+    const publicRoutes = ['/login', '/signup', '/_error'];
+
+    return publicRoutes.includes(router.pathname);
   }, [router.pathname]);
 
   return {

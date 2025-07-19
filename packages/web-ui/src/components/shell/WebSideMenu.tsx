@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import WebMenuContent from './WebMenuContent';
 import WebOptionsMenu from './WebOptionsMenu';
+import { WebSideMenuProps } from './index';
 
 const drawerWidth = 240;
 
@@ -21,7 +22,26 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function WebSideMenu() {
+export default function WebSideMenu({ user, onLogout }: WebSideMenuProps) {
+  // Extract user information with fallbacks
+  const userName = user?.displayName || user?.email?.split('@')[0] || 'User';
+  const userEmail = user?.email || '';
+  const userAvatarUrl = user?.photoURL;
+
+  // Generate avatar initials from display name or email
+  const getAvatarInitials = () => {
+    if (user?.displayName) {
+      const names = user.displayName.split(' ');
+      return names.length > 1
+        ? `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase()
+        : names[0][0].toUpperCase();
+    }
+    if (user?.email) {
+      return user.email[0].toUpperCase();
+    }
+    return 'U';
+  };
+
   return (
     <Drawer
       variant="permanent"
@@ -55,21 +75,24 @@ export default function WebSideMenu() {
       >
         <Avatar
           sizes="small"
-          alt="Riley Carter"
+          alt={userName}
+          src={userAvatarUrl || undefined}
           sx={{ width: 36, height: 36 }}
-        />
+        >
+          {!userAvatarUrl && getAvatarInitials()}
+        </Avatar>
         <Box sx={{ mr: 'auto' }}>
           <Typography
             variant="body2"
             sx={{ fontWeight: 500, lineHeight: '16px' }}
           >
-            Riley Carter
+            {userName}
           </Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            riley@email.com
+            {userEmail}
           </Typography>
         </Box>
-        <WebOptionsMenu />
+        <WebOptionsMenu onLogout={onLogout} />
       </Stack>
     </Drawer>
   );

@@ -12,6 +12,13 @@ export {
   WebOptionsMenu,
 } from './shell';
 
+// Shell component types
+export type {
+  WebSideMenuUser,
+  WebSideMenuProps,
+  WebOptionsMenuProps,
+} from './shell';
+
 // Chart components - Data visualization and analytics
 export {
   WebUserByCountryChart,

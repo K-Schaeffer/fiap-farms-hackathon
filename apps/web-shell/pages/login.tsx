@@ -24,7 +24,7 @@ export default function LoginPage() {
   };
 
   const handleSignUpRedirect = () => {
-    router.push('/auth/signup');
+    router.push('/signup');
   };
 
   return (
