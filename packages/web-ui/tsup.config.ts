@@ -2,7 +2,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: {
-    index: 'src/components/index.tsx',
+    index: 'src/components/index.ts',
     global: 'src/styles/global.css',
   },
   format: ['cjs', 'esm'],
