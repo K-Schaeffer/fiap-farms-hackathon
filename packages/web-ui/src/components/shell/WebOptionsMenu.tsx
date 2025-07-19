@@ -10,12 +10,13 @@ import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import WebMenuButton from './WebMenuButton';
+import { WebOptionsMenuProps } from './index';
 
 const MenuItem = styled(MuiMenuItem)({
   margin: '2px 0',
 });
 
-export default function WebOptionsMenu() {
+export default function WebOptionsMenu({ onLogout }: WebOptionsMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,6 +25,18 @@ export default function WebOptionsMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = async () => {
+    handleClose();
+    if (onLogout) {
+      try {
+        await onLogout();
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    }
+  };
+
   return (
     <React.Fragment>
       <WebMenuButton
@@ -59,7 +72,7 @@ export default function WebOptionsMenu() {
         <MenuItem onClick={handleClose}>Settings</MenuItem>
         <Divider />
         <MenuItem
-          onClick={handleClose}
+          onClick={handleLogout}
           sx={{
             [`& .${listItemIconClasses.root}`]: {
               ml: 'auto',

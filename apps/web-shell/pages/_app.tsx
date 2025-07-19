@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import '@fiap-farms/web-ui/global.css';
 import { AppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter';
-import { useAuthListener } from '@fiap-farms/auth-store';
+import { useAuthListener, useAuth } from '@fiap-farms/auth-store';
 import { AuthGuard } from '../components/AuthGuard';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -9,9 +9,11 @@ import { WebAppNavbar, WebHeader, WebSideMenu } from '@fiap-farms/web-ui';
 import { usePublicRoute } from '../hooks/usePublicRoute';
 
 function AppLayout({ children }: { children: React.ReactNode }) {
+  const { user, signOut } = useAuth();
+
   return (
     <Box sx={{ display: 'flex' }}>
-      <WebSideMenu />
+      <WebSideMenu user={user} onLogout={signOut} />
       <WebAppNavbar />
       <Box component="main">
         <Stack
@@ -37,15 +39,15 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <AppCacheProvider {...pageProps}>
-      {isPublic ? (
-        <Component {...pageProps} />
-      ) : (
-        <AuthGuard>
+      <AuthGuard>
+        {isPublic ? (
+          <Component {...pageProps} />
+        ) : (
           <AppLayout>
             <Component {...pageProps} />
           </AppLayout>
-        </AuthGuard>
-      )}
+        )}
+      </AuthGuard>
     </AppCacheProvider>
   );
 }

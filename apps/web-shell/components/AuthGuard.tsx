@@ -17,12 +17,19 @@ export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
   const { isPublic } = usePublicRoute();
 
-  // Protect all routes that are not public
-
   useEffect(() => {
-    // Only redirect if we're on a protected route and user is not authenticated
-    if (!isPublic && !isLoading && !isAuthenticated) {
+    if (isLoading) return; // Don't redirect while loading
+
+    // Redirect authenticated users away from auth pages (login, signup)
+    const authPages = ['/login', '/signup'];
+    if (isAuthenticated && authPages.includes(router.pathname)) {
       router.push('/');
+      return;
+    }
+
+    // Redirect unauthenticated users to login from protected routes
+    if (!isPublic && !isAuthenticated) {
+      router.push('/login');
     }
   }, [isPublic, isAuthenticated, isLoading, router]);
 
