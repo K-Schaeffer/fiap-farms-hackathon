@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateProfile,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   User,
@@ -22,7 +23,11 @@ export const useAuthStore = create<AuthStore>(set => ({
   signIn: async (email: string, password: string) => {
     try {
       set({ isLoading: true, error: null });
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       set({
         user: userCredential.user,
         isAuthenticated: true,
@@ -40,10 +45,19 @@ export const useAuthStore = create<AuthStore>(set => ({
     }
   },
 
-  signUp: async (email: string, password: string) => {
+  signUp: async (name: string, email: string, password: string) => {
     try {
       set({ isLoading: true, error: null });
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await updateProfile(userCredential.user, {
+        displayName: name,
+      });
+
       set({
         user: userCredential.user,
         isAuthenticated: true,

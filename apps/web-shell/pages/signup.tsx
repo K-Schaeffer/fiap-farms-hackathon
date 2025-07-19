@@ -9,11 +9,15 @@ export default function SignUpPage() {
   const { signUp } = useAuth();
   const router = useRouter();
 
-  const handleSignUp = async (email: string, password: string) => {
+  const handleSignUp = async (
+    name: string,
+    email: string,
+    password: string
+  ) => {
     try {
       setError(null);
       setIsLoading(true);
-      await signUp(email, password);
+      await signUp(name, email, password);
       router.push('/');
     } catch (err) {
       console.error('Sign up error:', err);

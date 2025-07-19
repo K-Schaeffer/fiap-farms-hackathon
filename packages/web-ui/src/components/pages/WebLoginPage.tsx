@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   Container,
   Paper,
-  TextField,
   Button,
   Typography,
   Alert,
@@ -10,6 +9,12 @@ import {
   CircularProgress,
   Link,
 } from '@mui/material';
+import { TextFieldElement } from 'react-hook-form-mui';
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
 interface WebLoginPageProps {
   onLogin: (email: string, password: string) => Promise<void>;
@@ -24,15 +29,15 @@ export function WebLoginPage({
   error,
   isLoading,
 }: WebLoginPageProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { control, handleSubmit } = useForm<LoginFormData>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim() || !password.trim()) {
-      return;
-    }
-    await onLogin(email, password);
+  const onSubmit = async (data: LoginFormData) => {
+    await onLogin(data.email, data.password);
   };
 
   return (
@@ -48,27 +53,35 @@ export function WebLoginPage({
           </Alert>
         )}
 
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-          <TextField
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 2 }}>
+          <TextFieldElement
+            name="email"
+            control={control}
             fullWidth
             label="Email"
             type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
             margin="normal"
-            required
             disabled={isLoading}
+            rules={{
+              required: 'Email is required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Please enter a valid email address',
+              },
+            }}
           />
 
-          <TextField
+          <TextFieldElement
+            name="password"
+            control={control}
             fullWidth
             label="Password"
             type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
             margin="normal"
-            required
             disabled={isLoading}
+            rules={{
+              required: 'Password is required',
+            }}
           />
 
           <Button
@@ -81,7 +94,7 @@ export function WebLoginPage({
             {isLoading ? <CircularProgress size={24} /> : 'Sign In'}
           </Button>
 
-          <Box sx={{ textAlign: 'center', mt: 2 }}>
+          <Box sx={{ textAlign: 'center' }}>
             <Typography variant="body2">
               Don&apos;t have an account?{' '}
               <Link

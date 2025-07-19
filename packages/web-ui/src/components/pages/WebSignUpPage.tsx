@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   Container,
   Paper,
-  TextField,
   Button,
   Typography,
   Alert,
@@ -10,9 +9,17 @@ import {
   CircularProgress,
   Link,
 } from '@mui/material';
+import { TextFieldElement } from 'react-hook-form-mui';
+
+interface SignUpFormData {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 interface WebSignUpPageProps {
-  onSignUp: (email: string, password: string) => Promise<void>;
+  onSignUp: (name: string, email: string, password: string) => Promise<void>;
   onLoginRedirect: () => void;
   error: string | null;
   isLoading: boolean;
@@ -24,34 +31,20 @@ export function WebSignUpPage({
   error,
   isLoading,
 }: WebSignUpPageProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [localError, setLocalError] = useState<string | null>(null);
+  const { control, handleSubmit, watch } = useForm<SignUpFormData>({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLocalError(null);
+  const password = watch('password');
 
-    if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
-      setLocalError('All fields are required');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setLocalError('Passwords do not match');
-      return;
-    }
-
-    if (password.length < 6) {
-      setLocalError('Password must be at least 6 characters long');
-      return;
-    }
-
-    await onSignUp(email, password);
+  const onSubmit = async (data: SignUpFormData) => {
+    await onSignUp(data.name, data.email, data.password);
   };
-
-  const displayError = error || localError;
 
   return (
     <Container maxWidth="sm" sx={{ mt: 8 }}>
@@ -60,45 +53,81 @@ export function WebSignUpPage({
           Sign Up
         </Typography>
 
-        {displayError && (
+        {error && (
           <Alert severity="error" sx={{ mb: 2 }}>
-            {displayError}
+            {error}
           </Alert>
         )}
 
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-          <TextField
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 2 }}>
+          <TextFieldElement
+            name="name"
+            control={control}
+            fullWidth
+            label="Name"
+            type="text"
+            margin="normal"
+            disabled={isLoading}
+            rules={{
+              required: 'Name is required',
+              minLength: {
+                value: 2,
+                message: 'Name must be at least 2 characters long',
+              },
+              pattern: {
+                value: /^[a-zA-Z\s]+$/,
+                message: 'Name can only contain letters and spaces',
+              },
+            }}
+          />
+
+          <TextFieldElement
+            name="email"
+            control={control}
             fullWidth
             label="Email"
             type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
             margin="normal"
-            required
             disabled={isLoading}
+            rules={{
+              required: 'Email is required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Please enter a valid email address',
+              },
+            }}
           />
 
-          <TextField
+          <TextFieldElement
+            name="password"
+            control={control}
             fullWidth
             label="Password"
             type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
             margin="normal"
-            required
             disabled={isLoading}
-            helperText="Password must be at least 6 characters long"
+            rules={{
+              required: 'Password is required',
+              minLength: {
+                value: 6,
+                message: 'Password must be at least 6 characters long',
+              },
+            }}
           />
 
-          <TextField
+          <TextFieldElement
+            name="confirmPassword"
+            control={control}
             fullWidth
             label="Confirm Password"
             type="password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
             margin="normal"
-            required
             disabled={isLoading}
+            rules={{
+              required: 'Please confirm your password',
+              validate: (value: string) =>
+                value === password || 'Passwords do not match',
+            }}
           />
 
           <Button
@@ -111,7 +140,7 @@ export function WebSignUpPage({
             {isLoading ? <CircularProgress size={24} /> : 'Sign Up'}
           </Button>
 
-          <Box sx={{ textAlign: 'center', mt: 2 }}>
+          <Box sx={{ textAlign: 'center' }}>
             <Typography variant="body2">
               Already have an account?{' '}
               <Link
