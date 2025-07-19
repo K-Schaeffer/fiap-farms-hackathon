@@ -29,12 +29,14 @@
     "@mui/material": "^7.2.0",
     "@mui/material-nextjs": "^7.2.0",
     "@mui/x-charts": "^8.8.0",
-    "@mui/x-date-pickers": "^8.8.0",
-    "@mui/x-data-grid-pro": "^8.8.0",
+    "@mui/x-date-pickers": "^7.29.4",
+    "@mui/x-data-grid": "^8.8.0",
     "@mui/x-tree-view": "^8.8.0",
     "@emotion/cache": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@emotion/server": "^11.11.0"
+    "@emotion/server": "^11.11.0",
+    "react-hook-form": "^7.60.0",
+    "react-hook-form-mui": "^7.6.2"
   },
   "devDependencies": {
     "@fiap-farms/typescript-config": "*",

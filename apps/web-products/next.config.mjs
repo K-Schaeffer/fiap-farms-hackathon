@@ -2,6 +2,12 @@ import { NextFederationPlugin } from '@module-federation/nextjs-mf';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: [
+    '@mui/x-charts',
+    '@mui/x-data-grid',
+    '@mui/x-date-pickers',
+    '@mui/x-tree-view',
+  ],
   webpack: config => {
     config.output.publicPath = '/_next/';
     config.plugins.push(
