@@ -47,7 +47,6 @@ export class FirestoreSaleRepository implements ISaleRepository {
     return {
       _id: docRef.id,
       ...saleData,
-      totalSaleProfit: undefined,
     };
   }
 

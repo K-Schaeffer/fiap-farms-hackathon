@@ -16,7 +16,4 @@ export default defineConfig({
     'firebase/firestore',
     '@react-native-async-storage/async-storage',
   ],
-  banner: {
-    js: '"use client";',
-  },
 });

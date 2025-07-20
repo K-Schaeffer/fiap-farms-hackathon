@@ -10,7 +10,4 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   external: ['firebase/firestore', '@fiap-farms/firebase'],
-  banner: {
-    js: '"use client";',
-  },
 });

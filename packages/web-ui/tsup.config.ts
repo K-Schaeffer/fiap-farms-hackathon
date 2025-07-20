@@ -17,7 +17,4 @@ export default defineConfig({
     /^@mui\/.*/,
     /^@emotion\/.*/,
   ],
-  banner: {
-    js: '"use client";',
-  },
 });
