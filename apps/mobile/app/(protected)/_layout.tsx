@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { useAuth } from '@fiap-farms/auth-store';
 import { View, StyleSheet } from 'react-native';
-import { ActivityIndicator, Text } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 
 export default function ProtectedLayout() {
   const { isAuthenticated, isLoading } = useAuth();
