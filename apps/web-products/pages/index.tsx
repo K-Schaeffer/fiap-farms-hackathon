@@ -1,21 +1,23 @@
-import { Typography } from '@mui/material';
-import { getFirebase } from '@fiap-farms/firebase';
-import { useAuth } from '@fiap-farms/auth-store';
+import { Typography, Container, Box } from '@mui/material';
+import { useProducts } from '../hooks/useProducts';
+import { ProductsTable } from '../components/ProductsTable';
 
 export default function Dashboard() {
-  // Ensure Firebase auth is initialized
-  const firebase = getFirebase();
-
-  console.log('Firebase initialized products:', firebase);
-
-  const { user } = useAuth();
-
-  console.log('Current user context:', user?.email);
-  console.log('Current user firebase:', firebase.auth.currentUser?.email);
+  const { products, loading, error } = useProducts();
 
   return (
-    <div>
-      <Typography variant="h1">Web Products</Typography>
-    </div>
+    <Container maxWidth="lg">
+      <Box sx={{ py: 4 }}>
+        <Typography variant="h1" gutterBottom>
+          Web Products
+        </Typography>
+
+        <Typography variant="h5" color="text.secondary" gutterBottom>
+          Manage your farm products catalog
+        </Typography>
+
+        <ProductsTable products={products} loading={loading} error={error} />
+      </Box>
+    </Container>
   );
 }
