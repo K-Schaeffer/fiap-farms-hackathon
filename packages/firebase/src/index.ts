@@ -71,11 +71,8 @@ const _initializeFirebase = (): FirebaseInstance => {
 export const getFirebase = (): FirebaseInstance => {
   // Initialize with default persistence if not already done
   if (!firebaseInstance) {
-    console.log('Firebase not initialized, calling initializeFirebase');
     return _initializeFirebase();
   }
-
-  console.log('Firebase already initialized, returning instance');
 
   return firebaseInstance;
 };
