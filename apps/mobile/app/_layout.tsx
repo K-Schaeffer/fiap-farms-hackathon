@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import { PaperProvider } from 'react-native-paper';
 import { useAuthListener } from '@fiap-farms/auth-store';
 
@@ -8,7 +8,7 @@ const AppLayout = () => {
 
   return (
     <PaperProvider>
-      <Stack />
+      <Slot />
     </PaperProvider>
   );
 };
