@@ -18,7 +18,6 @@ export default function SignUpPage() {
       setError(null);
       setIsLoading(true);
       await signUp(name, email, password);
-      router.push('/');
     } catch (err) {
       console.error('Sign up error:', err);
       setError('Failed to create account. Please try again.');
