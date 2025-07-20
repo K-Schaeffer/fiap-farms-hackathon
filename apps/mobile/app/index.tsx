@@ -12,7 +12,7 @@ import {
   ActivityIndicator,
 } from 'react-native-paper';
 import { useAuth } from '@fiap-farms/auth-store';
-import MobileMainGrid from '../components/MobileMainGrid';
+import { MobileMainGrid } from '../components/MobileMainGrid';
 
 const theme = {
   ...MD3LightTheme,

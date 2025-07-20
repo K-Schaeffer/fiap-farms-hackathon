@@ -11,7 +11,7 @@ export type MobileStatCardProps = {
   data: number[];
 };
 
-export default function MobileStatCard({
+export function MobileStatCard({
   title,
   value,
   interval,

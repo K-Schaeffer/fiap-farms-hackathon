@@ -78,7 +78,7 @@ const rows = [
   },
 ];
 
-export default function MobileCustomizedDataGrid() {
+export function MobileCustomizedDataGrid() {
   const [page, setPage] = React.useState<number>(0);
   const [numberOfItemsPerPageList] = React.useState([5, 10, 15]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
