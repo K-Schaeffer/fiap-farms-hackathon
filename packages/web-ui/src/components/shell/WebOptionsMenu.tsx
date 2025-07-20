@@ -9,14 +9,14 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import WebMenuButton from './WebMenuButton';
+import { WebMenuButton } from './WebMenuButton';
 import { WebOptionsMenuProps } from './index';
 
 const MenuItem = styled(MuiMenuItem)({
   margin: '2px 0',
 });
 
-export default function WebOptionsMenu({ onLogout }: WebOptionsMenuProps) {
+export function WebOptionsMenu({ onLogout }: WebOptionsMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

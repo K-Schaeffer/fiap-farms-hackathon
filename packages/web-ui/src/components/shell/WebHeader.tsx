@@ -1,10 +1,10 @@
 import Stack from '@mui/material/Stack';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 // import CustomDatePicker from './CustomDatePicker';
-import WebNavbarBreadcrumbs from './WebNavbarBreadcrumbs';
-import WebMenuButton from './WebMenuButton';
+import { WebNavbarBreadcrumbs } from './WebNavbarBreadcrumbs';
+import { WebMenuButton } from './WebMenuButton';
 
-export default function WebHeader() {
+export function WebHeader() {
   return (
     <Stack
       direction="row"

@@ -1,14 +1,14 @@
 import Badge, { badgeClasses } from '@mui/material/Badge';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 
-export interface MenuButtonProps extends IconButtonProps {
+export interface WebMenuButtonProps extends IconButtonProps {
   showBadge?: boolean;
 }
 
-export default function WebMenuButton({
+export function WebMenuButton({
   showBadge = false,
   ...props
-}: MenuButtonProps) {
+}: WebMenuButtonProps) {
   return (
     <Badge
       color="error"

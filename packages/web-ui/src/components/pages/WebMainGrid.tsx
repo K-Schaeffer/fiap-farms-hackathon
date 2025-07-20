@@ -2,12 +2,12 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import WebUserByCountryChart from '../charts/WebUserByCountryChart';
-import WebCustomizedDataGrid from '../grids/WebCustomizedDataGrid';
-import WebHighlightedCard from '../common/WebHighlightedCard';
-import WebPageViewsBarChart from '../charts/WebPageViewsBarChart';
-import WebSessionsChart from '../charts/WebSessionsChart';
-import WebStatCard, { StatCardProps } from '../common/WebStatCard';
+import { WebUserByCountryChart } from '../charts/WebUserByCountryChart';
+import { WebCustomizedDataGrid } from '../grids/WebCustomizedDataGrid';
+import { WebHighlightedCard } from '../common/WebHighlightedCard';
+import { WebPageViewsBarChart } from '../charts/WebPageViewsBarChart';
+import { WebSessionsChart } from '../charts/WebSessionsChart';
+import { WebStatCard, StatCardProps } from '../common/WebStatCard';
 
 const data: StatCardProps[] = [
   {
@@ -43,7 +43,7 @@ const data: StatCardProps[] = [
   },
 ];
 
-export default function WebMainGrid() {
+export function WebMainGrid() {
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       {/* cards */}

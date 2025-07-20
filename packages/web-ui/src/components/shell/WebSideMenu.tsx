@@ -5,8 +5,8 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import WebMenuContent from './WebMenuContent';
-import WebOptionsMenu from './WebOptionsMenu';
+import { WebMenuContent } from './WebMenuContent';
+import { WebOptionsMenu } from './WebOptionsMenu';
 import { WebSideMenuProps } from './index';
 
 const drawerWidth = 240;
@@ -22,7 +22,7 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function WebSideMenu({ user, onLogout }: WebSideMenuProps) {
+export function WebSideMenu({ user, onLogout }: WebSideMenuProps) {
   // Extract user information with fallbacks
   const userName = user?.displayName || user?.email?.split('@')[0] || 'User';
   const userEmail = user?.email || '';

@@ -6,8 +6,8 @@ import MuiToolbar from '@mui/material/Toolbar';
 import { tabsClasses } from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import WebSideMenuMobile from './WebSideMenuMobile';
-import WebMenuButton from './WebMenuButton';
+import { WebSideMenuMobile } from './WebSideMenuMobile';
+import { WebMenuButton } from './WebMenuButton';
 
 const Toolbar = styled(MuiToolbar)({
   width: '100%',
@@ -25,7 +25,7 @@ const Toolbar = styled(MuiToolbar)({
   },
 });
 
-export default function WebAppNavbar() {
+export function WebAppNavbar() {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
