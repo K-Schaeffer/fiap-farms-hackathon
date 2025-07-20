@@ -23,9 +23,25 @@ const nextConfig = {
             singleton: true,
             eager: false,
           },
+          '@fiap-farms/core': {
+            singleton: true,
+            eager: false,
+          },
           '@fiap-farms/auth-store': {
             singleton: true,
             eager: false,
+          },
+          'firebase/app': {
+            singleton: true,
+            requiredVersion: false,
+          },
+          'firebase/firestore': {
+            singleton: true,
+            requiredVersion: false,
+          },
+          'firebase/auth': {
+            singleton: true,
+            requiredVersion: false,
           },
         },
       })

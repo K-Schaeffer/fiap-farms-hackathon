@@ -11,6 +11,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@fiap-farms/core": "*",
     "@fiap-farms/firebase": "*",
     "@fiap-farms/auth-store": "*",
     "expo": "~52.0.47",

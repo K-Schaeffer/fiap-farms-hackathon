@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fiap-farms/web-ui": "*",
+    "@fiap-farms/core": "*",
     "@fiap-farms/firebase": "*",
     "@fiap-farms/auth-store": "*",
     "next": "^14.2.30",
