@@ -12,20 +12,30 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', width: '100%' }}>
       <WebSideMenu user={user} onLogout={signOut} />
-      <WebAppNavbar />
-      <Box component="main">
+      <WebAppNavbar user={user} onLogout={signOut} />
+      <WebHeader />
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          width: { xs: '100%', md: 'calc(100% - 240px)' }, // Account for sidebar width
+          maxWidth: '100%', // Prevent content overflow
+          overflow: 'hidden', // Prevent horizontal overflow
+        }}
+      >
         <Stack
           spacing={2}
           sx={{
             alignItems: 'center',
-            mx: 3,
+            mx: { xs: 1, sm: 2, md: 3 }, // Responsive margin
             pb: 5,
-            mt: { xs: 8, md: 0 },
+            mt: { xs: 8, md: 8 }, // Add top margin for fixed header on desktop
+            maxWidth: '100%', // Ensure stack doesn't overflow
+            overflow: 'hidden', // Prevent overflow
           }}
         >
-          <WebHeader />
           {children}
         </Stack>
       </Box>

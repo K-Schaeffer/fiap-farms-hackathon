@@ -6,8 +6,10 @@ import MuiToolbar from '@mui/material/Toolbar';
 import { tabsClasses } from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import { WebSideMenuMobile } from './WebSideMenuMobile';
 import { WebMenuButton } from './WebMenuButton';
+import { WebSideMenuUser } from './index';
 
 const Toolbar = styled(MuiToolbar)({
   width: '100%',
@@ -25,7 +27,12 @@ const Toolbar = styled(MuiToolbar)({
   },
 });
 
-export function WebAppNavbar() {
+interface WebAppNavbarProps {
+  user?: WebSideMenuUser | null;
+  onLogout?: () => Promise<void>;
+}
+
+export function WebAppNavbar({ user, onLogout }: WebAppNavbarProps) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -55,10 +62,13 @@ export function WebAppNavbar() {
             gap: 1,
           }}
         >
+          <WebMenuButton aria-label="menu" onClick={toggleDrawer(true)}>
+            <MenuRoundedIcon />
+          </WebMenuButton>
           <Stack
             direction="row"
             spacing={1}
-            sx={{ justifyContent: 'center', mr: 'auto' }}
+            sx={{ justifyContent: 'center', flexGrow: 1 }}
           >
             <Typography
               variant="h4"
@@ -68,10 +78,15 @@ export function WebAppNavbar() {
               Dashboard
             </Typography>
           </Stack>
-          <WebMenuButton aria-label="menu" onClick={toggleDrawer(true)}>
-            <MenuRoundedIcon />
+          <WebMenuButton showBadge aria-label="Open notifications">
+            <NotificationsRoundedIcon />
           </WebMenuButton>
-          <WebSideMenuMobile open={open} toggleDrawer={toggleDrawer} />
+          <WebSideMenuMobile
+            open={open}
+            toggleDrawer={toggleDrawer}
+            user={user}
+            onLogout={onLogout}
+          />
         </Stack>
       </Toolbar>
     </AppBar>
