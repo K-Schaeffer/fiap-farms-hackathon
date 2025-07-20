@@ -1,0 +1,8 @@
+{
+  "extends": "@fiap-farms/typescript-config/base",
+  "include": ["src"],
+  "exclude": ["dist", "build", "node_modules"],
+  "compilerOptions": {
+    "strict": true
+  }
+}
