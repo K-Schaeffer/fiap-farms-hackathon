@@ -5,19 +5,54 @@ import Drawer, { drawerClasses } from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
-import { WebMenuButton } from './WebMenuButton';
 import { WebMenuContent } from './WebMenuContent';
+import { WebSideMenuUser } from './index';
 
 interface SideMenuMobileProps {
   open: boolean | undefined;
   toggleDrawer: (newOpen: boolean) => () => void;
+  user?: WebSideMenuUser | null;
+  onLogout?: () => Promise<void>;
 }
 
-export function WebSideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
+export function WebSideMenuMobile({
+  open,
+  toggleDrawer,
+  user,
+  onLogout,
+}: SideMenuMobileProps) {
+  // Extract user information with fallbacks
+  const userName = user?.displayName || user?.email?.split('@')[0] || 'User';
+  const userEmail = user?.email || '';
+  const userAvatarUrl = user?.photoURL;
+
+  // Generate avatar initials from display name or email
+  const getAvatarInitials = () => {
+    if (user?.displayName) {
+      const names = user.displayName.split(' ');
+      return names.length > 1
+        ? `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase()
+        : names[0][0].toUpperCase();
+    }
+    if (user?.email) {
+      return user.email[0].toUpperCase();
+    }
+    return 'U';
+  };
+
+  const handleLogout = async () => {
+    if (onLogout) {
+      try {
+        await onLogout();
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    }
+  };
+
   return (
     <Drawer
-      anchor="right"
+      anchor="left"
       open={open}
       onClose={toggleDrawer(false)}
       sx={{
@@ -41,17 +76,27 @@ export function WebSideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
           >
             <Avatar
               sizes="small"
-              alt="Riley Carter"
-              src="/static/images/avatar/7.jpg"
+              alt={userName}
+              src={userAvatarUrl || undefined}
               sx={{ width: 24, height: 24 }}
-            />
-            <Typography component="p" variant="h6">
-              Riley Carter
-            </Typography>
+            >
+              {!userAvatarUrl && getAvatarInitials()}
+            </Avatar>
+            <Stack>
+              <Typography
+                component="p"
+                variant="h6"
+                sx={{ lineHeight: '20px' }}
+              >
+                {userName}
+              </Typography>
+              {userEmail && (
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                  {userEmail}
+                </Typography>
+              )}
+            </Stack>
           </Stack>
-          <WebMenuButton showBadge>
-            <NotificationsRoundedIcon />
-          </WebMenuButton>
         </Stack>
         <Divider />
         <Stack sx={{ flexGrow: 1 }}>
@@ -63,6 +108,7 @@ export function WebSideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
             variant="outlined"
             fullWidth
             startIcon={<LogoutRoundedIcon />}
+            onClick={handleLogout}
           >
             Logout
           </Button>
