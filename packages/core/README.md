@@ -31,7 +31,7 @@ Infrastructure → Application → Domain
 ```
 
 - **Infrastructure** can import from Application and Domain
-- **Application** can import from Domain only  
+- **Application** can import from Domain only
 - **Domain** imports nothing from other layers (pure business logic)
 
 This ensures that core business logic remains independent of frameworks, databases, and UI concerns.
@@ -58,7 +58,7 @@ interface Product {
 }
 ```
 
-*Note: Products are global entities and don't have owners*
+_Note: Products are global entities and don't have owners_
 
 ### ProductionItem
 
@@ -76,6 +76,7 @@ interface ProductionItem {
   updatedAt: Date;
 }
 ```
+
 ### InventoryItem
 
 ```typescript
@@ -90,7 +91,7 @@ interface InventoryItem {
 }
 ```
 
-*Note: Inventory is read-only from frontend. Updates are handled by backend functions*
+_Note: Inventory is read-only from frontend. Updates are handled by backend functions_
 
 ### Sale
 
@@ -121,18 +122,22 @@ The application layer contains use cases that orchestrate business workflows usi
 ### Currently Implemented Use Cases
 
 #### Production Management
+
 - **StartNewProductionUseCase** - Create new production items
 - **HarvestProductionItemUseCase** - Mark production as harvested with yield
 - **GetProductionOverviewUseCase** - Get production dashboard data
 
-#### Sales Management  
+#### Sales Management
+
 - **RegisterSaleUseCase** - Register new sales with inventory validation
 - **GetSalesDashboardDataUseCase** - Get sales analytics and dashboard data
 
 #### Inventory Management
+
 - **GetInventoryOverviewUseCase** - Get current inventory status
 
 #### Product Management
+
 - **GetProductsUseCase** - Retrieve available products
 
 ### Example Usage Flow
@@ -220,7 +225,7 @@ All repository interfaces are implemented for Firestore in the infrastructure la
 ### Available Repository Implementations
 
 - **FirestoreProductRepository** - Full CRUD operations for products (global, no owners)
-- **FirestoreProductionRepository** - Full CRUD operations for production items (owner-specific)  
+- **FirestoreProductionRepository** - Full CRUD operations for production items (owner-specific)
 - **FirestoreInventoryRepository** - **Read-only** operations (updates handled by backend)
 - **FirestoreSaleRepository** - Full CRUD operations for sales (owner-specific)
 
@@ -417,7 +422,7 @@ export * from './infrastructure/repositories/firestore/FirestoreSaleRepository';
 
 1. **Testability**: Easy to mock dependencies and test business logic in isolation
 2. **Framework Independence**: Business logic doesn't depend on React, React Native, Firebase, etc.
-3. **Database Flexibility**: Can swap Firestore for another database without changing business logic  
+3. **Database Flexibility**: Can swap Firestore for another database without changing business logic
 4. **Maintainability**: Clear boundaries mean changes in one layer don't affect others
 5. **Scalability**: Well-organized structure supports growth and feature additions
 6. **Team Productivity**: Different team members can work on different layers independently

@@ -158,7 +158,7 @@ export function MobileProductsTable({
             />
           </DataTable>
         </ScrollView>
-        
+
         <View style={styles.summary}>
           <Text variant="bodySmall" style={styles.summaryText}>
             Total: {products.length} product{products.length !== 1 ? 's' : ''}
