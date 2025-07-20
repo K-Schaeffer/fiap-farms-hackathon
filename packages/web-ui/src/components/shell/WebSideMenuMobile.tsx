@@ -6,18 +6,15 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
-import MenuButton from './WebMenuButton';
-import MenuContent from './WebMenuContent';
+import { WebMenuButton } from './WebMenuButton';
+import { WebMenuContent } from './WebMenuContent';
 
 interface SideMenuMobileProps {
   open: boolean | undefined;
   toggleDrawer: (newOpen: boolean) => () => void;
 }
 
-export default function WebSideMenuMobile({
-  open,
-  toggleDrawer,
-}: SideMenuMobileProps) {
+export function WebSideMenuMobile({ open, toggleDrawer }: SideMenuMobileProps) {
   return (
     <Drawer
       anchor="right"
@@ -52,13 +49,13 @@ export default function WebSideMenuMobile({
               Riley Carter
             </Typography>
           </Stack>
-          <MenuButton showBadge>
+          <WebMenuButton showBadge>
             <NotificationsRoundedIcon />
-          </MenuButton>
+          </WebMenuButton>
         </Stack>
         <Divider />
         <Stack sx={{ flexGrow: 1 }}>
-          <MenuContent />
+          <WebMenuContent />
           <Divider />
         </Stack>
         <Stack sx={{ p: 2 }}>

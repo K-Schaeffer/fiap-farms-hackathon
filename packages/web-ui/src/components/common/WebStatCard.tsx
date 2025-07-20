@@ -42,7 +42,7 @@ function AreaGradient({ color, id }: { color: string; id: string }) {
   );
 }
 
-export default function WebStatCard({
+export function WebStatCard({
   title,
   value,
   interval,

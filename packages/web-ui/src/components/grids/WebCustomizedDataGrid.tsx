@@ -1,7 +1,7 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { columns, rows } from './WebGridData';
 
-export default function WebCustomizedDataGrid() {
+export function WebCustomizedDataGrid() {
   return (
     <DataGrid
       checkboxSelection

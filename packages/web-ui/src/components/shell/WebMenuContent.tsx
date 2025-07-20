@@ -16,7 +16,7 @@ const mainListItems = [
   { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
 ];
 
-export default function WebMenuContent() {
+export function WebMenuContent() {
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
