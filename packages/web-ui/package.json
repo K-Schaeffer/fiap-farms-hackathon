@@ -35,7 +35,9 @@
     "@emotion/styled": "^11.14.1",
     "@emotion/server": "^11.11.0",
     "react-hook-form": "^7.60.0",
-    "react-hook-form-mui": "^7.6.2"
+    "react-hook-form-mui": "^7.6.2",
+    "@hello-pangea/dnd": "^18.0.1",
+    "dayjs": "^1.11.13"
   },
   "devDependencies": {
     "@fiap-farms/typescript-config": "*",
