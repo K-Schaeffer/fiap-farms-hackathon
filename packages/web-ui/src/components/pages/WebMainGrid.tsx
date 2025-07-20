@@ -45,7 +45,18 @@ const data: StatCardProps[] = [
 
 export function WebMainGrid() {
   return (
-    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
+    <Box
+      sx={{
+        width: '100%',
+        maxWidth: {
+          xs: '100%', // Full width on mobile
+          sm: '100%', // Full width on small tablets
+          md: '100%', // Full width on medium screens
+          lg: '1400px', // Limited width on large screens
+          xl: '1700px', // Maximum width on extra large screens
+        },
+      }}
+    >
       {/* cards */}
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
         Overview
