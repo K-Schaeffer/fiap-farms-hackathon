@@ -28,7 +28,6 @@ export default function LoginScreen() {
       clearError(); // Clear any previous auth store errors
       setIsLoading(true);
       await signIn(email, password);
-      router.replace('/(protected)/');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError('Invalid email or password');
