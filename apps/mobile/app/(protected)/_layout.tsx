@@ -22,7 +22,6 @@ export default function ProtectedLayout() {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" />
-        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }

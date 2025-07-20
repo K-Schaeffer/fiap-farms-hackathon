@@ -32,7 +32,6 @@ export default function SignUpScreen() {
       clearError(); // Clear any previous auth store errors
       setIsLoading(true);
       await signUp(name, email, password);
-      router.replace('/(protected)/');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError('Failed to create account. Please try again.');
