@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
-import StatCard, { StatCardProps } from './StatCard';
-import CustomizedDataGrid from './CustomizedDataGrid';
-import SessionsChart from './SessionsChart';
-import PageViewsBarChart from './PageViewsBarChart';
-import UserByCountryChart from './UserByCountryChart';
+import MobileStatCard, { MobileStatCardProps } from './MobileStatCard';
+import MobileCustomizedDataGrid from './MobileCustomizedDataGrid';
+import MobileSessionsChart from './MobileSessionsChart';
+import MobilePageViewsBarChart from './MobilePageViewsBarChart';
+import MobileUserByCountryChart from './MobileUserByCountryChart';
 
-const data: StatCardProps[] = [
+const data: MobileStatCardProps[] = [
   {
     title: 'Users',
     value: '14k',
@@ -41,7 +41,7 @@ const data: StatCardProps[] = [
   },
 ];
 
-export default function MainGrid() {
+export default function MobileMainGrid() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text variant="titleLarge" style={styles.sectionTitle}>
@@ -51,20 +51,20 @@ export default function MainGrid() {
       <View style={styles.statsGrid}>
         {data.map((card, index) => (
           <View key={index} style={styles.statCard}>
-            <StatCard {...card} />
+            <MobileStatCard {...card} />
           </View>
         ))}
       </View>
 
       <View style={styles.chartsSection}>
         <View style={styles.chartCard}>
-          <SessionsChart />
+          <MobileSessionsChart />
         </View>
         <View style={styles.chartCard}>
-          <PageViewsBarChart />
+          <MobilePageViewsBarChart />
         </View>
         <View style={styles.sideSection}>
-          <UserByCountryChart />
+          <MobileUserByCountryChart />
         </View>
       </View>
 
@@ -74,7 +74,7 @@ export default function MainGrid() {
 
       <View style={styles.detailsGrid}>
         <View style={styles.dataGridSection}>
-          <CustomizedDataGrid />
+          <MobileCustomizedDataGrid />
         </View>
       </View>
     </ScrollView>
