@@ -18,7 +18,7 @@ function getDaysInMonth(month: number, year: number) {
   return days;
 }
 
-export default function MobileSessionsChart() {
+export function MobileSessionsChart() {
   const xAxisLabels = getDaysInMonth(4, 2024);
 
   // Data for the three series (Direct, Referral, Organic)

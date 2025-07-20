@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Card, Text, Chip } from 'react-native-paper';
 import { BarChart } from 'react-native-gifted-charts';
 
-export default function MobilePageViewsBarChart() {
+export function MobilePageViewsBarChart() {
   const barData = [
     {
       value: 2234 + 3098 + 4051,

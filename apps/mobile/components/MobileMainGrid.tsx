@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
-import MobileStatCard, { MobileStatCardProps } from './MobileStatCard';
-import MobileCustomizedDataGrid from './MobileCustomizedDataGrid';
-import MobileSessionsChart from './MobileSessionsChart';
-import MobilePageViewsBarChart from './MobilePageViewsBarChart';
-import MobileUserByCountryChart from './MobileUserByCountryChart';
+import { MobileStatCard, MobileStatCardProps } from './MobileStatCard';
+import { MobileCustomizedDataGrid } from './MobileCustomizedDataGrid';
+import { MobileSessionsChart } from './MobileSessionsChart';
+import { MobilePageViewsBarChart } from './MobilePageViewsBarChart';
+import { MobileUserByCountryChart } from './MobileUserByCountryChart';
 
 const data: MobileStatCardProps[] = [
   {
@@ -41,7 +41,7 @@ const data: MobileStatCardProps[] = [
   },
 ];
 
-export default function MobileMainGrid() {
+export function MobileMainGrid() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text variant="titleLarge" style={styles.sectionTitle}>
