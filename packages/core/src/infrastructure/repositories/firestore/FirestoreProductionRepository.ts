@@ -36,10 +36,10 @@ export class FirestoreProductionRepository implements IProductionRepository {
       productId: data.productId,
       ownerId: data.ownerId,
       status: data.status,
-      plantedDate: data.plantedDate?.toDate() || new Date(),
-      expectedHarvestDate: data.expectedHarvestDate?.toDate() || new Date(),
+      plantedDate: data.plantedDate?.toDate(),
+      expectedHarvestDate: data.expectedHarvestDate?.toDate(),
       harvestedDate: data.harvestedDate?.toDate(),
-      updatedAt: data.harvestedDate?.toDate(),
+      updatedAt: data.updatedAt?.toDate(),
       yield: data.yield,
       location: data.location,
     };

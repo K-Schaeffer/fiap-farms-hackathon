@@ -16,7 +16,4 @@ export default defineConfig({
     'zustand/middleware',
     'react',
   ],
-  banner: {
-    js: '"use client";',
-  },
 });

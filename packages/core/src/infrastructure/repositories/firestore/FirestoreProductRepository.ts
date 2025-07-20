@@ -30,7 +30,7 @@ export class FirestoreProductRepository implements IProductRepository {
   }
 
   async findById(productId: string): Promise<Product | null> {
-    const docRef = doc(this.db, 'products', productId);
+    const docRef = doc(this.collectionRef, productId);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
