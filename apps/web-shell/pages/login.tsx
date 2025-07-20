@@ -14,7 +14,6 @@ export default function LoginPage() {
       setError(null);
       setIsLoading(true);
       await signIn(email, password);
-      router.push('/');
     } catch (err) {
       console.error('Login error:', err);
       setError('Invalid email or password');
