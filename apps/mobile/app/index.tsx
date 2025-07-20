@@ -12,13 +12,13 @@ import {
   ActivityIndicator,
 } from 'react-native-paper';
 import { useAuth } from '@fiap-farms/auth-store';
-import MainGrid from '../components/MainGrid';
+import MobileMainGrid from '../components/MobileMainGrid';
 
 const theme = {
   ...MD3LightTheme,
 };
 
-export default function Native() {
+export default function Homepage() {
   // Get auth state and actions from the store
   const { isLoading, isAuthenticated, error, signIn, clearError, signOut } =
     useAuth();
@@ -76,7 +76,7 @@ export default function Native() {
                 Logout
               </Button>
             </View>
-            <MainGrid />
+            <MobileMainGrid />
           </View>
           <StatusBar style="auto" />
         </SafeAreaView>
