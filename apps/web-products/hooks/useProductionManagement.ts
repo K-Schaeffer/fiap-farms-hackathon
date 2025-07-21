@@ -22,21 +22,7 @@ export function useProductionManagement() {
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
 
-  if (!user) {
-    return {
-      products: [],
-      productionItems: [],
-      loading: false,
-      error: 'User not authenticated',
-      startProductionWithForm: () => Promise.reject('User not authenticated'),
-      updateStatus: () => Promise.reject('User not authenticated'),
-      harvestItemWithForm: () => Promise.reject('User not authenticated'),
-      reorderItems: () => Promise.reject('User not authenticated'),
-      refreshData: () => Promise.resolve(),
-    };
-  }
-
-  const OWNER_ID = user.uid;
+  const OWNER_ID = user?.uid || 'no-owner-something-went-wrong';
 
   // Initialize repositories and use cases
   const getRepositories = () => {
