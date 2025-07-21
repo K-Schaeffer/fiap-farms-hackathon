@@ -45,7 +45,6 @@ function AppLayout({ children }: { children: React.ReactNode }) {
         <Stack
           spacing={2}
           sx={{
-            alignItems: 'center',
             mx: { xs: 1, sm: 2, md: 3 }, // Responsive margin
             pb: 5,
             mt: { xs: 8, md: 8 }, // Add top margin for fixed header on desktop

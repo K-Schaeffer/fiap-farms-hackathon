@@ -1,35 +1,27 @@
-import { Container, Paper, Typography, Box, Button } from '@mui/material';
-import Link from 'next/link';
+import { Box, Paper, Typography } from '@mui/material';
 import { useAuth } from '@fiap-farms/auth-store';
 
 export default function Web() {
-  // Get auth state from the store
   const { user } = useAuth();
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
-        <Typography
-          variant="h4"
-          component="h1"
-          gutterBottom
-          color="success.main"
-        >
-          Welcome, {user?.email}! You&apos;re logged in.
-        </Typography>
-        <Box sx={{ mt: 3, display: 'flex', gap: 2, justifyContent: 'center' }}>
-          <Link href="/sales" passHref>
-            <Button variant="contained" color="primary">
-              Go to Sales
-            </Button>
-          </Link>
-          <Link href="/products" passHref>
-            <Button variant="contained" color="secondary">
-              Go to Products
-            </Button>
-          </Link>
-        </Box>
-      </Paper>
-    </Container>
+    <Box
+      sx={{
+        width: '100%',
+        minHeight: '100vh',
+        px: { xs: 1, sm: 2, md: 3 },
+        py: { xs: 2, sm: 3, md: 4 },
+      }}
+    >
+      <Typography variant="h4" component="h1" gutterBottom color="info">
+        Hi, {user?.displayName}
+      </Typography>
+      <Typography variant="h6" color="textPrimary" gutterBottom>
+        Welcome to the FIAP Farms!
+      </Typography>
+      <Typography variant="body1" color="textSecondary">
+        You&apos;re logged in. Use the navigation menu to explore the app.
+      </Typography>
+    </Box>
   );
 }
