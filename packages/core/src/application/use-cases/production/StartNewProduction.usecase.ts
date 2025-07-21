@@ -6,6 +6,8 @@ export class StartNewProductionUseCase {
 
   async execute(data: {
     productId: string;
+    productName: string;
+    productUnit: 'kg' | 'unity' | 'box';
     ownerId: string;
     location: string;
     expectedHarvestDate: Date;

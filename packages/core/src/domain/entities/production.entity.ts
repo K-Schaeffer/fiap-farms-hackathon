@@ -3,6 +3,8 @@ export type ProductionStatus = 'planted' | 'in_production' | 'harvested';
 export interface ProductionItem {
   _id: string;
   productId: string;
+  productName: string;
+  productUnit: 'kg' | 'unity' | 'box';
   ownerId: string;
   status: ProductionStatus;
   plantedDate: Date;
