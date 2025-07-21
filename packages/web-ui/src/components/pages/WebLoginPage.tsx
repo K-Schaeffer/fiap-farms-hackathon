@@ -41,8 +41,16 @@ export function WebLoginPage({
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
+    <Box
+      sx={{
+        height: '100vh',
+        widtht: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Paper elevation={3} sx={{ p: 4, maxWidth: 600 }}>
         <Typography variant="h4" component="h1" gutterBottom align="center">
           Login
         </Typography>
@@ -109,6 +117,6 @@ export function WebLoginPage({
           </Box>
         </Box>
       </Paper>
-    </Container>
+    </Box>
   );
 }
