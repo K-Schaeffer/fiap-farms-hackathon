@@ -4,7 +4,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { WebUserByCountryChart } from '../charts/WebUserByCountryChart';
 import { WebCustomizedDataGrid } from '../grids/WebCustomizedDataGrid';
-import { WebHighlightedCard } from '../common/WebHighlightedCard';
 import { WebPageViewsBarChart } from '../charts/WebPageViewsBarChart';
 import { WebSessionsChart } from '../charts/WebSessionsChart';
 import { WebStatCard, StatCardProps } from '../common/WebStatCard';
@@ -72,9 +71,6 @@ export function WebMainGrid() {
             <WebStatCard {...card} />
           </Grid>
         ))}
-        <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-          <WebHighlightedCard />
-        </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <WebSessionsChart />
         </Grid>

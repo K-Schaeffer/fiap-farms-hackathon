@@ -1,13 +1,7 @@
-import {
-  Card,
-  CardContent,
-  Typography,
-  Chip,
-  Box,
-  Divider,
-} from '@mui/material';
+import { Card, CardContent, Typography, Box, Divider } from '@mui/material';
+import { WebProductionStatusChip } from '../common/WebProductionStatusChip';
 
-export interface ProductionCardData {
+export interface WebProductionCardData {
   id: string;
   productId: string;
   productName: string;
@@ -17,37 +11,12 @@ export interface ProductionCardData {
   expectedHarvestDate: string;
   harvestedDate?: string;
   yield?: number;
+  unit: string;
 }
 
-export interface ProductionCardProps {
-  productionItem: ProductionCardData;
+export interface WebProductionCardProps {
+  productionItem: WebProductionCardData;
 }
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'planted':
-      return 'success';
-    case 'in_production':
-      return 'warning';
-    case 'harvested':
-      return 'info';
-    default:
-      return 'default';
-  }
-};
-
-const getStatusLabel = (status: string) => {
-  switch (status) {
-    case 'planted':
-      return 'Planted';
-    case 'in_production':
-      return 'In Production';
-    case 'harvested':
-      return 'Harvested';
-    default:
-      return status;
-  }
-};
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString('en-US', {
@@ -57,7 +26,7 @@ const formatDate = (dateString: string) => {
   });
 };
 
-export function ProductionCard({ productionItem }: ProductionCardProps) {
+export function WebProductionCard({ productionItem }: WebProductionCardProps) {
   const isOverdue =
     productionItem.status !== 'harvested' &&
     new Date(productionItem.expectedHarvestDate) < new Date();
@@ -105,13 +74,11 @@ export function ProductionCard({ productionItem }: ProductionCardProps) {
           >
             Production #{productionItem.id.slice(-6)}
           </Typography>
-          <Chip
-            label={getStatusLabel(productionItem.status)}
-            color={getStatusColor(productionItem.status)}
-            size="small"
+          <WebProductionStatusChip
+            status={productionItem.status}
             sx={{
-              fontSize: { xs: '0.7rem', sm: '0.75rem' }, // Standardized with AvailableProductCard
-              height: { xs: 18, sm: 22 }, // Consistent height
+              fontSize: { xs: '0.7rem', sm: '0.75rem' },
+              height: { xs: 18, sm: 22 },
             }}
           />
         </Box>
@@ -189,7 +156,9 @@ export function ProductionCard({ productionItem }: ProductionCardProps) {
                 fontWeight: 600, // Make yield bold like price
               }}
             >
-              <strong>Yield: {productionItem.yield} units</strong>
+              <strong>
+                Yield: {productionItem.yield} units ({productionItem.unit})
+              </strong>
             </Typography>
           )}
         </Box>

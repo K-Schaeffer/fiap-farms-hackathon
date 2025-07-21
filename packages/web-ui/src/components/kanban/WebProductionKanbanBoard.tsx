@@ -7,19 +7,19 @@ import {
   DropResult,
   DragStart,
 } from '@hello-pangea/dnd';
-import { ProductionCard, ProductionCardData } from './ProductionCard';
-import { AvailableProductCard, ProductData } from './AvailableProductCard';
+import { WebProductionCard, WebProductionCardData } from './WebProductionCard';
+import { WebAvailableProductCard, WebProductData } from './WebAvailableProductCard';
 
 export interface KanbanColumn {
   id: string;
   title: string;
-  items: (ProductData | ProductionCardData)[];
+  items: (WebProductData | WebProductionCardData)[];
   color: string;
 }
 
-export interface ProductionKanbanBoardProps {
-  availableProducts: ProductData[];
-  productionItems: ProductionCardData[];
+export interface WebProductionKanbanBoardProps {
+  availableProducts: WebProductData[];
+  productionItems: WebProductionCardData[];
   onDragEnd: (result: DropResult) => void;
   isDragDisabled?: boolean;
 }
@@ -31,11 +31,11 @@ const COLUMN_DEFINITIONS = [
   { id: 'harvested', title: 'Harvested', color: '#e3f2fd' },
 ];
 
-export function ProductionKanbanBoard({
+export function WebProductionKanbanBoard({
   availableProducts,
   productionItems,
   onDragEnd,
-}: ProductionKanbanBoardProps) {
+}: WebProductionKanbanBoardProps) {
   const theme = useTheme();
 
   // Track current drag state
@@ -82,13 +82,13 @@ export function ProductionKanbanBoard({
 
   const columns = organizeItemsByStatus();
 
-  const getItemId = (item: ProductData | ProductionCardData) => {
+  const getItemId = (item: WebProductData | WebProductionCardData) => {
     return 'productId' in item ? item.id : item.id;
   };
 
   const isProductionItem = (
-    item: ProductData | ProductionCardData
-  ): item is ProductionCardData => {
+    item: WebProductData | WebProductionCardData
+  ): item is WebProductionCardData => {
     return 'status' in item;
   };
 
@@ -328,9 +328,9 @@ export function ProductionKanbanBoard({
                                 }}
                               >
                                 {isProductionItem(item) ? (
-                                  <ProductionCard productionItem={item} />
+                                  <WebProductionCard productionItem={item} />
                                 ) : (
-                                  <AvailableProductCard product={item} />
+                                  <WebAvailableProductCard product={item} />
                                 )}
                               </Box>
                             )}
@@ -349,3 +349,14 @@ export function ProductionKanbanBoard({
     </Box>
   );
 }
+
+export { WebProductionCard } from './WebProductionCard';
+export { WebAvailableProductCard } from './WebAvailableProductCard';
+export type {
+  WebProductionCardProps,
+  WebProductionCardData,
+} from './WebProductionCard';
+export type {
+  WebAvailableProductCardProps,
+  WebProductData,
+} from './WebAvailableProductCard';

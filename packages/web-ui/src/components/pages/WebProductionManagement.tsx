@@ -2,9 +2,9 @@ import { Box } from '@mui/material';
 import { useState } from 'react';
 import { DropResult } from '@hello-pangea/dnd';
 import {
-  ProductionKanbanBoard,
-  ProductData,
-  ProductionCardData,
+  WebProductionKanbanBoard,
+  WebProductionCardData,
+  WebProductData,
 } from '../kanban';
 import {
   PlantingModal,
@@ -13,9 +13,9 @@ import {
   HarvestFormData,
 } from '../modals';
 
-export interface ProductionManagementPageProps {
-  products: ProductData[];
-  productionItems: ProductionCardData[];
+export interface WebProductionManagementProps {
+  products: WebProductData[];
+  productionItems: WebProductionCardData[];
   onStartProductionWithForm: (
     productId: string,
     data: PlantingFormData
@@ -35,17 +35,17 @@ export interface ProductionManagementPageProps {
   ) => Promise<void>;
 }
 
-export function ProductionManagementPage({
+export function WebProductionManagement({
   products,
   productionItems,
   onStartProductionWithForm,
   onUpdateStatus,
   onHarvestItemWithForm,
   onReorderItems,
-}: ProductionManagementPageProps) {
+}: WebProductionManagementProps) {
   const [plantingModal, setPlantingModal] = useState<{
     open: boolean;
-    product: ProductData | null;
+    product: WebProductData | null;
   }>({
     open: false,
     product: null,
@@ -53,7 +53,7 @@ export function ProductionManagementPage({
 
   const [harvestModal, setHarvestModal] = useState<{
     open: boolean;
-    item: ProductionCardData | null;
+    item: WebProductionCardData | null;
   }>({
     open: false,
     item: null,
@@ -171,7 +171,7 @@ export function ProductionManagementPage({
 
   return (
     <Box>
-      <ProductionKanbanBoard
+      <WebProductionKanbanBoard
         availableProducts={products}
         productionItems={productionItems}
         onDragEnd={handleDragEnd}
