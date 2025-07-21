@@ -44,6 +44,8 @@ export * from './application/use-cases/production/StartNewProduction.usecase';
 export * from './application/use-cases/production/HarvestProductionItem.usecase';
 export * from './application/use-cases/production/GetProductionOverview.usecase';
 export * from './application/use-cases/production/UpdateProductionStatus.usecase';
+export * from './application/use-cases/production/GetProductionDistribution.usecase';
+export * from './application/use-cases/production/GetProductionTrend.usecase';
 
 export * from './application/use-cases/sales/RegisterSale.usecase';
 export * from './application/use-cases/sales/GetSalesDashboardData.usecase';

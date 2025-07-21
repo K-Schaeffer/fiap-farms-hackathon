@@ -34,6 +34,8 @@ export class FirestoreProductionRepository implements IProductionRepository {
     return {
       _id: id,
       productId: data.productId,
+      productName: data.productName,
+      productUnit: data.productUnit,
       ownerId: data.ownerId,
       status: data.status,
       plantedDate: data.plantedDate?.toDate(),

@@ -9,7 +9,7 @@ export class GetProductionOverviewUseCase {
     plantedItems: ProductionItem[];
     inProductionItems: ProductionItem[];
     harvestedItems: ProductionItem[];
-    readyToHarvest: ProductionItem[];
+    harvestOverdue: ProductionItem[];
   }> {
     const allProductions = await this.productionRepo.findByOwner(ownerId);
 
@@ -25,7 +25,7 @@ export class GetProductionOverviewUseCase {
 
     // Items that are past their expected harvest date but not yet harvested
     const now = new Date();
-    const readyToHarvest = allProductions.filter(
+    const harvestOverdue = allProductions.filter(
       item => item.status !== 'harvested' && item.expectedHarvestDate <= now
     );
 
@@ -34,7 +34,7 @@ export class GetProductionOverviewUseCase {
       plantedItems,
       inProductionItems,
       harvestedItems,
-      readyToHarvest,
+      harvestOverdue,
     };
   }
 }
