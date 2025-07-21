@@ -8,7 +8,10 @@ import {
   DragStart,
 } from '@hello-pangea/dnd';
 import { WebProductionCard, WebProductionCardData } from './WebProductionCard';
-import { WebAvailableProductCard, WebProductData } from './WebAvailableProductCard';
+import {
+  WebAvailableProductCard,
+  WebProductData,
+} from './WebAvailableProductCard';
 
 export interface KanbanColumn {
   id: string;

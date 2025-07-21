@@ -34,14 +34,15 @@ export const PRODUCTION_VALIDATION_ERROR_TYPES = {
   SKIP_PHASE: 'PRODUCTION_SKIP_PHASE',
 } as const;
 
-export type ProductionValidationErrorType = typeof PRODUCTION_VALIDATION_ERROR_TYPES[keyof typeof PRODUCTION_VALIDATION_ERROR_TYPES];
+export type ProductionValidationErrorType =
+  (typeof PRODUCTION_VALIDATION_ERROR_TYPES)[keyof typeof PRODUCTION_VALIDATION_ERROR_TYPES];
 
 /**
  * Custom error class for production validation errors
  */
 export class ProductionValidationError extends Error {
   constructor(
-    message: string, 
+    message: string,
     public readonly type: ProductionValidationErrorType
   ) {
     super(message);
@@ -51,7 +52,9 @@ export class ProductionValidationError extends Error {
   /**
    * Type guard to check if an error is a production validation error
    */
-  static isProductionValidationError(error: unknown): error is ProductionValidationError {
+  static isProductionValidationError(
+    error: unknown
+  ): error is ProductionValidationError {
     return error instanceof ProductionValidationError;
   }
 }
@@ -77,11 +80,11 @@ export class ProductionStatusValidator {
     }
 
     const allowedTransitions = VALID_STATUS_TRANSITIONS[currentStatus];
-    
+
     if (!allowedTransitions.includes(newStatus)) {
       throw new ProductionValidationError(
         `Invalid status transition from '${currentStatus}' to '${newStatus}'. ` +
-        `Valid transitions: ${this.getValidTransitionsDescription(currentStatus)}`,
+          `Valid transitions: ${this.getValidTransitionsDescription(currentStatus)}`,
         PRODUCTION_VALIDATION_ERROR_TYPES.INVALID_TRANSITION
       );
     }
@@ -117,7 +120,9 @@ export class ProductionStatusValidator {
   /**
    * Gets a human-readable description of valid transitions for a given status
    */
-  private static getValidTransitionsDescription(status: ProductionStatus): string {
+  private static getValidTransitionsDescription(
+    status: ProductionStatus
+  ): string {
     const transitions = VALID_STATUS_TRANSITIONS[status];
     if (transitions.length === 0) {
       return 'none (terminal state)';
@@ -128,7 +133,9 @@ export class ProductionStatusValidator {
   /**
    * Gets all valid next statuses for a given current status
    */
-  static getValidNextStatuses(currentStatus: ProductionStatus): ProductionStatus[] {
+  static getValidNextStatuses(
+    currentStatus: ProductionStatus
+  ): ProductionStatus[] {
     return [...VALID_STATUS_TRANSITIONS[currentStatus]];
   }
 }
