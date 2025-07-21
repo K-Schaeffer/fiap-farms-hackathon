@@ -5,8 +5,11 @@ import {
   transformProductsToUI,
   transformProductionItemsToUI,
 } from '../utils/transformers';
+import { useAuth } from '@fiap-farms/auth-store';
 
 export default function Management() {
+  const { user } = useAuth();
+
   const {
     products,
     productionItems,
@@ -17,6 +20,25 @@ export default function Management() {
     harvestItemWithForm,
     reorderItems,
   } = useProductionManagement();
+
+  if (!user) {
+    return (
+      <Box
+        sx={{
+          width: '100%',
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          px: 2,
+        }}
+      >
+        <Typography variant="h6" color="textSecondary">
+          Please log in to manage your products.
+        </Typography>
+      </Box>
+    );
+  }
 
   if (loading) {
     return (
