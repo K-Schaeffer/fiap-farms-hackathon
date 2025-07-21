@@ -1,9 +1,9 @@
 import dynamic from 'next/dynamic';
 
-const SalesApp = dynamic(() => import('salesApp/Index'), {
+const SalesAppDashboard = dynamic(() => import('salesApp/Dashboard'), {
   ssr: false,
 });
 
-export default function ShellView() {
-  return <SalesApp />;
+export default function SalesDashboardPage() {
+  return <SalesAppDashboard />;
 }

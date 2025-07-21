@@ -1,9 +1,6 @@
-import { Box, Paper, Typography } from '@mui/material';
-import { useAuth } from '@fiap-farms/auth-store';
+import { Box, Typography } from '@mui/material';
 
-export default function Web() {
-  const { user } = useAuth();
-
+export default function Root() {
   return (
     <Box
       sx={{
@@ -13,10 +10,7 @@ export default function Web() {
         py: { xs: 2, sm: 3, md: 4 },
       }}
     >
-      <Typography variant="h4" component="h1" gutterBottom color="info">
-        Hi, {user?.displayName}
-      </Typography>
-      <Typography variant="h6" color="textPrimary" gutterBottom>
+      <Typography variant="h4" component="h1" gutterBottom color="textPrimary">
         Welcome to the FIAP Farms!
       </Typography>
       <Typography variant="body1" color="textSecondary">
