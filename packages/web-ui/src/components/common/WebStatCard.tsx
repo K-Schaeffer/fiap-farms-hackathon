@@ -9,7 +9,6 @@ export type StatCardProps = {
   value: string;
   interval: string;
   trend: 'up' | 'down' | 'neutral';
-  data?: number[];
   color?: 'success' | 'warning' | 'info' | 'error' | 'default';
 };
 
