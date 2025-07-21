@@ -274,7 +274,7 @@ export function WebProductionDashboard({
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
-              height: '100%',
+              height: isLargeScreen ? 360 : '100%',
               minHeight: 320,
             }}
           >
@@ -341,7 +341,7 @@ export function WebProductionDashboard({
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
-              height: '100%',
+              height: isLargeScreen ? 360 : '100%',
               minHeight: 320,
             }}
           >
@@ -441,7 +441,7 @@ export function WebProductionDashboard({
       </Typography>
       <Grid container spacing={2} columns={12}>
         <Grid size={{ xs: 12 }}>
-          <Box sx={{ height: 500, width: '100%' }}>
+          <Box sx={{ height: 450, width: '100%' }}>
             <DataGrid
               rows={productionItems}
               columns={productionColumns}
