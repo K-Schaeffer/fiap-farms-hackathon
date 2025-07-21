@@ -38,7 +38,7 @@ export function useNavigation() {
       icon: <InventoryIcon />,
       children: [
         {
-          text: 'Production Management',
+          text: 'Management',
           icon: <AgricultureIcon />,
           href: '/products/management',
         },

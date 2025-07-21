@@ -1,7 +1,7 @@
 import { Product, ProductionItem } from '@fiap-farms/core';
-import { ProductData, ProductionCardData } from '@fiap-farms/web-ui';
+import { WebProductData, WebProductionCardData } from '@fiap-farms/web-ui';
 
-export function transformProductToUI(product: Product): ProductData {
+export function transformProductToUI(product: Product): WebProductData {
   return {
     id: product._id,
     name: product.name,
@@ -11,31 +11,29 @@ export function transformProductToUI(product: Product): ProductData {
   };
 }
 
+export function transformProductsToUI(products: Product[]): WebProductData[] {
+  return products.map(transformProductToUI);
+}
+
 export function transformProductionItemToUI(
-  item: ProductionItem,
-  products: Product[]
-): ProductionCardData {
-  const product = products.find(p => p._id === item.productId);
+  item: ProductionItem
+): WebProductionCardData {
   return {
     id: item._id,
     productId: item.productId,
-    productName: product?.name || 'Unknown Product',
+    productName: item.productName,
     status: item.status,
     location: item.location,
     plantedDate: item.plantedDate.toISOString(),
     expectedHarvestDate: item.expectedHarvestDate.toISOString(),
     harvestedDate: item.harvestedDate?.toISOString(),
     yield: item.yield,
+    unit: item.productUnit,
   };
 }
 
-export function transformProductsToUI(products: Product[]): ProductData[] {
-  return products.map(transformProductToUI);
-}
-
 export function transformProductionItemsToUI(
-  items: ProductionItem[],
-  products: Product[]
-): ProductionCardData[] {
-  return items.map(item => transformProductionItemToUI(item, products));
+  items: ProductionItem[]
+): WebProductionCardData[] {
+  return items.map(item => transformProductionItemToUI(item));
 }
