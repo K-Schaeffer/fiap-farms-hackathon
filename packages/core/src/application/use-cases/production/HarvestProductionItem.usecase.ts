@@ -1,3 +1,4 @@
+import { ProductionStatusValidator } from '../../../domain/entities/production.entity';
 import { IProductionRepository } from '../../../domain/repositories/IProductionRepository';
 
 export class HarvestProductionItemUseCase {
@@ -15,9 +16,11 @@ export class HarvestProductionItemUseCase {
       throw new Error('Production item not found');
     }
 
-    if (productionItem.status === 'harvested') {
-      throw new Error('Production item already harvested');
-    }
+    // Use domain validation to ensure proper status transition
+    ProductionStatusValidator.validateStatusTransition(
+      productionItem.status,
+      'harvested'
+    );
 
     // Update production item as harvested
     await this.productionRepo.setAsHarvested(
