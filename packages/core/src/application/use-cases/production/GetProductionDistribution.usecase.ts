@@ -2,7 +2,7 @@ import { IProductionRepository } from '../../../domain/repositories/IProductionR
 
 export interface ProductionDistributionItem {
   productName: string;
-  count: number;
+  percentage: number;
 }
 
 export class GetProductionDistributionUseCase {
@@ -16,9 +16,12 @@ export class GetProductionDistributionUseCase {
       distributionMap[item.productName] =
         (distributionMap[item.productName] || 0) + 1;
     }
-    return Object.entries(distributionMap).map(([productName, count]) => ({
-      productName,
-      count,
-    }));
+    const total = Object.values(distributionMap).reduce((sum, val) => sum + val, 0);
+    return Object.entries(distributionMap)
+      .map(([productName, count]) => ({
+        productName,
+        percentage: total > 0 ? Math.round((count / total) * 100) : 0,
+      }))
+      .sort((a, b) => b.percentage - a.percentage);
   }
 }

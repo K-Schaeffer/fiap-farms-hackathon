@@ -20,7 +20,7 @@ import { useTheme } from '@mui/material/styles';
 
 export interface WebProductionDashboardProps {
   productionItems: WebProductionCardData[];
-  distribution: { productName: string; count: number }[];
+  distribution: { productName: string; percentage: number }[];
   trend: { year: number; month: number; count: number }[];
   harvestedTrend: { year: number; month: number; count: number }[];
 }
@@ -129,7 +129,7 @@ export function WebProductionDashboard({
   ];
   const productionDistribution = distribution.map((item, idx) => ({
     label: item.productName,
-    value: item.count,
+    value: item.percentage,
     color: chartColors[idx % chartColors.length],
   }));
 
@@ -249,7 +249,6 @@ export function WebProductionDashboard({
               value={card.value}
               interval={card.interval}
               trend={card.trend}
-              data={[]} // No trend data
               color={card.color}
             />
           </Grid>
@@ -379,6 +378,7 @@ export function WebProductionDashboard({
                       outerRadius: isLargeScreen ? 100 : 70,
                       paddingAngle: 2,
                       highlightScope: { fade: 'global', highlight: 'item' },
+                      valueFormatter: ({ value }) => `${value}%`,
                     },
                   ]}
                   height={isLargeScreen ? 250 : 180}
