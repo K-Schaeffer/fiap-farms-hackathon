@@ -57,9 +57,13 @@ export class FirestoreProductionRepository implements IProductionRepository {
   }
 
   async create(itemData: Omit<ProductionItem, '_id'>): Promise<ProductionItem> {
-    const docRef = await addDoc(this.collectionRef, {
-      ...this.convertDatesToTimestamps(itemData),
-    });
+    const convertedData = this.convertDatesToTimestamps(itemData);
+
+    const filteredData = Object.fromEntries(
+      Object.entries(convertedData).filter(([, value]) => value !== undefined)
+    );
+
+    const docRef = await addDoc(this.collectionRef, filteredData);
 
     return {
       _id: docRef.id,

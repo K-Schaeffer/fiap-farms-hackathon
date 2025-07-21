@@ -2,6 +2,7 @@
 export { StartNewProductionUseCase } from './production/StartNewProduction.usecase';
 export { HarvestProductionItemUseCase } from './production/HarvestProductionItem.usecase';
 export { GetProductionOverviewUseCase } from './production/GetProductionOverview.usecase';
+export { UpdateProductionStatusUseCase } from './production/UpdateProductionStatus.usecase';
 
 // Sales Use Cases
 export { RegisterSaleUseCase } from './sales/RegisterSale.usecase';
