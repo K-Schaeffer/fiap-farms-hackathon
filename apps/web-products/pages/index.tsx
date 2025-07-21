@@ -1,96 +1,137 @@
-import { Typography, Box, CircularProgress } from '@mui/material';
-import { useProductionManagement } from '../hooks/useProductionManagement';
-import { ProductionManagementPage } from '@fiap-farms/web-ui';
-import {
-  transformProductsToUI,
-  transformProductionItemsToUI,
-} from '../utils/transformers';
+import { Typography, Box, Button } from '@mui/material';
+import Link from 'next/link';
+import { useAuth } from '@fiap-farms/auth-store';
+import { useState } from 'react';
 
-export default function Dashboard() {
-  const {
-    products,
-    productionItems,
-    loading,
-    error,
-    startProductionWithForm,
-    updateStatus,
-    harvestItemWithForm,
-    reorderItems,
-  } = useProductionManagement();
+export default function Root() {
+  const { isAuthenticated, signIn, signOut, user } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          width: '100%',
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          px: 2,
-        }}
-      >
-        <CircularProgress size={100} thickness={4} />
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box
-        sx={{
-          width: '100%',
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          px: 2,
-        }}
-      >
-        <Typography variant="h6" color="error">
-          Error: {typeof error === 'string' ? error : 'An error occurred'}
-        </Typography>
-      </Box>
-    );
-  }
-
-  // Transform data for UI components
-  const uiProducts = transformProductsToUI(products);
-  const uiProductionItems = transformProductionItemsToUI(
-    productionItems,
-    products
-  );
+  const handleLogin = async () => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      await signIn(email, password);
+    } catch {
+      setError('Invalid email or password');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Box
       sx={{
-        width: '100%',
-        minHeight: '100vh',
-        px: { xs: 1, sm: 2, md: 3 },
-        py: { xs: 2, sm: 3, md: 4 },
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        mt: 2,
       }}
     >
-      <Typography
-        variant="h5"
-        color="text.secondary"
-        gutterBottom
-        sx={{
-          fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
-          textAlign: { xs: 'center', sm: 'left' },
-          mb: { xs: 2, sm: 3, md: 4 },
-        }}
-      >
-        Manage your farm products catalog and production lifecycle
+      <Typography variant="h4" component="h1" gutterBottom color="info">
+        Welcome to Products App
       </Typography>
-
-      <ProductionManagementPage
-        products={uiProducts}
-        productionItems={uiProductionItems}
-        onStartProductionWithForm={startProductionWithForm}
-        onUpdateStatus={updateStatus}
-        onHarvestItemWithForm={harvestItemWithForm}
-        onReorderItems={reorderItems}
-      />
+      {isAuthenticated ? (
+        <>
+          <Typography
+            variant="h6"
+            component="h1"
+            gutterBottom
+            color="textPrimary"
+          >
+            Logged in as <b>{user?.email}</b>
+          </Typography>
+          <Box
+            sx={{
+              mt: 3,
+              mb: 3,
+              display: 'flex',
+              gap: 2,
+              justifyContent: 'center',
+            }}
+          >
+            <Link href="/management" passHref>
+              <Button variant="contained" color="primary">
+                Go to Management
+              </Button>
+            </Link>
+            <Link href="/dashboard" passHref>
+              <Button variant="contained" color="secondary">
+                Go to Dashboard
+              </Button>
+            </Link>
+            <Button
+              variant="contained"
+              color="warning"
+              onClick={() => signOut()}
+            >
+              Logout
+            </Button>
+          </Box>
+        </>
+      ) : (
+        <Box>
+          <Typography
+            variant="body1"
+            color="warning.main"
+            sx={{ mt: 2, mb: 2, maxWidth: 500, textAlign: 'center' }}
+          >
+            {`This app is for internal testing only.`}
+            <br />
+            {`To test authentication and integration, please use the shell app.`}
+            <br />
+            {`Account creation is also only available in the shell app.`}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            Login
+          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              style={{
+                padding: '8px',
+                fontSize: '16px',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+              }}
+              disabled={isLoading}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              style={{
+                padding: '8px',
+                fontSize: '16px',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+              }}
+              disabled={isLoading}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleLogin}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Logging in...' : 'Login'}
+            </Button>
+            {error && (
+              <Typography variant="body2" color="error">
+                {error}
+              </Typography>
+            )}
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 }

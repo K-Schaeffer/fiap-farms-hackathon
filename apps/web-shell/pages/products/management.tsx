@@ -1,9 +1,9 @@
 import dynamic from 'next/dynamic';
 
-const ProductsApp = dynamic(() => import('productsApp/Index'), {
+const ProductsAppManagement = dynamic(() => import('productsApp/Management'), {
   ssr: false,
 });
 
-export default function RootViewDashboard() {
-  return <ProductsApp />;
+export default function ProductsManagementPage() {
+  return <ProductsAppManagement />;
 }

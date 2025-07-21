@@ -15,7 +15,8 @@ const nextConfig = {
         name: 'productsApp',
         filename: 'static/chunks/remoteEntry.js',
         exposes: {
-          './Index': './pages/index.tsx',
+          './Management': './pages/management.tsx',
+          './Dashboard': './pages/dashboard.tsx',
         },
         shared: {
           '@fiap-farms/firebase': {
