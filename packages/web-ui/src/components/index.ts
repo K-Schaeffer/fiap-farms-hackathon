@@ -30,9 +30,42 @@ export {
 export { WebCustomizedDataGrid, renderAvatar, columns, rows } from './grids';
 
 // Page components - Complete page layouts
-export { WebMainGrid, WebLoginPage, WebSignUpPage } from './pages';
+export {
+  WebMainGrid,
+  WebLoginPage,
+  WebSignUpPage,
+  ProductionManagementPage,
+} from './pages';
 
 // Common/reusable components - Shared UI elements
 export { WebHighlightedCard, WebStatCard } from './common';
 
+// Kanban components - Production management board
+export {
+  ProductionKanbanBoard,
+  ProductionCard,
+  AvailableProductCard,
+} from './kanban';
+
+// Modal components - Dialog and form modals
+export { PlantingModal, HarvestModal } from './modals';
+
 export type { StatCardProps } from './common';
+
+export type {
+  KanbanColumn,
+  ProductionKanbanBoardProps,
+  ProductionCardProps,
+  AvailableProductCardProps,
+  ProductData,
+  ProductionCardData,
+} from './kanban';
+
+export type {
+  PlantingModalProps,
+  PlantingFormData,
+  HarvestModalProps,
+  HarvestFormData,
+} from './modals';
+
+export type { ProductionManagementPageProps } from './pages';
