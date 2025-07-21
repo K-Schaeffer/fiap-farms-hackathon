@@ -9,6 +9,7 @@ import { WebAppNavbar, WebHeader, WebSideMenu } from '@fiap-farms/web-ui';
 import { usePublicRoute } from '../hooks/usePublicRoute';
 import { useBreadcrumbs } from '../hooks/useBreadcrumbs';
 import { useNavigation } from '../hooks/useNavigation';
+import Head from 'next/head';
 
 function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
@@ -62,18 +63,24 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 export default function App({ Component, pageProps }: AppProps) {
   useAuthListener();
   const { isPublic } = usePublicRoute();
+  const breadcrumbs = useBreadcrumbs();
 
   return (
-    <AppCacheProvider {...pageProps}>
-      <AuthGuard>
-        {isPublic ? (
-          <Component {...pageProps} />
-        ) : (
-          <AppLayout>
+    <>
+      <Head>
+        <title>Fiap Farms - {breadcrumbs.title}</title>
+      </Head>
+      <AppCacheProvider {...pageProps}>
+        <AuthGuard>
+          {isPublic ? (
             <Component {...pageProps} />
-          </AppLayout>
-        )}
-      </AuthGuard>
-    </AppCacheProvider>
+          ) : (
+            <AppLayout>
+              <Component {...pageProps} />
+            </AppLayout>
+          )}
+        </AuthGuard>
+      </AppCacheProvider>
+    </>
   );
 }
