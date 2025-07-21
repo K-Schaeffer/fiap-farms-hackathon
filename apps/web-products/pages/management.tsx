@@ -1,6 +1,6 @@
 import { Typography, Box, CircularProgress } from '@mui/material';
 import { useProductionManagement } from '../hooks/useProductionManagement';
-import { ProductionManagementPage } from '@fiap-farms/web-ui';
+import { WebProductionManagement } from '@fiap-farms/web-ui';
 import {
   transformProductsToUI,
   transformProductionItemsToUI,
@@ -78,10 +78,7 @@ export default function Management() {
 
   // Transform data for UI components
   const uiProducts = transformProductsToUI(products);
-  const uiProductionItems = transformProductionItemsToUI(
-    productionItems,
-    products
-  );
+  const uiProductionItems = transformProductionItemsToUI(productionItems);
 
   return (
     <Box
@@ -105,7 +102,7 @@ export default function Management() {
         Manage your farm products catalog and production lifecycle
       </Typography>
 
-      <ProductionManagementPage
+      <WebProductionManagement
         products={uiProducts}
         productionItems={uiProductionItems}
         onStartProductionWithForm={startProductionWithForm}

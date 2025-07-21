@@ -96,9 +96,14 @@ export function useProductionManagement() {
     async (productId: string, data: PlantingFormData) => {
       try {
         const { startNewProductionUseCase } = getRepositories();
+        const product = products.find(p => p._id === productId);
+        const productName = product?.name || 'Unknown Product';
+        const productUnit = product?.unit || 'kg';
 
         const newProductionItem = await startNewProductionUseCase.execute({
           productId,
+          productName,
+          productUnit,
           ownerId: OWNER_ID,
           location: data.location,
           expectedHarvestDate: data.expectedHarvestDate,
@@ -113,7 +118,7 @@ export function useProductionManagement() {
         throw err;
       }
     },
-    [OWNER_ID]
+    [OWNER_ID, products]
   );
 
   const updateStatus = useCallback(
