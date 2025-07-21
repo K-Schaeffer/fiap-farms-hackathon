@@ -1,7 +1,7 @@
-import { 
-  ProductionItem, 
-  ProductionStatus, 
-  ProductionStatusValidator 
+import {
+  ProductionItem,
+  ProductionStatus,
+  ProductionStatusValidator,
 } from '../../../domain/entities/production.entity';
 import { IProductionRepository } from '../../../domain/repositories/IProductionRepository';
 
@@ -23,7 +23,7 @@ export class UpdateProductionStatusUseCase {
 
     // Delegate business rule validation to domain layer
     ProductionStatusValidator.validateStatusTransition(
-      productionItem.status, 
+      productionItem.status,
       newStatus
     );
 

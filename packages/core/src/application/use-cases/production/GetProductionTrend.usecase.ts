@@ -36,14 +36,22 @@ export class GetProductionTrendUseCase {
         harvestedMap[key] = (harvestedMap[key] || 0) + 1;
       }
     }
-    const planted = Object.entries(plantedMap).map(([key, count]) => {
-      const [year, month] = key.split('-').map(Number);
-      return { year, month, count };
-    }).sort((a, b) => a.year !== b.year ? a.year - b.year : a.month - b.month);
-    const harvested = Object.entries(harvestedMap).map(([key, count]) => {
-      const [year, month] = key.split('-').map(Number);
-      return { year, month, count };
-    }).sort((a, b) => a.year !== b.year ? a.year - b.year : a.month - b.month);
+    const planted = Object.entries(plantedMap)
+      .map(([key, count]) => {
+        const [year, month] = key.split('-').map(Number);
+        return { year, month, count };
+      })
+      .sort((a, b) =>
+        a.year !== b.year ? a.year - b.year : a.month - b.month
+      );
+    const harvested = Object.entries(harvestedMap)
+      .map(([key, count]) => {
+        const [year, month] = key.split('-').map(Number);
+        return { year, month, count };
+      })
+      .sort((a, b) =>
+        a.year !== b.year ? a.year - b.year : a.month - b.month
+      );
     return { planted, harvested };
   }
-} 
+}

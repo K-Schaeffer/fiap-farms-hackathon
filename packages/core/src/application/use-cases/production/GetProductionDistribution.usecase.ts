@@ -16,7 +16,10 @@ export class GetProductionDistributionUseCase {
       distributionMap[item.productName] =
         (distributionMap[item.productName] || 0) + 1;
     }
-    const total = Object.values(distributionMap).reduce((sum, val) => sum + val, 0);
+    const total = Object.values(distributionMap).reduce(
+      (sum, val) => sum + val,
+      0
+    );
     return Object.entries(distributionMap)
       .map(([productName, count]) => ({
         productName,
