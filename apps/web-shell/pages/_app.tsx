@@ -7,15 +7,32 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { WebAppNavbar, WebHeader, WebSideMenu } from '@fiap-farms/web-ui';
 import { usePublicRoute } from '../hooks/usePublicRoute';
+import { useBreadcrumbs } from '../hooks/useBreadcrumbs';
+import { useNavigation } from '../hooks/useNavigation';
 
 function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
+  const breadcrumbs = useBreadcrumbs();
+  const { navigationItems, onNavigate, currentPath } = useNavigation();
 
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
-      <WebSideMenu user={user} onLogout={signOut} />
-      <WebAppNavbar user={user} onLogout={signOut} />
-      <WebHeader />
+      <WebSideMenu
+        user={user}
+        onLogout={signOut}
+        navigationItems={navigationItems}
+        onNavigate={onNavigate}
+        currentPath={currentPath}
+      />
+      <WebAppNavbar
+        user={user}
+        onLogout={signOut}
+        title={breadcrumbs.title}
+        navigationItems={navigationItems}
+        onNavigate={onNavigate}
+        currentPath={currentPath}
+      />
+      <WebHeader breadcrumbs={breadcrumbs} />
       <Box
         component="main"
         sx={{

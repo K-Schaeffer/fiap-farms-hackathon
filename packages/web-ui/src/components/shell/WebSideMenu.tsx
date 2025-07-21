@@ -22,7 +22,13 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export function WebSideMenu({ user, onLogout }: WebSideMenuProps) {
+export function WebSideMenu({
+  user,
+  onLogout,
+  currentPath,
+  onNavigate,
+  navigationItems,
+}: WebSideMenuProps) {
   // Extract user information with fallbacks
   const userName = user?.displayName || user?.email?.split('@')[0] || 'User';
   const userEmail = user?.email || '';
@@ -61,7 +67,11 @@ export function WebSideMenu({ user, onLogout }: WebSideMenuProps) {
           flexDirection: 'column',
         }}
       >
-        <WebMenuContent />
+        <WebMenuContent
+          currentPath={currentPath}
+          onNavigate={onNavigate}
+          navigationItems={navigationItems}
+        />
       </Box>
       <Stack
         direction="row"

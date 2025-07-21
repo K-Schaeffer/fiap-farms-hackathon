@@ -6,13 +6,16 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { WebMenuContent } from './WebMenuContent';
-import { WebSideMenuUser } from './index';
+import { WebSideMenuUser, NavigationItem } from './';
 
 interface SideMenuMobileProps {
   open: boolean | undefined;
   toggleDrawer: (newOpen: boolean) => () => void;
   user?: WebSideMenuUser | null;
   onLogout?: () => Promise<void>;
+  currentPath?: string;
+  onNavigate?: (href: string) => void;
+  navigationItems: NavigationItem[];
 }
 
 export function WebSideMenuMobile({
@@ -20,6 +23,9 @@ export function WebSideMenuMobile({
   toggleDrawer,
   user,
   onLogout,
+  currentPath,
+  onNavigate,
+  navigationItems,
 }: SideMenuMobileProps) {
   // Extract user information with fallbacks
   const userName = user?.displayName || user?.email?.split('@')[0] || 'User';
@@ -100,7 +106,11 @@ export function WebSideMenuMobile({
         </Stack>
         <Divider />
         <Stack sx={{ flexGrow: 1 }}>
-          <WebMenuContent />
+          <WebMenuContent
+            currentPath={currentPath}
+            onNavigate={onNavigate}
+            navigationItems={navigationItems}
+          />
           <Divider />
         </Stack>
         <Stack sx={{ p: 2 }}>

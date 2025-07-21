@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs, { breadcrumbsClasses } from '@mui/material/Breadcrumbs';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import { BreadcrumbsData } from './';
 
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   margin: theme.spacing(1, 0),
@@ -14,19 +15,32 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   },
 }));
 
-export function WebNavbarBreadcrumbs() {
+interface WebNavbarBreadcrumbsProps {
+  breadcrumbs: BreadcrumbsData;
+}
+
+export function WebNavbarBreadcrumbs({
+  breadcrumbs,
+}: WebNavbarBreadcrumbsProps) {
+  const { items } = breadcrumbs;
   return (
     <StyledBreadcrumbs
       aria-label="breadcrumb"
       separator={<NavigateNextRoundedIcon fontSize="small" />}
     >
-      <Typography variant="body1">Dashboard</Typography>
-      <Typography
-        variant="body1"
-        sx={{ color: 'text.primary', fontWeight: 600 }}
-      >
-        Home
-      </Typography>
+      {items.map((item, index) => (
+        <Typography
+          key={index}
+          variant="body1"
+          sx={{
+            color:
+              index === items.length - 1 ? 'text.primary' : 'text.secondary',
+            fontWeight: index === items.length - 1 ? 600 : 400,
+          }}
+        >
+          {item.label}
+        </Typography>
+      ))}
     </StyledBreadcrumbs>
   );
 }

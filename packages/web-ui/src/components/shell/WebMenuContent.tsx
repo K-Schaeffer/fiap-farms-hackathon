@@ -4,30 +4,95 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
-import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
-import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import React from 'react';
 
-const mainListItems = [
-  { text: 'Home', icon: <HomeRoundedIcon /> },
-  { text: 'Analytics', icon: <AnalyticsRoundedIcon /> },
-  { text: 'Clients', icon: <PeopleRoundedIcon /> },
-  { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
-];
+import { NavigationItem, WebMenuContentProps } from '.';
 
-export function WebMenuContent() {
+export function WebMenuContent({
+  currentPath = '/',
+  onNavigate = () => {},
+  navigationItems,
+}: WebMenuContentProps) {
+  const [expandedItems, setExpandedItems] = React.useState<string[]>([]);
+
+  // Auto-expand parent items based on current path
+  React.useEffect(() => {
+    const newExpandedItems: string[] = [];
+
+    if (!navigationItems) return;
+
+    navigationItems.forEach(item => {
+      if (item.children) {
+        const hasActiveChild = item.children.some(
+          child => child.href === currentPath
+        );
+        if (hasActiveChild) {
+          newExpandedItems.push(item.text);
+        }
+      }
+    });
+    setExpandedItems(newExpandedItems);
+  }, [currentPath, navigationItems]);
+
+  const handleToggleExpand = (itemText: string) => {
+    setExpandedItems(prev =>
+      prev.includes(itemText)
+        ? prev.filter(item => item !== itemText)
+        : [...prev, itemText]
+    );
+  };
+
+  const isItemActive = (href?: string) => href === currentPath;
+  const isParentActive = (children?: NavigationItem[]) =>
+    children?.some(child => child.href === currentPath) || false;
+
+  const renderNavigationItem = (item: NavigationItem, depth = 0) => {
+    const hasChildren = item.children && item.children.length > 0;
+    const isExpanded = expandedItems.includes(item.text);
+    const isActive =
+      isItemActive(item.href) || (hasChildren && isParentActive(item.children));
+
+    return (
+      <React.Fragment key={item.text}>
+        <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
+            selected={isActive}
+            onClick={() => {
+              if (hasChildren) {
+                handleToggleExpand(item.text);
+              } else if (item.href) {
+                onNavigate(item.href);
+              }
+            }}
+            sx={{ pl: depth * 2 + 2 }}
+          >
+            <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
+            {hasChildren && (isExpanded ? <ExpandLess /> : <ExpandMore />)}
+          </ListItemButton>
+        </ListItem>
+        {hasChildren && (
+          <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {item.children!.map(child =>
+                renderNavigationItem(child, depth + 1)
+              )}
+            </List>
+          </Collapse>
+        )}
+      </React.Fragment>
+    );
+  };
+
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
-        {mainListItems.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={index === 0}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {navigationItems
+          ? navigationItems.map(item => renderNavigationItem(item))
+          : []}
       </List>
     </Stack>
   );

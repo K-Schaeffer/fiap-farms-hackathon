@@ -5,8 +5,13 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 // import CustomDatePicker from './CustomDatePicker';
 import { WebNavbarBreadcrumbs } from './WebNavbarBreadcrumbs';
 import { WebMenuButton } from './WebMenuButton';
+import { BreadcrumbsData } from './';
 
-export function WebHeader() {
+interface WebHeaderProps {
+  breadcrumbs: BreadcrumbsData;
+}
+
+export function WebHeader({ breadcrumbs }: WebHeaderProps) {
   return (
     <AppBar
       position="fixed"
@@ -39,7 +44,7 @@ export function WebHeader() {
           }}
           spacing={2}
         >
-          <WebNavbarBreadcrumbs />
+          <WebNavbarBreadcrumbs breadcrumbs={breadcrumbs} />
           <Stack
             direction="row"
             sx={{

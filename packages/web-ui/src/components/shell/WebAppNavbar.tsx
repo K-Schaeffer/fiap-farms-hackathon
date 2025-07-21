@@ -9,7 +9,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import { WebSideMenuMobile } from './WebSideMenuMobile';
 import { WebMenuButton } from './WebMenuButton';
-import { WebSideMenuUser } from './index';
+import { WebAppNavbarProps } from './index';
 
 const Toolbar = styled(MuiToolbar)({
   width: '100%',
@@ -27,12 +27,14 @@ const Toolbar = styled(MuiToolbar)({
   },
 });
 
-interface WebAppNavbarProps {
-  user?: WebSideMenuUser | null;
-  onLogout?: () => Promise<void>;
-}
-
-export function WebAppNavbar({ user, onLogout }: WebAppNavbarProps) {
+export function WebAppNavbar({
+  user,
+  onLogout,
+  title,
+  currentPath,
+  onNavigate,
+  navigationItems,
+}: WebAppNavbarProps) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -75,7 +77,7 @@ export function WebAppNavbar({ user, onLogout }: WebAppNavbarProps) {
               component="h1"
               sx={{ color: 'text.primary' }}
             >
-              Dashboard
+              {title || 'Dashboard'}
             </Typography>
           </Stack>
           <WebMenuButton showBadge aria-label="Open notifications">
@@ -86,6 +88,9 @@ export function WebAppNavbar({ user, onLogout }: WebAppNavbarProps) {
             toggleDrawer={toggleDrawer}
             user={user}
             onLogout={onLogout}
+            currentPath={currentPath}
+            onNavigate={onNavigate}
+            navigationItems={navigationItems}
           />
         </Stack>
       </Toolbar>
