@@ -2,6 +2,7 @@
 export { WebMainGrid } from './WebMainGrid';
 export { WebLoginPage } from './WebLoginPage';
 export { WebSignUpPage } from './WebSignUpPage';
-export { ProductionManagementPage } from './ProductionManagementPage';
+export { WebProductionManagement } from './WebProductionManagement';
+export { WebProductionDashboard } from './WebProductionDashboard';
 
-export type { ProductionManagementPageProps } from './ProductionManagementPage';
+export type { WebProductionManagementProps } from './WebProductionManagement';

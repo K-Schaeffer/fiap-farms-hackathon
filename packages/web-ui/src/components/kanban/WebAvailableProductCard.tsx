@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography, Chip, Box } from '@mui/material';
 
-export interface ProductData {
+export interface WebProductData {
   id: string;
   name: string;
   description: string;
@@ -8,24 +8,26 @@ export interface ProductData {
   costPerUnit: number;
 }
 
-export interface AvailableProductCardProps {
-  product: ProductData;
+export interface WebAvailableProductCardProps {
+  product: WebProductData;
 }
 
-const getUnitColor = (unit: string) => {
+export function getUnitColor(unit: string) {
   switch (unit) {
     case 'kg':
       return 'primary';
     case 'unity':
       return 'secondary';
     case 'box':
-      return 'success';
+      return 'warning';
     default:
       return 'default';
   }
-};
+}
 
-export function AvailableProductCard({ product }: AvailableProductCardProps) {
+export function WebAvailableProductCard({
+  product,
+}: WebAvailableProductCardProps) {
   return (
     <Card
       elevation={1}

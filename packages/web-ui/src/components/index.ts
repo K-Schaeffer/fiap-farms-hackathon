@@ -39,17 +39,18 @@ export {
   WebMainGrid,
   WebLoginPage,
   WebSignUpPage,
-  ProductionManagementPage,
+  WebProductionManagement,
+  WebProductionDashboard,
 } from './pages';
 
 // Common/reusable components - Shared UI elements
-export { WebHighlightedCard, WebStatCard } from './common';
+export { WebStatCard } from './common';
 
 // Kanban components - Production management board
 export {
-  ProductionKanbanBoard,
-  ProductionCard,
-  AvailableProductCard,
+  WebProductionKanbanBoard,
+  WebProductionCard,
+  WebAvailableProductCard,
 } from './kanban';
 
 // Modal components - Dialog and form modals
@@ -59,11 +60,11 @@ export type { StatCardProps } from './common';
 
 export type {
   KanbanColumn,
-  ProductionKanbanBoardProps,
-  ProductionCardProps,
-  AvailableProductCardProps,
-  ProductData,
-  ProductionCardData,
+  WebProductionKanbanBoardProps,
+  WebProductionCardProps,
+  WebAvailableProductCardProps,
+  WebProductData,
+  WebProductionCardData,
 } from './kanban';
 
 export type {
@@ -73,4 +74,4 @@ export type {
   HarvestFormData,
 } from './modals';
 
-export type { ProductionManagementPageProps } from './pages';
+export type { WebProductionManagementProps } from './pages';
