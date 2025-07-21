@@ -17,6 +17,11 @@ export type {
   WebSideMenuUser,
   WebSideMenuProps,
   WebOptionsMenuProps,
+  WebAppNavbarProps,
+  WebHeaderProps,
+  BreadcrumbsData,
+  NavigationItem,
+  WebMenuContentProps,
 } from './shell';
 
 // Chart components - Data visualization and analytics
