@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 import { NavigationItem } from '@fiap-farms/web-ui';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import AgricultureIcon from '@mui/icons-material/Agriculture';
+import PieChart from '@mui/icons-material/PieChart';
 
 export function useNavigation() {
   const router = useRouter();
@@ -21,14 +22,14 @@ export function useNavigation() {
       icon: <ShoppingCartIcon />,
       children: [
         {
-          text: 'Dashboard',
-          icon: <DashboardIcon />,
-          href: '/sales/dashboard',
-        },
-        {
           text: 'New',
           icon: <AddIcon />,
           href: '/sales/new',
+        },
+        {
+          text: 'Dashboard',
+          icon: <AssessmentIcon />,
+          href: '/sales/dashboard',
         },
       ],
     },
@@ -38,12 +39,12 @@ export function useNavigation() {
       children: [
         {
           text: 'Production Management',
-          icon: <AssessmentIcon />,
+          icon: <AgricultureIcon />,
           href: '/products/management',
         },
         {
           text: 'Dashboard',
-          icon: <DashboardIcon />,
+          icon: <PieChart />,
           href: '/products/dashboard',
         },
       ],
