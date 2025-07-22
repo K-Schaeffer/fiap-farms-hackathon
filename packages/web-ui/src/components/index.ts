@@ -41,6 +41,7 @@ export {
   WebSignUpPage,
   WebProductionManagement,
   WebProductionDashboard,
+  WebSaleForm,
 } from './pages';
 
 // Common/reusable components - Shared UI elements
@@ -74,4 +75,9 @@ export type {
   HarvestFormData,
 } from './modals';
 
-export type { WebProductionManagementProps } from './pages';
+export type {
+  WebProductionManagementProps,
+  WebSaleFormData,
+  WebSaleFormProps,
+  WebSaleProduct,
+} from './pages';
