@@ -41,7 +41,6 @@ export class FirestoreSaleRepository implements ISaleRepository {
     const docRef = await addDoc(this.collectionRef, {
       ...saleData,
       saleDate: Timestamp.fromDate(saleData.saleDate),
-      createdAt: Timestamp.now(),
     });
 
     return {
