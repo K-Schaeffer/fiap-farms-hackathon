@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 import { WebSignUpPage } from '@fiap-farms/web-ui';
 
 export default function SignUpPage() {

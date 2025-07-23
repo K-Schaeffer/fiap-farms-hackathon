@@ -9,7 +9,7 @@ import {
   ProductionTrendItem,
 } from '@fiap-farms/core';
 import { getFirebaseDb } from '@fiap-farms/firebase';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 import { transformProductionItemsToUI } from '../utils/transformers';
 
 export function useProductionDashboard() {

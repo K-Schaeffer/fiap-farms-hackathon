@@ -27,7 +27,7 @@ const nextConfig = {
             singleton: true,
             eager: false,
           },
-          '@fiap-farms/auth-store': {
+          '@fiap-farms/shared-stores': {
             singleton: true,
             eager: false,
           },

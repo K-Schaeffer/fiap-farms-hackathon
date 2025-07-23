@@ -1,20 +1,22 @@
-# @fiap-farms/auth-store
+# @fiap-farms/shared-stores
 
-A global authentication store for managing Firebase authentication state across microfrontends and React Native applications.
+Shared global state management for the FIAP Farms application suite. Manages authentication, goals, notifications, and cross-platform storage across microfrontends and React Native applications.
 
 ## Features
 
+- **Multi-Store Architecture**: Authentication, sales goals, production goals, and notifications
 - **Global State Management**: Uses Zustand for lightweight, performant state management
-- **Firebase Integration**: Built-in integration with Firebase Authentication
+- **Firebase Integration**: Built-in integration with Firebase Authentication and Firestore
 - **Cross-Platform**: Works with web applications and React Native
 - **TypeScript Support**: Fully typed for better development experience
-- **Simple API**: Just two hooks for all your auth needs
+- **Reactive Notifications**: Goal-based achievement notifications with read state persistence
+- **Cross-Platform Storage**: Automatic localStorage (web) and AsyncStorage (React Native) handling
 - **Persistence**: Authentication persistence is handled by `@fiap-farms/firebase`
 
 ## Installation
 
 ```bash
-npm install @fiap-farms/auth-store
+npm install @fiap-farms/shared-stores
 ```
 
 ## Setup
@@ -26,7 +28,7 @@ Authentication persistence is configured in the `@fiap-farms/firebase` package. 
 In your app's root component, set up the Firebase auth state listener:
 
 ```tsx
-import { useAuthListener } from '@fiap-farms/auth-store';
+import { useAuthListener } from '@fiap-farms/shared-stores';
 
 function App() {
   // Setup Firebase auth state listener
@@ -41,7 +43,7 @@ function App() {
 ### Using the Auth Hook
 
 ```tsx
-import { useAuth, useAuthListener } from '@fiap-farms/auth-store';
+import { useAuth, useAuthListener } from '@fiap-farms/shared-stores';
 
 function LoginComponent() {
   const {
@@ -98,10 +100,21 @@ function LoginComponent() {
 
 ## API Reference
 
-### Hooks
+### Auth Hooks
 
 - `useAuth()`: Returns complete auth state and actions
 - `useAuthListener()`: Sets up Firebase auth state listener
+
+### Goal Hooks
+
+- `useSalesGoal()`: Returns sales goal state and achievement status
+- `useSalesGoalListener()`: Sets up sales goal data listener
+- `useProductionGoal()`: Returns production goal state and achievement status
+- `useProductionGoalListener()`: Sets up production goal data listener
+
+### Notification Hooks
+
+- `useNotificationReadState()`: Manages notification read state with cross-platform persistence
 
 ### Types
 
@@ -130,7 +143,7 @@ interface AuthActions {
 
 ```tsx
 // pages/_app.tsx
-import { useAuthListener } from '@fiap-farms/auth-store';
+import { useAuthListener } from '@fiap-farms/shared-stores';
 
 export default function App({ Component, pageProps }) {
   // Setup auth listener once at app level
@@ -144,7 +157,7 @@ export default function App({ Component, pageProps }) {
 
 ```tsx
 // App.tsx
-import { useAuth, useAuthListener } from '@fiap-farms/auth-store';
+import { useAuth, useAuthListener } from '@fiap-farms/shared-stores';
 
 export default function App() {
   const { isAuthenticated, isLoading } = useAuth();

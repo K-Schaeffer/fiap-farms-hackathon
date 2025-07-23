@@ -9,7 +9,7 @@ import {
   useSalesGoal,
   useProductionGoal,
   useNotificationReadState,
-} from '@fiap-farms/auth-store';
+} from '@fiap-farms/shared-stores';
 import { AuthGuard } from '../components/AuthGuard';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';

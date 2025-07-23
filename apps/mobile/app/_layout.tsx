@@ -2,7 +2,7 @@ import { Slot } from 'expo-router';
 import { PaperProvider, MD3LightTheme } from 'react-native-paper';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useAuthListener } from '@fiap-farms/auth-store';
+import { useAuthListener } from '@fiap-farms/shared-stores';
 
 const theme = {
   ...MD3LightTheme,

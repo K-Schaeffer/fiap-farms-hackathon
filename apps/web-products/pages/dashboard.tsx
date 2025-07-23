@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 import { WebProductionDashboard } from '@fiap-farms/web-ui';
 import { CircularProgress } from '@mui/material';
 import { useProductionDashboard } from '../hooks/useProductionDashboard';

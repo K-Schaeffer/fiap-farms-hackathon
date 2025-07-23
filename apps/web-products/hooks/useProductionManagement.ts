@@ -13,7 +13,7 @@ import {
 } from '@fiap-farms/core';
 import { WebPlantingFormData, WebHarvestFormData } from '@fiap-farms/web-ui';
 import { getFirebaseDb } from '@fiap-farms/firebase';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 
 export function useProductionManagement() {
   const [products, setProducts] = useState<Product[]>([]);

@@ -6,13 +6,14 @@
     "dev": "cross-env NEXT_PRIVATE_LOCAL_WEBPACK=true next dev -p 5000",
     "build": "cross-env NEXT_PRIVATE_LOCAL_WEBPACK=true next build",
     "lint": "eslint ./ --ext .ts,.tsx",
-    "lint:fix": "eslint ./ --ext .ts,.tsx --fix"
+    "lint:fix": "eslint ./ --ext .ts,.tsx --fix",
+    "clean": "rm -rf .next node_modules .turbo"
   },
   "dependencies": {
     "@fiap-farms/web-ui": "*",
     "@fiap-farms/core": "*",
     "@fiap-farms/firebase": "*",
-    "@fiap-farms/auth-store": "*",
+    "@fiap-farms/shared-stores": "*",
     "next": "^14.2.30",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

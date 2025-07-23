@@ -5,7 +5,7 @@ import {
   transformProductsToUI,
   transformProductionItemsToUI,
 } from '../utils/transformers';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 
 export default function Management() {
   const { user } = useAuth();
