@@ -291,7 +291,7 @@ export function WebProductionDashboard({
                 gutterBottom
                 sx={{ px: 2, pt: 2, mb: 2 }}
               >
-                Production Trend
+                Monthly Planting vs Harvesting
               </Typography>
               <BarChart
                 borderRadius={8}
