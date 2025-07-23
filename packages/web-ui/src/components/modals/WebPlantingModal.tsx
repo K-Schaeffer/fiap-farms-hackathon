@@ -14,16 +14,16 @@ import { FormContainer, TextFieldElement } from 'react-hook-form-mui';
 import { useController } from 'react-hook-form';
 import dayjs, { Dayjs } from 'dayjs';
 
-export interface PlantingFormData {
+export interface WebPlantingFormData {
   location: string;
   expectedHarvestDate: Date;
 }
 
-export interface PlantingModalProps {
+export interface WebPlantingModalProps {
   open: boolean;
   productName: string;
   onClose: () => void;
-  onConfirm: (data: PlantingFormData) => void;
+  onConfirm: (data: WebPlantingFormData) => void;
   loading?: boolean;
 }
 
@@ -78,14 +78,14 @@ function DatePickerField({
   );
 }
 
-export function PlantingModal({
+export function WebPlantingModal({
   open,
   productName,
   onClose,
   onConfirm,
   loading = false,
-}: PlantingModalProps) {
-  const defaultValues: PlantingFormData = {
+}: WebPlantingModalProps) {
+  const defaultValues: WebPlantingFormData = {
     location: '',
     expectedHarvestDate: dayjs().add(1, 'month').toDate(),
   };
@@ -94,7 +94,7 @@ export function PlantingModal({
     onClose();
   };
 
-  const handleSubmit = (data: PlantingFormData) => {
+  const handleSubmit = (data: WebPlantingFormData) => {
     onConfirm(data);
   };
 

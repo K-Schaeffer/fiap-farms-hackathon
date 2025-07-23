@@ -1,5 +1,11 @@
-export { PlantingModal } from './PlantingModal';
-export type { PlantingModalProps, PlantingFormData } from './PlantingModal';
+export { WebPlantingModal } from './WebPlantingModal';
+export type {
+  WebPlantingModalProps,
+  WebPlantingFormData,
+} from './WebPlantingModal';
 
-export { HarvestModal } from './HarvestModal';
-export type { HarvestModalProps, HarvestFormData } from './HarvestModal';
+export { WebHarvestModal } from './WebHarvestModal';
+export type {
+  WebHarvestModalProps,
+  WebHarvestFormData,
+} from './WebHarvestModal';

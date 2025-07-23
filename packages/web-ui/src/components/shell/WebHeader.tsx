@@ -2,13 +2,12 @@ import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
-// import CustomDatePicker from './CustomDatePicker';
 import { WebNavbarBreadcrumbs } from './WebNavbarBreadcrumbs';
 import { WebMenuButton } from './WebMenuButton';
-import { BreadcrumbsData } from './';
+import { WebBreadcrumbsData } from './';
 
 interface WebHeaderProps {
-  breadcrumbs: BreadcrumbsData;
+  breadcrumbs: WebBreadcrumbsData;
 }
 
 export function WebHeader({ breadcrumbs }: WebHeaderProps) {

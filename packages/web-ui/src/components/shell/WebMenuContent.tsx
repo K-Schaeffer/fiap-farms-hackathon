@@ -9,7 +9,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import React from 'react';
 
-import { NavigationItem, WebMenuContentProps } from '.';
+import { WebNavigationItem, WebMenuContentProps } from '.';
 
 export function WebMenuContent({
   currentPath = '/',
@@ -46,10 +46,10 @@ export function WebMenuContent({
   };
 
   const isItemActive = (href?: string) => href === currentPath;
-  const isParentActive = (children?: NavigationItem[]) =>
+  const isParentActive = (children?: WebNavigationItem[]) =>
     children?.some(child => child.href === currentPath) || false;
 
-  const renderNavigationItem = (item: NavigationItem, depth = 0) => {
+  const renderWebNavigationItem = (item: WebNavigationItem, depth = 0) => {
     const hasChildren = item.children && item.children.length > 0;
     const isExpanded = expandedItems.includes(item.text);
     const isActive =
@@ -78,7 +78,7 @@ export function WebMenuContent({
           <Collapse in={isExpanded} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {item.children!.map(child =>
-                renderNavigationItem(child, depth + 1)
+                renderWebNavigationItem(child, depth + 1)
               )}
             </List>
           </Collapse>
@@ -91,7 +91,7 @@ export function WebMenuContent({
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
         {navigationItems
-          ? navigationItems.map(item => renderNavigationItem(item))
+          ? navigationItems.map(item => renderWebNavigationItem(item))
           : []}
       </List>
     </Stack>

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { NavigationItem } from '@fiap-farms/web-ui';
+import { WebNavigationItem } from '@fiap-farms/web-ui';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import HomeIcon from '@mui/icons-material/Home';
@@ -11,7 +11,7 @@ import PieChart from '@mui/icons-material/PieChart';
 export function useNavigation() {
   const router = useRouter();
 
-  const navigationItems: NavigationItem[] = [
+  const navigationItems: WebNavigationItem[] = [
     {
       text: 'Home',
       icon: <HomeIcon />,

@@ -4,7 +4,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-export type StatCardProps = {
+export type WebStatCardProps = {
   title: string;
   value: string;
   interval: string;
@@ -18,7 +18,7 @@ export function WebStatCard({
   interval,
   trend,
   color,
-}: StatCardProps) {
+}: WebStatCardProps) {
   const labelColors = {
     up: 'success' as const,
     down: 'error' as const,

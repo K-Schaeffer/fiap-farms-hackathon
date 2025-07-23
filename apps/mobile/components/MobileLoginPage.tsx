@@ -9,7 +9,7 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { Text, TextInput, Button, Card, Snackbar } from 'react-native-paper';
 
-interface LoginFormData {
+interface WebLoginFormData {
   email: string;
   password: string;
 }
@@ -34,7 +34,7 @@ export function MobileLoginPage({
     control,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<LoginFormData>({
+  } = useForm<WebLoginFormData>({
     mode: 'onChange',
     defaultValues: {
       email: '',
@@ -48,7 +48,7 @@ export function MobileLoginPage({
     }
   }, [error]);
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: WebLoginFormData) => {
     await onLogin(data.email, data.password);
   };
 

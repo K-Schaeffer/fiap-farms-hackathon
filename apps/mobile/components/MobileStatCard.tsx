@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Card, Text, Chip } from 'react-native-paper';
 import { LineChart } from 'react-native-gifted-charts';
 
-export type MobileStatCardProps = {
+export type MobileWebStatCardProps = {
   title: string;
   value: string;
   interval: string;
@@ -17,7 +17,7 @@ export function MobileStatCard({
   interval,
   trend,
   data,
-}: MobileStatCardProps) {
+}: MobileWebStatCardProps) {
   const trendColors = {
     up: '#4caf50',
     down: '#f44336',

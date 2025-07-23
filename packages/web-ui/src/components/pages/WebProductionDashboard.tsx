@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { WebStatCard, StatCardProps } from '../common/WebStatCard';
+import { WebStatCard, WebStatCardProps } from '../common/WebStatCard';
 import { WebProductionCardData } from '../kanban';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { PieChart } from '@mui/x-charts/PieChart';
@@ -54,7 +54,7 @@ export function WebProductionDashboard({
       new Date(item.expectedHarvestDate) < new Date()
   ).length;
 
-  const productionStats: StatCardProps[] = [
+  const productionStats: WebStatCardProps[] = [
     {
       title: 'Planted',
       value: plantedThisYearCount.toString(),

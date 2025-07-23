@@ -19,24 +19,13 @@ export type {
   WebOptionsMenuProps,
   WebAppNavbarProps,
   WebHeaderProps,
-  BreadcrumbsData,
-  NavigationItem,
+  WebBreadcrumbsData,
+  WebNavigationItem,
   WebMenuContentProps,
 } from './shell';
 
-// Chart components - Data visualization and analytics
-export {
-  WebUserByCountryChart,
-  WebPageViewsBarChart,
-  WebSessionsChart,
-} from './charts';
-
-// Grid components - Data tables and layouts
-export { WebCustomizedDataGrid, renderAvatar, columns, rows } from './grids';
-
 // Page components - Complete page layouts
 export {
-  WebMainGrid,
   WebLoginPage,
   WebSignUpPage,
   WebProductionManagement,
@@ -55,12 +44,12 @@ export {
 } from './kanban';
 
 // Modal components - Dialog and form modals
-export { PlantingModal, HarvestModal } from './modals';
+export { WebPlantingModal, WebHarvestModal } from './modals';
 
-export type { StatCardProps } from './common';
+export type { WebStatCardProps } from './common';
 
 export type {
-  KanbanColumn,
+  WebKanbanColumn,
   WebProductionKanbanBoardProps,
   WebProductionCardProps,
   WebAvailableProductCardProps,
@@ -69,10 +58,10 @@ export type {
 } from './kanban';
 
 export type {
-  PlantingModalProps,
-  PlantingFormData,
-  HarvestModalProps,
-  HarvestFormData,
+  WebPlantingModalProps,
+  WebPlantingFormData,
+  WebHarvestModalProps,
+  WebHarvestFormData,
 } from './modals';
 
 export type {

@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { TextFieldElement } from 'react-hook-form-mui';
 
-interface SignUpFormData {
+interface WebSignUpFormData {
   name: string;
   email: string;
   password: string;
@@ -30,7 +30,7 @@ export function WebSignUpPage({
   error,
   isLoading,
 }: WebSignUpPageProps) {
-  const { control, handleSubmit, watch } = useForm<SignUpFormData>({
+  const { control, handleSubmit, watch } = useForm<WebSignUpFormData>({
     defaultValues: {
       name: '',
       email: '',
@@ -41,7 +41,7 @@ export function WebSignUpPage({
 
   const password = watch('password');
 
-  const onSubmit = async (data: SignUpFormData) => {
+  const onSubmit = async (data: WebSignUpFormData) => {
     await onSignUp(data.name, data.email, data.password);
   };
 
