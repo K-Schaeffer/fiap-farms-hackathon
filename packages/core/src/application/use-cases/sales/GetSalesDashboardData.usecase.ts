@@ -4,7 +4,9 @@ import { ISaleRepository } from '../../../domain/repositories/ISaleRepository';
 export interface SalesDashboardData {
   totalSales: number;
   totalRevenue: number;
-  recentSales: Sale[];
+  totalRevenueLiquid: number;
+  bestMonth: { month: string; amount: number; count: number };
+  salesHistory: Sale[];
   salesByMonth: { month: string; amount: number; count: number }[];
   topClients: { client: string; totalAmount: number; salesCount: number }[];
 }
@@ -33,14 +35,22 @@ export class GetSalesDashboardDataUseCase {
       (sum, sale) => sum + sale.totalSaleAmount,
       0
     );
+    const totalRevenueLiquid = sales.reduce(
+      (sum, sale) => sum + (sale.totalSaleProfit || 0),
+      0
+    );
 
     // Get recent sales (last 10)
-    const recentSales = sales
+    const salesHistory = sales
       .sort((a, b) => b.saleDate.getTime() - a.saleDate.getTime())
-      .slice(0, 10);
 
     // Group sales by month
     const salesByMonth = this.groupSalesByMonth(sales);
+
+    const bestMonth = salesByMonth.reduce(
+      (best, current) => (current.amount > best.amount ? current : best),
+      { month: '', amount: 0, count: 0 }
+    );
 
     // Calculate top clients
     const topClients = this.calculateTopClients(sales);
@@ -48,7 +58,9 @@ export class GetSalesDashboardDataUseCase {
     return {
       totalSales,
       totalRevenue,
-      recentSales,
+      totalRevenueLiquid,
+      bestMonth,
+      salesHistory,
       salesByMonth,
       topClients,
     };
