@@ -63,7 +63,7 @@ export const useProductionGoalListener = () => {
 };
 
 export const useNotificationReadState = () => {
-  const { user } = useAuthStore();
+  const { user, isLoading } = useAuthStore();
   const [readNotifications, setReadNotifications] = useState<Set<string>>(
     new Set()
   );
@@ -139,28 +139,15 @@ export const useNotificationReadState = () => {
     }
   }, [user?.uid, getStorageKey]);
 
-  // Clear read state when user logs out
+  // Clear read state when user actually logs out (not during initialization)
   useEffect(() => {
-    if (!user) {
+    // Only cleanup if we're not loading and there's no user (actual logout)
+    if (!isLoading && !user) {
       setReadNotifications(new Set());
-      // Clear for any potential lingering user IDs (cleanup)
-      const cleanupNotifications = async () => {
-        try {
-          const allKeys = await storage.getAllKeys();
-          const notificationKeys = allKeys.filter(key =>
-            key.startsWith('fiap-farms-read-notifications-')
-          );
-          if (notificationKeys.length > 0) {
-            await storage.multiRemove(notificationKeys);
-          }
-        } catch (error) {
-          console.warn('Failed to cleanup notification read state:', error);
-        }
-      };
-
-      cleanupNotifications();
+      // Only clear the current session's read state, not all users
+      // The aggressive multiRemove was causing issues during app rebuilds
     }
-  }, [user]);
+  }, [user, isLoading]);
 
   return {
     markAsRead,
