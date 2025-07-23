@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Keyboard } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useAuth } from '@fiap-farms/shared-stores';
 import { MobileLoginPage } from '../../components/MobileLoginPage';
@@ -39,7 +40,11 @@ export default function LoginScreen() {
   const handleSignUpRedirect = () => {
     setError(null);
     clearError(); // Clear errors when navigating
-    router.push('/(auth)/signup');
+    Keyboard.dismiss(); // Dismiss keyboard before navigation
+    // Small delay to ensure keyboard is fully dismissed
+    setTimeout(() => {
+      router.push('/(auth)/signup');
+    }, 100);
   };
 
   return (
