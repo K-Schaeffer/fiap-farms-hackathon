@@ -27,11 +27,6 @@ export function MobileNotificationMenu({
   notifications = [],
   onNotificationPress,
 }: MobileNotificationMenuProps) {
-  console.log('MobileNotificationMenu render:', {
-    visible,
-    notificationsCount: notifications.length,
-  });
-
   const handleNotificationPress = (notification: MobileNotificationData) => {
     if (onNotificationPress && !notification.isRead) {
       onNotificationPress(notification.id);
