@@ -11,9 +11,11 @@ export default defineConfig({
   clean: true,
   external: [
     'firebase/auth',
+    'firebase/firestore',
     '@fiap-farms/firebase',
     'zustand',
     'zustand/middleware',
     'react',
+    '@react-native-async-storage/async-storage',
   ],
 });
