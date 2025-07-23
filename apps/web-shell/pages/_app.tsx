@@ -69,6 +69,8 @@ function AppLayout({ children }: { children: React.ReactNode }) {
         navigationItems={navigationItems}
         onNavigate={onNavigate}
         currentPath={currentPath}
+        notifications={notifications}
+        onNotificationRead={markAsRead}
       />
       <WebHeader
         breadcrumbs={breadcrumbs}
