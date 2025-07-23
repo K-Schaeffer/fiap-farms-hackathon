@@ -34,6 +34,8 @@ export interface WebAppNavbarProps {
   currentPath?: string;
   onNavigate?: (href: string) => void;
   navigationItems: WebNavigationItem[];
+  notifications?: WebNotificationsData[];
+  onNotificationRead?: (notificationId: string) => void;
 }
 
 export interface WebBreadcrumbItem {
