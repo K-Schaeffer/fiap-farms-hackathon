@@ -23,6 +23,7 @@ export type {
   WebBreadcrumbsData,
   WebNavigationItem,
   WebMenuContentProps,
+  WebNotificationsData,
 } from './shell';
 
 // Page components - Complete page layouts

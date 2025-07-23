@@ -46,8 +46,16 @@ export interface WebBreadcrumbsData {
   title: string;
 }
 
+export interface WebNotificationsData {
+  id: string;
+  title: string;
+  isRead?: boolean;
+}
+
 export interface WebHeaderProps {
-  breadcrumbs?: WebBreadcrumbsData;
+  breadcrumbs: WebBreadcrumbsData;
+  notifications?: WebNotificationsData[];
+  onNotificationRead?: (notificationId: string) => void;
 }
 
 export interface WebMenuContentProps {
