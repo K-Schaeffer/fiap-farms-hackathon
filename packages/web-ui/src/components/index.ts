@@ -1,3 +1,4 @@
+export * from './pages';
 // ===== ORGANIZED COMPONENT EXPORTS =====
 
 // Shell components - Navigation, menus, and shell-level UI
