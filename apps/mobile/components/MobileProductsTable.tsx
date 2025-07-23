@@ -9,7 +9,7 @@ import {
 } from 'react-native-paper';
 import { Product } from '@fiap-farms/core';
 
-interface MobileProductsTableProps {
+export interface MobileProductsTableProps {
   products: Product[];
   loading: boolean;
   error: Error | null;

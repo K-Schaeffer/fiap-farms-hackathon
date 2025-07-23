@@ -29,7 +29,7 @@ export interface WebSaleProduct {
   quantity: number;
 }
 
-export interface WebWebSaleItemFormData {
+export interface WebSaleItemFormData {
   productId: string;
   quantity: string;
   pricePerUnit: string;
@@ -37,7 +37,7 @@ export interface WebWebSaleItemFormData {
 
 export interface WebSaleFormData {
   client: string;
-  items: WebWebSaleItemFormData[];
+  items: WebSaleItemFormData[];
 }
 
 export interface WebSaleFormProps {

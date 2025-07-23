@@ -1,9 +1,9 @@
 import Chip from '@mui/material/Chip';
 
-export type ProductionStatus = 'planted' | 'in_production' | 'harvested';
+export type WebProductionStatus = 'planted' | 'in_production' | 'harvested';
 
-export function getProductionStatusColor(
-  status: ProductionStatus
+export function getWebProductionStatusColor(
+  status: WebProductionStatus
 ): 'success' | 'warning' | 'info' | 'error' | 'default' {
   switch (status) {
     case 'planted':
@@ -18,7 +18,9 @@ export function getProductionStatusColor(
   }
 }
 
-export function getProductionStatusLabel(status: ProductionStatus): string {
+export function getWebProductionStatusLabel(
+  status: WebProductionStatus
+): string {
   switch (status) {
     case 'planted':
       return 'Planted';
@@ -33,7 +35,7 @@ export function getProductionStatusLabel(status: ProductionStatus): string {
 }
 
 export interface WebProductionStatusChipProps {
-  status: ProductionStatus;
+  status: WebProductionStatus;
   size?: 'small' | 'medium';
   sx?: object;
 }
@@ -45,8 +47,8 @@ export function WebProductionStatusChip({
 }: WebProductionStatusChipProps) {
   return (
     <Chip
-      label={getProductionStatusLabel(status)}
-      color={getProductionStatusColor(status)}
+      label={getWebProductionStatusLabel(status)}
+      color={getWebProductionStatusColor(status)}
       size={size}
       sx={{ fontSize: '0.75rem', height: 22, ...sx }}
     />
