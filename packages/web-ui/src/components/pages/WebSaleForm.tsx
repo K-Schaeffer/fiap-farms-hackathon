@@ -187,230 +187,254 @@ export function WebSaleForm({
                     <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
                       Select Products
                     </Typography>
-                    <Grid container spacing={2}>
-                      {products.map(product => {
-                        const isSelected = items.some(
-                          item => item.productId === product.id
-                        );
-                        return (
-                          <Grid
-                            key={product.id}
-                            size={{ xs: 12, sm: 6, md: 4 }}
-                          >
-                            <Card
-                              variant="outlined"
+                    {products.length === 0 ? (
+                      <Typography color="text.secondary" sx={{ mb: 2 }}>
+                        No products are available for sale at this time.
+                      </Typography>
+                    ) : (
+                      <>
+                        <Grid container spacing={2}>
+                          {products.map(product => {
+                            const isSelected = items.some(
+                              item => item.productId === product.id
+                            );
+                            return (
+                              <Grid
+                                key={product.id}
+                                size={{ xs: 12, sm: 6, md: 4 }}
+                              >
+                                <Card
+                                  variant="outlined"
+                                  sx={{
+                                    height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    position: 'relative',
+                                    ...(isSelected && {
+                                      borderColor: 'primary.main',
+                                      bgcolor: 'primary.lighter',
+                                    }),
+                                  }}
+                                >
+                                  <CardContent>
+                                    <Typography
+                                      variant="h6"
+                                      gutterBottom
+                                      sx={{
+                                        fontSize: '1.1rem',
+                                        fontWeight: 600,
+                                        mb: 1,
+                                      }}
+                                    >
+                                      {product.name}
+                                    </Typography>
+                                    <Typography
+                                      variant="body1"
+                                      color="text.secondary"
+                                      sx={{ fontSize: '0.95rem' }}
+                                    >
+                                      <b>Available:</b> {product.quantity} (
+                                      {product.unit})
+                                    </Typography>
+                                  </CardContent>
+                                  <CardActions>
+                                    <Button
+                                      startIcon={
+                                        isSelected ? (
+                                          <DeleteIcon />
+                                        ) : (
+                                          <AddIcon />
+                                        )
+                                      }
+                                      color={isSelected ? 'error' : 'primary'}
+                                      onClick={() => {
+                                        if (isSelected) {
+                                          const index = items.findIndex(
+                                            item =>
+                                              item.productId === product.id
+                                          );
+                                          if (index !== -1) remove(index);
+                                        } else {
+                                          append({
+                                            productId: product.id,
+                                            quantity: '',
+                                            pricePerUnit: '',
+                                          });
+                                        }
+                                      }}
+                                      disabled={
+                                        !isSelected && product.quantity === 0
+                                      }
+                                      sx={{ fontSize: '0.9rem' }}
+                                    >
+                                      {isSelected ? 'Remove' : 'Add to Sale'}
+                                    </Button>
+                                  </CardActions>
+                                  {isSelected && (
+                                    <CheckCircleOutlineIcon
+                                      color="primary"
+                                      sx={{
+                                        position: 'absolute',
+                                        top: 8,
+                                        right: 8,
+                                        fontSize: '1.5rem',
+                                      }}
+                                    />
+                                  )}
+                                </Card>
+                              </Grid>
+                            );
+                          })}
+                        </Grid>
+                        {items.length > 0 && (
+                          <>
+                            <Divider sx={{ my: 3 }} />
+                            <Typography
+                              variant="h6"
+                              gutterBottom
                               sx={{
-                                height: '100%',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                position: 'relative',
-                                ...(isSelected && {
-                                  borderColor: 'primary.main',
-                                  bgcolor: 'primary.lighter',
-                                }),
+                                fontWeight: 600,
+                                mb: 2,
                               }}
                             >
-                              <CardContent>
-                                <Typography
-                                  variant="h6"
-                                  gutterBottom
-                                  sx={{
-                                    fontSize: '1.1rem',
-                                    fontWeight: 600,
-                                    mb: 1,
-                                  }}
-                                >
-                                  {product.name}
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  color="text.secondary"
-                                  sx={{ fontSize: '0.95rem' }}
-                                >
-                                  <b>Available:</b> {product.quantity} (
-                                  {product.unit})
-                                </Typography>
-                              </CardContent>
-                              <CardActions>
-                                <Button
-                                  startIcon={
-                                    isSelected ? <DeleteIcon /> : <AddIcon />
-                                  }
-                                  color={isSelected ? 'error' : 'primary'}
-                                  onClick={() => {
-                                    if (isSelected) {
-                                      const index = items.findIndex(
-                                        item => item.productId === product.id
-                                      );
-                                      if (index !== -1) remove(index);
-                                    } else {
-                                      append({
-                                        productId: product.id,
-                                        quantity: '',
-                                        pricePerUnit: '',
-                                      });
-                                    }
-                                  }}
-                                  disabled={
-                                    !isSelected && product.quantity === 0
-                                  }
-                                  sx={{ fontSize: '0.9rem' }}
-                                >
-                                  {isSelected ? 'Remove' : 'Add to Sale'}
-                                </Button>
-                              </CardActions>
-                              {isSelected && (
-                                <CheckCircleOutlineIcon
-                                  color="primary"
-                                  sx={{
-                                    position: 'absolute',
-                                    top: 8,
-                                    right: 8,
-                                    fontSize: '1.5rem',
-                                  }}
-                                />
-                              )}
-                            </Card>
-                          </Grid>
-                        );
-                      })}
-                    </Grid>
-                    {items.length > 0 && (
-                      <>
-                        <Divider sx={{ my: 3 }} />
-                        <Typography
-                          variant="h6"
-                          gutterBottom
-                          sx={{
-                            fontWeight: 600,
-                            mb: 2,
-                          }}
-                        >
-                          Selected Products
-                        </Typography>
-                        {items.map((item, index) => {
-                          const product = products.find(
-                            p => p.id === item.productId
-                          );
-                          if (!product) return null;
-                          return (
-                            <Fragment key={item.productId}>
-                              <Stack
-                                direction={{ xs: 'column', md: 'row' }}
-                                spacing={{ xs: 2 }}
-                                alignItems={{ xs: 'flex-start', md: 'center' }}
-                                justifyContent={{
-                                  xs: 'flex-start',
-                                  md: 'space-between',
-                                }}
-                                sx={{ width: '100%' }}
-                              >
-                                <Typography
-                                  sx={{
-                                    fontWeight: 500,
-                                    fontSize: { xs: '1.1rem', md: '1rem' },
-                                    alignSelf: 'start',
-                                  }}
-                                  variant="subtitle1"
-                                >
-                                  {product.name}
-                                </Typography>
-                                <Stack
-                                  direction={{ xs: 'row' }}
-                                  spacing={2}
-                                  alignItems="flex-start"
-                                  sx={{
-                                    width: { xs: '100%', md: 'auto' },
-                                    flexWrap: { xs: 'wrap', md: 'nowrap' },
-                                  }}
-                                >
-                                  <TextFieldElement
-                                    name={`items.${index}.quantity`}
-                                    control={control}
-                                    label="Quantity"
-                                    type="number"
-                                    required
-                                    sx={{
-                                      width: { xs: 'calc(50% - 8px)', md: 150 },
+                              Selected Products
+                            </Typography>
+                            {items.map((item, index) => {
+                              const product = products.find(
+                                p => p.id === item.productId
+                              );
+                              if (!product) return null;
+                              return (
+                                <Fragment key={item.productId}>
+                                  <Stack
+                                    direction={{ xs: 'column', md: 'row' }}
+                                    spacing={{ xs: 2 }}
+                                    alignItems={{
+                                      xs: 'flex-start',
+                                      md: 'center',
                                     }}
-                                    rules={{
-                                      required: 'Quantity is required',
-                                      min: {
-                                        value: 1,
-                                        message: 'Must be at least 1',
-                                      },
-                                      validate: value => {
-                                        if (!product) return true;
-                                        if (
-                                          value === '' ||
-                                          isNaN(Number(value))
-                                        )
-                                          return 'Enter a valid number';
-                                        if (Number(value) > product.quantity) {
-                                          return `Cannot sell more than available (${product.quantity})`;
-                                        }
-                                        return true;
-                                      },
+                                    justifyContent={{
+                                      xs: 'flex-start',
+                                      md: 'space-between',
                                     }}
-                                    FormHelperTextProps={{
-                                      sx: {
-                                        minHeight: 22,
-                                        fontSize: '0.8rem',
-                                      },
-                                    }}
-                                  />
-                                  <TextFieldElement
-                                    name={`items.${index}.pricePerUnit`}
-                                    control={control}
-                                    label={`Price per ${product.unit} ($)`}
-                                    type="number"
-                                    required
-                                    sx={{
-                                      width: { xs: 'calc(50% - 8px)', md: 180 },
-                                    }}
-                                    rules={{
-                                      required: 'Price is required',
-                                      min: {
-                                        value: 0.01,
-                                        message: 'Must be at least $0.01',
-                                      },
-                                      validate: value => {
-                                        if (
-                                          value === '' ||
-                                          isNaN(Number(value))
-                                        )
-                                          return 'Enter a valid price';
-                                        return true;
-                                      },
-                                    }}
-                                    FormHelperTextProps={{
-                                      sx: {
-                                        minHeight: 22,
-                                        fontSize: '0.8rem',
-                                      },
-                                    }}
-                                  />
-                                  <Box
-                                    sx={{
-                                      display: 'flex',
-                                      justifyContent: 'flex-end',
-                                      width: { xs: '100%', md: 'auto' },
-                                      mt: { xs: 3, md: 0 },
-                                    }}
+                                    sx={{ width: '100%' }}
                                   >
-                                    <IconButton
-                                      aria-label="Remove product"
-                                      onClick={() => remove(index)}
+                                    <Typography
+                                      sx={{
+                                        fontWeight: 500,
+                                        fontSize: { xs: '1.1rem', md: '1rem' },
+                                        alignSelf: 'start',
+                                      }}
+                                      variant="subtitle1"
                                     >
-                                      <DeleteIcon />
-                                    </IconButton>
-                                  </Box>
-                                </Stack>
-                              </Stack>
-                              <Divider sx={{ my: 2 }} />
-                            </Fragment>
-                          );
-                        })}
+                                      {product.name}
+                                    </Typography>
+                                    <Stack
+                                      direction={{ xs: 'row' }}
+                                      spacing={2}
+                                      alignItems="flex-start"
+                                      sx={{
+                                        width: { xs: '100%', md: 'auto' },
+                                        flexWrap: { xs: 'wrap', md: 'nowrap' },
+                                      }}
+                                    >
+                                      <TextFieldElement
+                                        name={`items.${index}.quantity`}
+                                        control={control}
+                                        label="Quantity"
+                                        type="number"
+                                        required
+                                        sx={{
+                                          width: {
+                                            xs: 'calc(50% - 8px)',
+                                            md: 150,
+                                          },
+                                        }}
+                                        rules={{
+                                          required: 'Quantity is required',
+                                          min: {
+                                            value: 1,
+                                            message: 'Must be at least 1',
+                                          },
+                                          validate: value => {
+                                            if (!product) return true;
+                                            if (
+                                              value === '' ||
+                                              isNaN(Number(value))
+                                            )
+                                              return 'Enter a valid number';
+                                            if (
+                                              Number(value) > product.quantity
+                                            ) {
+                                              return `Cannot sell more than available (${product.quantity})`;
+                                            }
+                                            return true;
+                                          },
+                                        }}
+                                        FormHelperTextProps={{
+                                          sx: {
+                                            minHeight: 22,
+                                            fontSize: '0.8rem',
+                                          },
+                                        }}
+                                      />
+                                      <TextFieldElement
+                                        name={`items.${index}.pricePerUnit`}
+                                        control={control}
+                                        label={`Price per ${product.unit} ($)`}
+                                        type="number"
+                                        required
+                                        sx={{
+                                          width: {
+                                            xs: 'calc(50% - 8px)',
+                                            md: 180,
+                                          },
+                                        }}
+                                        rules={{
+                                          required: 'Price is required',
+                                          min: {
+                                            value: 0.01,
+                                            message: 'Must be at least $0.01',
+                                          },
+                                          validate: value => {
+                                            if (
+                                              value === '' ||
+                                              isNaN(Number(value))
+                                            )
+                                              return 'Enter a valid price';
+                                            return true;
+                                          },
+                                        }}
+                                        FormHelperTextProps={{
+                                          sx: {
+                                            minHeight: 22,
+                                            fontSize: '0.8rem',
+                                          },
+                                        }}
+                                      />
+                                      <Box
+                                        sx={{
+                                          display: 'flex',
+                                          justifyContent: 'flex-end',
+                                          width: { xs: '100%', md: 'auto' },
+                                          mt: { xs: 3, md: 0 },
+                                        }}
+                                      >
+                                        <IconButton
+                                          aria-label="Remove product"
+                                          onClick={() => remove(index)}
+                                        >
+                                          <DeleteIcon />
+                                        </IconButton>
+                                      </Box>
+                                    </Stack>
+                                  </Stack>
+                                  <Divider sx={{ my: 2 }} />
+                                </Fragment>
+                              );
+                            })}
+                          </>
+                        )}
                       </>
                     )}
                   </>
