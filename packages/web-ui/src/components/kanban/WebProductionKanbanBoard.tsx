@@ -13,7 +13,7 @@ import {
   WebProductData,
 } from './WebAvailableProductCard';
 
-export interface KanbanColumn {
+export interface WebKanbanColumn {
   id: string;
   title: string;
   items: (WebProductData | WebProductionCardData)[];
@@ -60,7 +60,7 @@ export function WebProductionKanbanBoard({
   };
 
   const organizeItemsByStatus = () => {
-    const columns: Record<string, KanbanColumn> = {};
+    const columns: Record<string, WebKanbanColumn> = {};
 
     // Initialize columns
     COLUMN_DEFINITIONS.forEach(col => {

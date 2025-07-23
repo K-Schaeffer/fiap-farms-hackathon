@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { BreadcrumbsData } from '@fiap-farms/web-ui';
+import { WebBreadcrumbsData } from '@fiap-farms/web-ui';
 
-export function useBreadcrumbs(): BreadcrumbsData {
+export function useBreadcrumbs(): WebBreadcrumbsData {
   const router = useRouter();
 
   return useMemo(() => {

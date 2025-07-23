@@ -9,26 +9,26 @@ import {
 } from '@mui/material';
 import { FormContainer, TextFieldElement } from 'react-hook-form-mui';
 
-export interface HarvestFormData {
+export interface WebHarvestFormData {
   yieldAmount: number;
 }
 
-export interface HarvestModalProps {
+export interface WebHarvestModalProps {
   open: boolean;
   productName: string;
   onClose: () => void;
-  onConfirm: (data: HarvestFormData) => void;
+  onConfirm: (data: WebHarvestFormData) => void;
   loading?: boolean;
 }
 
-export function HarvestModal({
+export function WebHarvestModal({
   open,
   productName,
   onClose,
   onConfirm,
   loading = false,
-}: HarvestModalProps) {
-  const defaultValues: HarvestFormData = {
+}: WebHarvestModalProps) {
+  const defaultValues: WebHarvestFormData = {
     yieldAmount: 150,
   };
 
@@ -36,7 +36,7 @@ export function HarvestModal({
     onClose();
   };
 
-  const handleSubmit = (data: HarvestFormData) => {
+  const handleSubmit = (data: WebHarvestFormData) => {
     onConfirm(data);
   };
 

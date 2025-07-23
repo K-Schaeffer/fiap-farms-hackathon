@@ -11,7 +11,7 @@ import {
   HarvestProductionItemUseCase,
   UpdateProductionStatusUseCase,
 } from '@fiap-farms/core';
-import { PlantingFormData, HarvestFormData } from '@fiap-farms/web-ui';
+import { WebPlantingFormData, WebHarvestFormData } from '@fiap-farms/web-ui';
 import { getFirebaseDb } from '@fiap-farms/firebase';
 import { useAuth } from '@fiap-farms/auth-store';
 
@@ -93,7 +93,7 @@ export function useProductionManagement() {
   }, [loadData]);
 
   const startProductionWithForm = useCallback(
-    async (productId: string, data: PlantingFormData) => {
+    async (productId: string, data: WebPlantingFormData) => {
       try {
         const { startNewProductionUseCase } = getRepositories();
         const product = products.find(p => p._id === productId);
@@ -159,7 +159,7 @@ export function useProductionManagement() {
   );
 
   const harvestItemWithForm = useCallback(
-    async (itemId: string, data: HarvestFormData) => {
+    async (itemId: string, data: WebHarvestFormData) => {
       try {
         const { harvestProductionItemUseCase } = getRepositories();
 

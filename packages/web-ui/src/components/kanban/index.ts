@@ -5,7 +5,7 @@ export {
 } from './WebProductionKanbanBoard';
 
 export type {
-  KanbanColumn,
+  WebKanbanColumn,
   WebProductionKanbanBoardProps,
   WebProductionCardProps,
   WebAvailableProductCardProps,

@@ -7,10 +7,10 @@ import {
   WebProductData,
 } from '../kanban';
 import {
-  PlantingModal,
-  PlantingFormData,
-  HarvestModal,
-  HarvestFormData,
+  WebPlantingModal,
+  WebPlantingFormData,
+  WebHarvestModal,
+  WebHarvestFormData,
 } from '../modals';
 
 export interface WebProductionManagementProps {
@@ -18,7 +18,7 @@ export interface WebProductionManagementProps {
   productionItems: WebProductionCardData[];
   onStartProductionWithForm: (
     productId: string,
-    data: PlantingFormData
+    data: WebPlantingFormData
   ) => Promise<void>;
   onUpdateStatus: (
     itemId: string,
@@ -26,7 +26,7 @@ export interface WebProductionManagementProps {
   ) => Promise<void>;
   onHarvestItemWithForm: (
     itemId: string,
-    data: HarvestFormData
+    data: WebHarvestFormData
   ) => Promise<void>;
   onReorderItems: (
     sourceIndex: number,
@@ -138,7 +138,7 @@ export function WebProductionManagement({
     setPlantingModal({ open: false, product: null });
   };
 
-  const handlePlantingConfirm = async (data: PlantingFormData) => {
+  const handlePlantingConfirm = async (data: WebPlantingFormData) => {
     if (!plantingModal.product) return;
 
     try {
@@ -157,7 +157,7 @@ export function WebProductionManagement({
     setHarvestModal({ open: false, item: null });
   };
 
-  const handleHarvestConfirm = async (data: HarvestFormData) => {
+  const handleHarvestConfirm = async (data: WebHarvestFormData) => {
     if (!harvestModal.item) return;
 
     try {
@@ -177,7 +177,7 @@ export function WebProductionManagement({
         onDragEnd={handleDragEnd}
       />
 
-      <PlantingModal
+      <WebPlantingModal
         open={plantingModal.open}
         productName={plantingModal.product?.name || ''}
         onClose={handlePlantingModalClose}
@@ -185,7 +185,7 @@ export function WebProductionManagement({
         loading={isPlanting}
       />
 
-      <HarvestModal
+      <WebHarvestModal
         open={harvestModal.open}
         productName={harvestModal.item?.productName || ''}
         onClose={handleHarvestModalClose}

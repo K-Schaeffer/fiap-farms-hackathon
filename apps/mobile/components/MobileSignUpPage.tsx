@@ -9,7 +9,7 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { Text, TextInput, Button, Card, Snackbar } from 'react-native-paper';
 
-interface SignUpFormData {
+interface WebSignUpFormData {
   name: string;
   email: string;
   password: string;
@@ -38,7 +38,7 @@ export function MobileSignUpPage({
     handleSubmit,
     watch,
     formState: { errors, isValid },
-  } = useForm<SignUpFormData>({
+  } = useForm<WebSignUpFormData>({
     mode: 'onChange',
     defaultValues: {
       name: '',
@@ -56,7 +56,7 @@ export function MobileSignUpPage({
     }
   }, [error]);
 
-  const onSubmit = async (data: SignUpFormData) => {
+  const onSubmit = async (data: WebSignUpFormData) => {
     await onSignUp(data.name, data.email, data.password);
   };
 

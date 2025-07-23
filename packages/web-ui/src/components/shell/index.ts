@@ -20,7 +20,7 @@ export interface WebSideMenuProps {
   onLogout?: () => Promise<void>;
   currentPath?: string;
   onNavigate?: (href: string) => void;
-  navigationItems: NavigationItem[];
+  navigationItems: WebNavigationItem[];
 }
 
 export interface WebOptionsMenuProps {
@@ -33,32 +33,32 @@ export interface WebAppNavbarProps {
   title?: string;
   currentPath?: string;
   onNavigate?: (href: string) => void;
-  navigationItems: NavigationItem[];
+  navigationItems: WebNavigationItem[];
 }
 
-export interface BreadcrumbItem {
+export interface WebBreadcrumbItem {
   label: string;
   href?: string;
 }
 
-export interface BreadcrumbsData {
-  items: BreadcrumbItem[];
+export interface WebBreadcrumbsData {
+  items: WebBreadcrumbItem[];
   title: string;
 }
 
 export interface WebHeaderProps {
-  breadcrumbs?: BreadcrumbsData;
+  breadcrumbs?: WebBreadcrumbsData;
 }
 
 export interface WebMenuContentProps {
   currentPath?: string;
   onNavigate?: (href: string) => void;
-  navigationItems: NavigationItem[];
+  navigationItems: WebNavigationItem[];
 }
 
-export interface NavigationItem {
+export interface WebNavigationItem {
   text: string;
   icon: React.ReactNode;
   href?: string;
-  children?: NavigationItem[];
+  children?: WebNavigationItem[];
 }
