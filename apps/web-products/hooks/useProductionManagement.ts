@@ -8,7 +8,6 @@ import {
   GetProductsUseCase,
   GetProductionOverviewUseCase,
   StartNewProductionUseCase,
-  HarvestProductionItemUseCase,
   UpdateProductionStatusUseCase,
 } from '@fiap-farms/core';
 import { WebPlantingFormData, WebHarvestFormData } from '@fiap-farms/web-ui';
@@ -38,9 +37,6 @@ export function useProductionManagement() {
         productionRepo
       ),
       startNewProductionUseCase: new StartNewProductionUseCase(productionRepo),
-      harvestProductionItemUseCase: new HarvestProductionItemUseCase(
-        productionRepo
-      ),
       updateProductionStatusUseCase: new UpdateProductionStatusUseCase(
         productionRepo
       ),
@@ -161,26 +157,17 @@ export function useProductionManagement() {
   const harvestItemWithForm = useCallback(
     async (itemId: string, data: WebHarvestFormData) => {
       try {
-        const { harvestProductionItemUseCase } = getRepositories();
+        const { updateProductionStatusUseCase } = getRepositories();
 
-        await harvestProductionItemUseCase.execute({
+        const updatedItem = await updateProductionStatusUseCase.execute({
           productionItemId: itemId,
+          newStatus: 'harvested',
           yieldAmount: data.yieldAmount,
         });
 
-        // Update local state optimistically
+        // Update local state with the returned item
         setProductionItems(prev =>
-          prev.map(item =>
-            item._id === itemId
-              ? {
-                  ...item,
-                  status: 'harvested' as const,
-                  harvestedDate: new Date(),
-                  yield: data.yieldAmount,
-                  updatedAt: new Date(),
-                }
-              : item
-          )
+          prev.map(item => (item._id === itemId ? updatedItem : item))
         );
       } catch (err) {
         console.error('Error harvesting item with form:', err);

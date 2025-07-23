@@ -7,7 +7,12 @@ export interface SalesDashboardData {
   totalRevenueLiquid: number;
   bestMonth: { month: string; amount: number; count: number };
   salesHistory: Sale[];
-  salesByMonth: { month: string; amount: number; count: number }[];
+  salesByMonth: {
+    month: string;
+    amount: number;
+    liquidAmount: number;
+    count: number;
+  }[];
   topClients: { client: string; totalAmount: number; salesCount: number }[];
 }
 
@@ -69,15 +74,23 @@ export class GetSalesDashboardDataUseCase {
 
   private groupSalesByMonth(
     sales: Sale[]
-  ): { month: string; amount: number; count: number }[] {
-    const monthMap = new Map<string, { amount: number; count: number }>();
+  ): { month: string; amount: number; liquidAmount: number; count: number }[] {
+    const monthMap = new Map<
+      string,
+      { amount: number; liquidAmount: number; count: number }
+    >();
 
     sales.forEach(sale => {
       const monthKey = sale.saleDate.toISOString().substring(0, 7); // YYYY-MM format
-      const existing = monthMap.get(monthKey) || { amount: 0, count: 0 };
+      const existing = monthMap.get(monthKey) || {
+        amount: 0,
+        liquidAmount: 0,
+        count: 0,
+      };
 
       monthMap.set(monthKey, {
         amount: existing.amount + sale.totalSaleAmount,
+        liquidAmount: existing.liquidAmount + (sale.totalSaleProfit || 0),
         count: existing.count + 1,
       });
     });

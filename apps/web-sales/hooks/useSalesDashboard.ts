@@ -5,11 +5,31 @@ import {
   FirestoreSaleRepository,
 } from '@fiap-farms/core';
 import { useAuth } from '@fiap-farms/shared-stores';
-import { WebSalesDashboardProps } from '@fiap-farms/web-ui';
-import { transformSalesDashboardToUI } from '../utils/transformers';
+import {
+  transformSalesDashboardToUI,
+  transformSalesDashboardStats,
+  transformSalesTrendData,
+  transformSalesDistributionData,
+  type SalesDashboardStats,
+  type ChartTrendData,
+  type ChartDistributionData,
+} from '../utils/transformers';
+
+interface EnhancedSalesDashboard {
+  totalSales: number;
+  totalRevenue: number;
+  totalRevenueLiquid: number;
+  bestMonth: string;
+  salesByMonth: { month: string; amount: number; count: number }[];
+  topClients: { client: string; totalAmount: number; salesCount: number }[];
+  salesHistory: { client: string; saleDate: string; totalSaleAmount: number }[];
+  dashboardStats: SalesDashboardStats;
+  trendData: ChartTrendData;
+  distributionData: ChartDistributionData[];
+}
 
 export function useSalesDashboard() {
-  const [dashboard, setDashboard] = useState<WebSalesDashboardProps | null>(
+  const [dashboard, setDashboard] = useState<EnhancedSalesDashboard | null>(
     null
   );
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,8 +52,19 @@ export function useSalesDashboard() {
       const data = await getSalesDashboardData.execute(OWNER_ID);
 
       const dashboardData = transformSalesDashboardToUI(data);
+      const dashboardStats = transformSalesDashboardStats(data);
+      const trendData = transformSalesTrendData(data.salesByMonth);
+      const distributionData = transformSalesDistributionData(
+        data.topClients,
+        data.totalRevenue
+      );
 
-      setDashboard(dashboardData);
+      setDashboard({
+        ...dashboardData,
+        dashboardStats,
+        trendData,
+        distributionData,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load dashboard');
     } finally {

@@ -84,15 +84,16 @@ export default function NewSale() {
         Check and analyze sales data
       </Typography>
 
-      <WebSalesDashboard
-        totalSales={dashboard?.totalSales || 0}
-        totalRevenue={dashboard?.totalRevenue || 0}
-        totalRevenueLiquid={dashboard?.totalRevenueLiquid || 0}
-        bestMonth={dashboard?.bestMonth || 'N/A'}
-        salesByMonth={dashboard?.salesByMonth || []}
-        topClients={dashboard?.topClients || []}
-        salesHistory={dashboard?.salesHistory || []}
-      />
+      {dashboard?.dashboardStats &&
+      dashboard?.trendData &&
+      dashboard?.distributionData ? (
+        <WebSalesDashboard
+          salesHistory={dashboard.salesHistory || []}
+          dashboardStats={dashboard.dashboardStats}
+          trendData={dashboard.trendData}
+          distributionData={dashboard.distributionData}
+        />
+      ) : null}
     </Box>
   );
 }

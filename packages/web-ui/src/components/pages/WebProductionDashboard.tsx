@@ -18,120 +18,77 @@ import { getWebUnitColor } from '../kanban/WebAvailableProductCard';
 import Chip from '@mui/material/Chip';
 import { useTheme } from '@mui/material/styles';
 
+export interface ProductionDashboardStats {
+  planted: number;
+  harvested: number;
+  inProduction: number;
+  overdueHarvests: number;
+}
+
+export interface ChartTrendData {
+  months: string[];
+  planted: number[];
+  harvested: number[];
+}
+
+export interface ChartDistributionData {
+  label: string;
+  value: number;
+  color: string;
+}
+
 export interface WebProductionDashboardProps {
   productionItems: WebProductionCardData[];
-  distribution: { productName: string; percentage: number }[];
-  trend: { year: number; month: number; count: number }[];
-  harvestedTrend: { year: number; month: number; count: number }[];
+  dashboardStats: ProductionDashboardStats;
+  trendData: ChartTrendData;
+  distributionData: ChartDistributionData[];
 }
 
 export function WebProductionDashboard({
   productionItems,
-  distribution,
-  trend,
-  harvestedTrend,
+  dashboardStats,
+  trendData,
+  distributionData,
 }: WebProductionDashboardProps) {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
-  // Calculate stats for overview cards
-  const currentYear = new Date().getFullYear();
-  const inProductionCount = productionItems.filter(
-    item => item.status === 'in_production'
-  ).length;
-  const plantedThisYearCount = productionItems.filter(
-    item =>
-      item.status === 'planted' &&
-      new Date(item.plantedDate).getFullYear() === currentYear
-  ).length;
-  const harvestedThisYearCount = productionItems.filter(
-    item =>
-      item.status === 'harvested' &&
-      new Date(item.expectedHarvestDate).getFullYear() === currentYear
-  ).length;
-  const overdueHarvestsCount = productionItems.filter(
-    item =>
-      item.status !== 'harvested' &&
-      new Date(item.expectedHarvestDate) < new Date()
-  ).length;
 
   const productionStats: WebStatCardProps[] = [
     {
       title: 'Planted',
-      value: plantedThisYearCount.toString(),
+      value: dashboardStats.planted.toString(),
       interval: 'Current',
       trend: 'neutral',
       color: 'success',
     },
     {
       title: 'Harvested',
-      value: harvestedThisYearCount.toString(),
+      value: dashboardStats.harvested.toString(),
       interval: 'Current',
       trend: 'neutral',
       color: 'info',
     },
     {
       title: 'In Production',
-      value: inProductionCount.toString(),
+      value: dashboardStats.inProduction.toString(),
       interval: 'Current',
       trend: 'neutral',
       color: 'warning',
     },
     {
       title: 'Overdue Harvests',
-      value: overdueHarvestsCount.toString(),
+      value: dashboardStats.overdueHarvests.toString(),
       interval: 'Current',
       trend: 'neutral',
       color: 'error',
     },
   ];
 
-  // Map trend data to months (assume current year)
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  const trendByMonth = Array(12).fill(0);
-  trend.forEach(item => {
-    if (item.year === currentYear && item.month >= 1 && item.month <= 12) {
-      trendByMonth[item.month - 1] = item.count;
-    }
-  });
-  const harvestedByMonth = Array(12).fill(0);
-  harvestedTrend.forEach(item => {
-    if (item.year === currentYear && item.month >= 1 && item.month <= 12) {
-      harvestedByMonth[item.month - 1] = item.count;
-    }
-  });
-  const productionTrend = trendByMonth;
-  const harvestTrend = harvestedByMonth;
-  // const harvestTrend = Array(12).fill(0); // Placeholder for future harvested trend
-
-  // Map distribution data to chart format and assign random colors
-  const chartColors = [
-    '#ab47bc',
-    '#ff7043',
-    '#26a69a',
-    '#8d6e63',
-    '#42a5f5',
-    '#ffa726',
-    '#66bb6a',
-    '#d4e157',
-  ];
-  const productionDistribution = distribution.map((item, idx) => ({
-    label: item.productName,
-    value: item.percentage,
-    color: chartColors[idx % chartColors.length],
-  }));
+  // Chart data is now pre-transformed from the hook
+  const productionTrend = trendData.planted;
+  const harvestTrend = trendData.harvested;
+  const months = trendData.months;
+  const productionDistribution = distributionData;
 
   const productionColumns: GridColDef[] = [
     { field: 'productName', headerName: 'Product', flex: 1, minWidth: 120 },
@@ -313,13 +270,13 @@ export function WebProductionDashboard({
                     id: 'planted',
                     label: 'Planted',
                     data: productionTrend,
-                    stack: 'A',
+                    stack: 'planted',
                   },
                   {
                     id: 'harvested',
                     label: 'Harvested',
                     data: harvestTrend,
-                    stack: 'A',
+                    stack: 'harvested',
                   },
                 ]}
                 height={250}

@@ -10,9 +10,9 @@ export default function Dashboard() {
     productionItems,
     loading,
     error,
-    distribution,
-    trend,
-    harvestedTrend,
+    dashboardStats,
+    trendData,
+    distributionData,
   } = useProductionDashboard();
 
   if (!user) {
@@ -94,9 +94,9 @@ export default function Dashboard() {
 
       <WebProductionDashboard
         productionItems={productionItems}
-        distribution={distribution}
-        trend={trend}
-        harvestedTrend={harvestedTrend}
+        dashboardStats={dashboardStats}
+        trendData={trendData}
+        distributionData={distributionData}
       />
     </Box>
   );

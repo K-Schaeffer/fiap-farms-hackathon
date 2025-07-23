@@ -11,24 +11,37 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Stack } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-export interface WebSalesDashboardProps {
+export interface SalesDashboardStats {
   totalSales: number;
   totalRevenue: number;
   totalRevenueLiquid: number;
   bestMonth: string;
-  salesByMonth: { month: string; amount: number; count: number }[];
-  topClients: { client: string; totalAmount: number; salesCount: number }[];
+}
+
+export interface ChartTrendData {
+  months: string[];
+  revenue: number[];
+  liquidRevenue: number[];
+}
+
+export interface ChartDistributionData {
+  label: string;
+  value: number;
+  color: string;
+}
+
+export interface WebSalesDashboardProps {
   salesHistory: { client: string; saleDate: string; totalSaleAmount: number }[];
+  dashboardStats: SalesDashboardStats;
+  trendData: ChartTrendData;
+  distributionData: ChartDistributionData[];
 }
 
 export function WebSalesDashboard({
-  totalSales,
-  totalRevenue,
-  totalRevenueLiquid,
-  bestMonth,
-  salesByMonth,
-  topClients,
   salesHistory,
+  dashboardStats,
+  trendData,
+  distributionData,
 }: WebSalesDashboardProps) {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
@@ -36,14 +49,14 @@ export function WebSalesDashboard({
   const salesStats: WebStatCardProps[] = [
     {
       title: 'Sales',
-      value: totalSales.toString(),
+      value: dashboardStats.totalSales.toString(),
       interval: 'This Year',
       trend: 'neutral',
-      color: 'info',
+      color: 'default',
     },
     {
       title: 'Revenue',
-      value: totalRevenue.toLocaleString('en-US', {
+      value: dashboardStats.totalRevenue.toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD',
       }),
@@ -53,64 +66,22 @@ export function WebSalesDashboard({
     },
     {
       title: 'Liquid Revenue',
-      value: totalRevenueLiquid.toLocaleString('en-US', {
+      value: dashboardStats.totalRevenueLiquid.toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD',
       }),
       interval: 'This Year',
       trend: 'neutral',
-      color: 'success',
+      color: 'info',
     },
     {
       title: 'Best Month',
-      value: bestMonth,
+      value: dashboardStats.bestMonth || 'N/A',
       interval: 'This Year',
       trend: 'neutral',
       color: 'default',
     },
   ];
-
-  // Map trend data to months (assume current year)
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  const trendByMonth = Array(12).fill(0);
-
-  salesByMonth.forEach(item => {
-    const monthIndex = months.indexOf(item.month);
-    if (monthIndex !== -1) {
-      trendByMonth[monthIndex] = item.count;
-    }
-  });
-
-  // Map distribution data to chart format and assign random colors
-  const chartColors = [
-    '#ab47bc',
-    '#ff7043',
-    '#26a69a',
-    '#8d6e63',
-    '#42a5f5',
-    '#ffa726',
-    '#66bb6a',
-    '#d4e157',
-  ];
-
-  const salesDistribution = topClients.map((client, idx) => ({
-    label: client.client,
-    value: Number(((client.totalAmount / totalRevenue) * 100).toFixed(2)),
-    color: chartColors[idx % chartColors.length],
-  }));
 
   const salesColumns: GridColDef[] = [
     { field: 'client', headerName: 'Client', flex: 1, minWidth: 120 },
@@ -240,7 +211,7 @@ export function WebSalesDashboard({
                 xAxis={[
                   {
                     scaleType: 'point',
-                    data: salesByMonth.map(item => item.month),
+                    data: trendData.months,
                     height: 24,
                   },
                 ]}
@@ -248,15 +219,23 @@ export function WebSalesDashboard({
                 series={[
                   {
                     id: 'revenue',
-                    label: 'Revenue',
-                    data: salesByMonth.map(item => item.amount ?? 0),
+                    label: 'Total Revenue',
+                    data: trendData.revenue,
                     color: theme.palette.success.main,
+                    area: true,
+                  },
+                  {
+                    id: 'liquidRevenue',
+                    label: 'Liquid Revenue',
+                    data: trendData.liquidRevenue,
+                    color: theme.palette.info.main,
+                    area: true,
                   },
                 ]}
                 height={250}
                 margin={{ left: 0, right: 0, top: 20, bottom: 0 }}
                 grid={{ horizontal: true }}
-                hideLegend
+                hideLegend={false}
               />
             </CardContent>
           </Card>
@@ -304,7 +283,7 @@ export function WebSalesDashboard({
                 <PieChart
                   series={[
                     {
-                      data: salesDistribution,
+                      data: distributionData,
                       innerRadius: 60,
                       outerRadius: isLargeScreen ? 100 : 70,
                       paddingAngle: 2,
@@ -327,7 +306,7 @@ export function WebSalesDashboard({
                     width: '100%',
                   }}
                 >
-                  {salesDistribution.map(item => (
+                  {distributionData.map(item => (
                     <Stack
                       key={item.label}
                       direction="row"
