@@ -1,5 +1,16 @@
 import { InventoryItem, SalesDashboardData } from '@fiap-farms/core';
-import { WebSaleProduct, WebSalesDashboardProps } from '@fiap-farms/web-ui';
+import { WebSaleProduct } from '@fiap-farms/web-ui';
+
+// Local interface for dashboard props (matches WebSalesDashboardProps from web-ui)
+interface WebSalesDashboardProps {
+  totalSales: number;
+  totalRevenue: number;
+  totalRevenueLiquid: number;
+  bestMonth: string;
+  salesByMonth: { month: string; amount: number; count: number }[];
+  topClients: { client: string; totalAmount: number; salesCount: number }[];
+  salesHistory: { client: string; saleDate: string; totalSaleAmount: number }[];
+}
 
 export function transformInventoryItemToUI(
   inventory: InventoryItem
@@ -46,4 +57,78 @@ export function transformSalesDashboardToUI(
       })),
     })),
   };
+}
+
+// New dashboard-specific transformers
+export interface SalesDashboardStats {
+  totalSales: number;
+  totalRevenue: number;
+  totalRevenueLiquid: number;
+  bestMonth: string;
+}
+
+export interface ChartTrendData {
+  months: string[];
+  revenue: number[];
+  liquidRevenue: number[];
+}
+
+export interface ChartDistributionData {
+  label: string;
+  value: number;
+  color: string;
+}
+
+const CHART_COLORS = [
+  '#ab47bc',
+  '#ff7043',
+  '#26a69a',
+  '#8d6e63',
+  '#42a5f5',
+  '#ffa726',
+  '#66bb6a',
+  '#d4e157',
+];
+
+export function transformSalesDashboardStats(
+  data: SalesDashboardData
+): SalesDashboardStats {
+  return {
+    totalSales: data.totalSales,
+    totalRevenue: data.totalRevenue,
+    totalRevenueLiquid: data.totalRevenueLiquid,
+    bestMonth: data.bestMonth.month,
+  };
+}
+
+export function transformSalesTrendData(
+  salesByMonth: Array<{
+    month: string;
+    amount: number;
+    liquidAmount: number;
+    count: number;
+  }>
+): ChartTrendData {
+  // Use direct data mapping instead of filling array with 0s
+  // This preserves the actual months that have data
+  return {
+    months: salesByMonth.map(item => item.month),
+    revenue: salesByMonth.map(item => item.amount ?? 0),
+    liquidRevenue: salesByMonth.map(item => item.liquidAmount ?? 0),
+  };
+}
+
+export function transformSalesDistributionData(
+  topClients: Array<{
+    client: string;
+    totalAmount: number;
+    salesCount: number;
+  }>,
+  totalRevenue: number
+): ChartDistributionData[] {
+  return topClients.map((client, idx) => ({
+    label: client.client,
+    value: Number(((client.totalAmount / totalRevenue) * 100).toFixed(2)),
+    color: CHART_COLORS[idx % CHART_COLORS.length],
+  }));
 }

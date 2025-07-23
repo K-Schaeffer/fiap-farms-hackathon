@@ -2,15 +2,19 @@ import { useState, useEffect, useCallback } from 'react';
 import {
   FirestoreProductionRepository,
   GetProductionOverviewUseCase,
-  GetProductionDistributionUseCase,
-  GetProductionTrendUseCase,
+  GetProductionDashboardDataUseCase,
   ProductionItem,
   ProductionDistributionItem,
   ProductionTrendItem,
 } from '@fiap-farms/core';
 import { getFirebaseDb } from '@fiap-farms/firebase';
 import { useAuth } from '@fiap-farms/shared-stores';
-import { transformProductionItemsToUI } from '../utils/transformers';
+import {
+  transformProductionItemsToUI,
+  transformProductionDashboardStats,
+  transformProductionTrendData,
+  transformProductionDistributionData,
+} from '../utils/transformers';
 
 export function useProductionDashboard() {
   const [productionItems, setProductionItems] = useState<ProductionItem[]>([]);
@@ -34,10 +38,9 @@ export function useProductionDashboard() {
       getProductionOverviewUseCase: new GetProductionOverviewUseCase(
         productionRepo
       ),
-      getProductionDistributionUseCase: new GetProductionDistributionUseCase(
+      getProductionDashboardDataUseCase: new GetProductionDashboardDataUseCase(
         productionRepo
       ),
-      getProductionTrendUseCase: new GetProductionTrendUseCase(productionRepo),
     };
   };
 
@@ -51,15 +54,12 @@ export function useProductionDashboard() {
       setError(null);
       const {
         getProductionOverviewUseCase,
-        getProductionDistributionUseCase,
-        getProductionTrendUseCase,
+        getProductionDashboardDataUseCase,
       } = getRepositories();
-      const [productionOverview, fetchedDistribution, fetchedTrends] =
-        await Promise.all([
-          getProductionOverviewUseCase.execute(OWNER_ID),
-          getProductionDistributionUseCase.execute(OWNER_ID),
-          getProductionTrendUseCase.execute(OWNER_ID),
-        ]);
+      const [productionOverview, dashboardData] = await Promise.all([
+        getProductionOverviewUseCase.execute(OWNER_ID),
+        getProductionDashboardDataUseCase.execute(OWNER_ID),
+      ]);
       // Combine all production items from overview
       const allProductionItems = [
         ...productionOverview.plantedItems,
@@ -67,9 +67,9 @@ export function useProductionDashboard() {
         ...productionOverview.harvestedItems,
       ];
       setProductionItems(allProductionItems);
-      setDistribution(fetchedDistribution);
-      setTrend(fetchedTrends.planted);
-      setHarvestedTrend(fetchedTrends.harvested);
+      setDistribution(dashboardData.distribution);
+      setTrend(dashboardData.trends.planted);
+      setHarvestedTrend(dashboardData.trends.harvested);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load data');
     } finally {
@@ -83,12 +83,15 @@ export function useProductionDashboard() {
 
   // Transform for UI
   const uiProductionItems = transformProductionItemsToUI(productionItems);
+  const dashboardStats = transformProductionDashboardStats(productionItems);
+  const trendData = transformProductionTrendData(trend, harvestedTrend);
+  const distributionData = transformProductionDistributionData(distribution);
 
   return {
     productionItems: uiProductionItems,
-    distribution,
-    trend,
-    harvestedTrend,
+    dashboardStats,
+    trendData,
+    distributionData,
     loading,
     error,
     refresh: loadData,
