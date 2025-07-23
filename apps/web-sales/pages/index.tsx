@@ -82,7 +82,7 @@ export default function Root() {
           >
             {`This app is for internal testing only.`}
             <br />
-            {`To test authentication and integration, please use the shell app.`}
+            {`To test authentication, notification and integration, please use the shell app.`}
             <br />
             {`Account creation is also only available in the shell app.`}
           </Typography>

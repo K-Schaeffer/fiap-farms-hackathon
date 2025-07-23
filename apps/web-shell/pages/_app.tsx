@@ -1,11 +1,24 @@
 import type { AppProps } from 'next/app';
 import '@fiap-farms/web-ui/global.css';
 import { AppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter';
-import { useAuthListener, useAuth } from '@fiap-farms/auth-store';
+import {
+  useAuthListener,
+  useAuth,
+  useProductionGoalListener,
+  useSalesGoalListener,
+  useSalesGoal,
+  useProductionGoal,
+  useNotificationReadState,
+} from '@fiap-farms/auth-store';
 import { AuthGuard } from '../components/AuthGuard';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { WebAppNavbar, WebHeader, WebSideMenu } from '@fiap-farms/web-ui';
+import {
+  WebAppNavbar,
+  WebHeader,
+  WebSideMenu,
+  WebNotificationsData,
+} from '@fiap-farms/web-ui';
 import { usePublicRoute } from '../hooks/usePublicRoute';
 import { useBreadcrumbs } from '../hooks/useBreadcrumbs';
 import { useNavigation } from '../hooks/useNavigation';
@@ -15,6 +28,30 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
   const breadcrumbs = useBreadcrumbs();
   const { navigationItems, onNavigate, currentPath } = useNavigation();
+  const { isSalesGoalAchieved, activeSalesGoal } = useSalesGoal();
+  const { isProductionGoalAchieved, activeProductionGoal } =
+    useProductionGoal();
+  const { isNotificationRead, markAsRead } = useNotificationReadState();
+
+  const notifications: WebNotificationsData[] = [];
+
+  if (activeSalesGoal && isSalesGoalAchieved) {
+    const notificationId = `sales-goal-${activeSalesGoal.targetProfit}`;
+    notifications.push({
+      id: notificationId,
+      title: `Achieved sales goal of $${activeSalesGoal.targetProfit}`,
+      isRead: isNotificationRead(notificationId),
+    });
+  }
+
+  if (activeProductionGoal && isProductionGoalAchieved) {
+    const notificationId = `production-goal-${activeProductionGoal.targetYield}`;
+    notifications.push({
+      id: notificationId,
+      title: `Achieved production goal of ${activeProductionGoal.targetYield} units`,
+      isRead: isNotificationRead(notificationId),
+    });
+  }
 
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
@@ -33,7 +70,11 @@ function AppLayout({ children }: { children: React.ReactNode }) {
         onNavigate={onNavigate}
         currentPath={currentPath}
       />
-      <WebHeader breadcrumbs={breadcrumbs} />
+      <WebHeader
+        breadcrumbs={breadcrumbs}
+        notifications={notifications}
+        onNotificationRead={markAsRead}
+      />
       <Box
         component="main"
         sx={{
@@ -62,6 +103,8 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 
 export default function App({ Component, pageProps }: AppProps) {
   useAuthListener();
+  useProductionGoalListener();
+  useSalesGoalListener();
   const { isPublic } = usePublicRoute();
   const breadcrumbs = useBreadcrumbs();
 
