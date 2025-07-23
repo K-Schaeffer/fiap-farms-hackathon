@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Text, TextInput, Button, Card, Snackbar } from 'react-native-paper';
@@ -56,6 +57,11 @@ export function MobileSignUpPage({
     }
   }, [error]);
 
+  // Dismiss keyboard when component mounts to prevent layout issues
+  React.useEffect(() => {
+    Keyboard.dismiss();
+  }, []);
+
   const onSubmit = async (data: MobileSignUpFormData) => {
     await onSignUp(data.name, data.email, data.password);
   };
@@ -64,6 +70,7 @@ export function MobileSignUpPage({
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
     >
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
