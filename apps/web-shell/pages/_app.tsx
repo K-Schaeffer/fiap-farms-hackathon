@@ -113,7 +113,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>FIAP Farms - {breadcrumbs.title}</title>
+        <title>{`FIAP Farms - ${breadcrumbs?.title || 'Loading...'}`}</title>
       </Head>
       <AppCacheProvider {...pageProps}>
         <AuthGuard>

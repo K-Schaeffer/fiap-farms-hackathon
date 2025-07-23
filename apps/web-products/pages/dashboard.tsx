@@ -46,7 +46,7 @@ export default function Dashboard() {
           px: 2,
         }}
       >
-        <CircularProgress size={100} thickness={4} />
+        <CircularProgress size={160} thickness={4} />
       </Box>
     );
   }
