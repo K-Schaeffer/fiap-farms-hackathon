@@ -32,7 +32,8 @@ export const useProductionGoalStore = create<ProductionGoalState>(
     initialize: (ownerId: string) => {
       // Helper function to check achievement
       const checkAchievement = () => {
-        const { activeProductionGoal, currentYield, isProductionGoalAchieved } = get();
+        const { activeProductionGoal, currentYield, isProductionGoalAchieved } =
+          get();
         if (
           !isProductionGoalAchieved &&
           activeProductionGoal &&
@@ -66,7 +67,7 @@ export const useProductionGoalStore = create<ProductionGoalState>(
         );
 
         set({ currentYield: totalYield });
-        
+
         // Check achievement after yield is updated
         checkAchievement();
       });

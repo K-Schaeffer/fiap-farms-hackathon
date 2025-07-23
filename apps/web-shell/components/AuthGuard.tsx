@@ -1,4 +1,4 @@
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 import { useRouter } from 'next/router';
 import { useEffect, ReactNode } from 'react';
 import { CircularProgress, Container } from '@mui/material';

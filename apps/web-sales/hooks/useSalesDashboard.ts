@@ -4,7 +4,7 @@ import {
   GetSalesDashboardDataUseCase,
   FirestoreSaleRepository,
 } from '@fiap-farms/core';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 import { WebSalesDashboardProps } from '@fiap-farms/web-ui';
 import { transformSalesDashboardToUI } from '../utils/transformers';
 

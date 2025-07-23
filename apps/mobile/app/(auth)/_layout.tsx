@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Stack, useRouter } from 'expo-router';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 
 export default function AuthLayout() {
   const { isAuthenticated, isLoading } = useAuth();

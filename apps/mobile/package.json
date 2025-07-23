@@ -8,12 +8,13 @@
     "android": "expo run:android",
     "lint": "eslint ./ --ext .ts,.tsx",
     "lint:fix": "eslint ./ --ext .ts,.tsx --fix",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "clean": "rm -rf .expo .turbo"
   },
   "dependencies": {
     "@fiap-farms/core": "*",
     "@fiap-farms/firebase": "*",
-    "@fiap-farms/auth-store": "*",
+    "@fiap-farms/shared-stores": "*",
     "expo": "~52.0.47",
     "expo-constants": "~17.0.8",
     "expo-linking": "~7.0.5",

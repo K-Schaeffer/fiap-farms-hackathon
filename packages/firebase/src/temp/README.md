@@ -110,9 +110,9 @@ Import trace for requested module:
 ../../packages/firebase/dist/index.mjs
 consume shared module (default) @fiap-farms/firebase@* (singleton) (fallback: .
 ./../packages/firebase/dist/index.mjs)
-../../packages/auth-store/dist/index.mjs
-consume shared module (default) @fiap-farms/auth-store@* (singleton) (fallback:
- ../../packages/auth-store/dist/index.mjs)
+../../packages/shared-stores/dist/index.mjs
+consume shared module (default) @fiap-farms/shared-stores@* (singleton) (fallback:
+ ../../packages/shared-stores/dist/index.mjs)
 ```
 
 On Firebase JS SDK:

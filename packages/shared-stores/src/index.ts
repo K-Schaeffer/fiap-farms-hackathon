@@ -6,7 +6,7 @@ export {
   useSalesGoalListener,
   useProductionGoal,
   useProductionGoalListener,
-  useNotificationReadState
+  useNotificationReadState,
 } from './hooks';
 
 // Types

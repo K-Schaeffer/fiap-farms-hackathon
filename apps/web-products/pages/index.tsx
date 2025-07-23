@@ -1,6 +1,6 @@
 import { Typography, Box, Button } from '@mui/material';
 import Link from 'next/link';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 import { useState } from 'react';
 
 export default function Root() {

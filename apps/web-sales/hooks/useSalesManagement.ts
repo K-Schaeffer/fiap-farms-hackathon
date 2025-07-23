@@ -8,7 +8,7 @@ import {
 } from '@fiap-farms/core';
 import { transformInventoryItemsToUI } from '../utils/transformers';
 import type { WebSaleProduct, WebSaleFormData } from '@fiap-farms/web-ui';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 
 export function useSalesManagement() {
   const [availableProducts, setAvailableProducts] = useState<WebSaleProduct[]>(

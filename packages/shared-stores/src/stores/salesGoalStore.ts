@@ -60,7 +60,7 @@ export const useSalesGoalStore = create<SalesGoalState>((set, get) => ({
       );
 
       set({ currentProfit: totalProfit });
-      
+
       // Check achievement after profit is updated
       checkAchievement();
     });

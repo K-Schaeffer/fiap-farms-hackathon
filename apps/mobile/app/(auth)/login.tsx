@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter, useFocusEffect } from 'expo-router';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 import { MobileLoginPage } from '../../components/MobileLoginPage';
 
 export default function LoginScreen() {

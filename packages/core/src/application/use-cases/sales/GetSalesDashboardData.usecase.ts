@@ -41,8 +41,9 @@ export class GetSalesDashboardDataUseCase {
     );
 
     // Get recent sales (last 10)
-    const salesHistory = sales
-      .sort((a, b) => b.saleDate.getTime() - a.saleDate.getTime())
+    const salesHistory = sales.sort(
+      (a, b) => b.saleDate.getTime() - a.saleDate.getTime()
+    );
 
     // Group sales by month
     const salesByMonth = this.groupSalesByMonth(sales);

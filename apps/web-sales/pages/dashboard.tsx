@@ -1,7 +1,7 @@
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { WebSalesDashboard } from '@fiap-farms/web-ui';
 import { useSalesDashboard } from '../hooks/useSalesDashboard';
-import { useAuth } from '@fiap-farms/auth-store';
+import { useAuth } from '@fiap-farms/shared-stores';
 
 export default function NewSale() {
   const { user } = useAuth();
