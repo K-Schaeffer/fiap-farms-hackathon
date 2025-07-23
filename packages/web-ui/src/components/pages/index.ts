@@ -1,3 +1,4 @@
+export * from './WebSalesDashboard';
 // Page-level components - Complete page layouts and page-specific components
 export { WebLoginPage } from './WebLoginPage';
 export { WebSignUpPage } from './WebSignUpPage';
