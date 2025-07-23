@@ -16,7 +16,6 @@ export function MobileNotificationBadge({
   disabled = false,
 }: MobileNotificationBadgeProps) {
   const handlePress = () => {
-    console.log('Badge pressed! ShowBadge:', showBadge);
     onPress();
   };
 
@@ -46,4 +45,4 @@ export function MobileNotificationBadge({
       />
     </View>
   );
-} 
+}

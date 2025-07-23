@@ -40,7 +40,8 @@ export function WebAppNavbar({
   onNotificationRead,
 }: WebAppNavbarProps) {
   const [open, setOpen] = React.useState(false);
-  const [notificationAnchorEl, setNotificationAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [notificationAnchorEl, setNotificationAnchorEl] =
+    React.useState<null | HTMLElement>(null);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
