@@ -84,8 +84,6 @@ export function useProductionDashboard() {
   // Transform for UI
   const uiProductionItems = transformProductionItemsToUI(productionItems);
 
-  console.log(uiProductionItems);
-
   return {
     productionItems: uiProductionItems,
     distribution,
