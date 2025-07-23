@@ -1,4 +1,3 @@
-export * from './pages';
 // ===== ORGANIZED COMPONENT EXPORTS =====
 
 // Shell components - Navigation, menus, and shell-level UI
@@ -26,30 +25,39 @@ export type {
   WebNotificationsData,
 } from './shell';
 
-// Page components - Complete page layouts
+// Page components - Main application pages and forms
 export {
+  WebProductionDashboard,
+  WebProductionManagement,
+  WebSalesDashboard,
+  WebSaleForm,
   WebLoginPage,
   WebSignUpPage,
-  WebProductionManagement,
-  WebProductionDashboard,
-  WebSaleForm,
 } from './pages';
 
-// Common/reusable components - Shared UI elements
-export { WebStatCard } from './common';
-
-// Kanban components - Production management board
+// Kanban components - Production board and cards
 export {
   WebProductionKanbanBoard,
   WebProductionCard,
   WebAvailableProductCard,
 } from './kanban';
 
-// Modal components - Dialog and form modals
+// Modal components - Dialogs and modal forms
 export { WebPlantingModal, WebHarvestModal } from './modals';
 
-export type { WebStatCardProps } from './common';
+// Common components - Shared UI elements
+export { WebStatCard, WebProductionStatusChip } from './common';
 
+// ===== TYPE EXPORTS =====
+
+// Common component types
+export type {
+  WebStatCardProps,
+  WebProductionStatusChipProps,
+  WebProductionStatus,
+} from './common';
+
+// Kanban types
 export type {
   WebKanbanColumn,
   WebProductionKanbanBoardProps,
@@ -59,6 +67,7 @@ export type {
   WebProductionCardData,
 } from './kanban';
 
+// Modal types
 export type {
   WebPlantingModalProps,
   WebPlantingFormData,
@@ -66,9 +75,21 @@ export type {
   WebHarvestFormData,
 } from './modals';
 
+// Page types
 export type {
   WebProductionManagementProps,
   WebSaleFormData,
   WebSaleFormProps,
   WebSaleProduct,
+  WebSaleItemFormData,
 } from './pages';
+
+// ===== UTILITY FUNCTION EXPORTS =====
+
+// Export Web-prefixed utility functions
+export {
+  getWebProductionStatusColor,
+  getWebProductionStatusLabel,
+} from './common/WebProductionStatusChip';
+
+export { getWebUnitColor } from './kanban/WebAvailableProductCard';

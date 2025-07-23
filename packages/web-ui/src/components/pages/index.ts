@@ -11,4 +11,5 @@ export type {
   WebSaleFormData,
   WebSaleFormProps,
   WebSaleProduct,
+  WebSaleItemFormData,
 } from './WebSaleForm';

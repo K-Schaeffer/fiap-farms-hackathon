@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
-import { MobileStatCard, MobileWebStatCardProps } from './MobileStatCard';
+import { MobileStatCard, MobileStatCardProps } from './MobileStatCard';
 import { MobileCustomizedDataGrid } from './MobileCustomizedDataGrid';
 import { MobileSessionsChart } from './MobileSessionsChart';
 import { MobilePageViewsBarChart } from './MobilePageViewsBarChart';
 import { MobileUserByCountryChart } from './MobileUserByCountryChart';
 
-const data: MobileWebStatCardProps[] = [
+const data: MobileStatCardProps[] = [
   {
     title: 'Users',
     value: '14k',

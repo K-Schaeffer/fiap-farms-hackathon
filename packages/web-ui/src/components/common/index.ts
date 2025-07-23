@@ -5,5 +5,7 @@ export type { WebStatCardProps } from './WebStatCard';
 export { WebProductionStatusChip } from './WebProductionStatusChip';
 export type {
   WebProductionStatusChipProps,
-  ProductionStatus,
+  WebProductionStatus,
+  getWebProductionStatusColor,
+  getWebProductionStatusLabel,
 } from './WebProductionStatusChip';

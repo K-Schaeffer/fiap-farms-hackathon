@@ -14,7 +14,7 @@ export interface MobileNotificationData {
   isRead?: boolean;
 }
 
-interface MobileNotificationMenuProps {
+export interface MobileNotificationMenuProps {
   visible: boolean;
   onDismiss: () => void;
   notifications?: MobileNotificationData[];

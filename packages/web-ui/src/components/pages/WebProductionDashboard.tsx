@@ -12,9 +12,9 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Stack } from '@mui/material';
 import {
   WebProductionStatusChip,
-  ProductionStatus,
+  WebProductionStatus,
 } from '../common/WebProductionStatusChip';
-import { getUnitColor } from '../kanban/WebAvailableProductCard';
+import { getWebUnitColor } from '../kanban/WebAvailableProductCard';
 import Chip from '@mui/material/Chip';
 import { useTheme } from '@mui/material/styles';
 
@@ -141,7 +141,7 @@ export function WebProductionDashboard({
       flex: 1,
       minWidth: 120,
       renderCell: params => (
-        <WebProductionStatusChip status={params.value as ProductionStatus} />
+        <WebProductionStatusChip status={params.value as WebProductionStatus} />
       ),
     },
     { field: 'location', headerName: 'Location', flex: 1, minWidth: 120 },
@@ -216,7 +216,7 @@ export function WebProductionDashboard({
       renderCell: params => (
         <Chip
           label={params.value}
-          color={getUnitColor(params.value)}
+          color={getWebUnitColor(params.value)}
           size="small"
           sx={{ fontSize: '0.75rem', height: 22 }}
         />

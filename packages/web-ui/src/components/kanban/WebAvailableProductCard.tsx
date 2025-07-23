@@ -12,7 +12,7 @@ export interface WebAvailableProductCardProps {
   product: WebProductData;
 }
 
-export function getUnitColor(unit: string) {
+export function getWebUnitColor(unit: string) {
   switch (unit) {
     case 'kg':
       return 'primary';
@@ -80,7 +80,7 @@ export function WebAvailableProductCard({
           </Typography>
           <Chip
             label={product.unit}
-            color={getUnitColor(product.unit)}
+            color={getWebUnitColor(product.unit)}
             size="small"
             sx={{
               fontSize: { xs: '0.7rem', sm: '0.75rem' }, // Standardized with ProductionCard

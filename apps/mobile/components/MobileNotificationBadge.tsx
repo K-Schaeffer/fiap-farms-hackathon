@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { IconButton, Badge } from 'react-native-paper';
 
-interface MobileNotificationBadgeProps {
+export interface MobileNotificationBadgeProps {
   onPress: () => void;
   showBadge?: boolean;
   icon?: string;

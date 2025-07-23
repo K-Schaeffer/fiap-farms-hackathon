@@ -1,11 +1,14 @@
 import { Card, CardContent, Typography, Box, Divider } from '@mui/material';
-import { WebProductionStatusChip } from '../common/WebProductionStatusChip';
+import {
+  WebProductionStatusChip,
+  WebProductionStatus,
+} from '../common/WebProductionStatusChip';
 
 export interface WebProductionCardData {
   id: string;
   productId: string;
   productName: string;
-  status: 'planted' | 'in_production' | 'harvested';
+  status: WebProductionStatus;
   location: string;
   plantedDate: string;
   expectedHarvestDate: string;
