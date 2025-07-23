@@ -2,7 +2,11 @@ import { Slot } from 'expo-router';
 import { PaperProvider, MD3LightTheme } from 'react-native-paper';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useAuthListener } from '@fiap-farms/shared-stores';
+import {
+  useAuthListener,
+  useProductionGoalListener,
+  useSalesGoalListener,
+} from '@fiap-farms/shared-stores';
 
 const theme = {
   ...MD3LightTheme,
@@ -10,6 +14,8 @@ const theme = {
 
 const AppLayout = () => {
   useAuthListener();
+  useProductionGoalListener();
+  useSalesGoalListener();
 
   return (
     <PaperProvider theme={theme}>
