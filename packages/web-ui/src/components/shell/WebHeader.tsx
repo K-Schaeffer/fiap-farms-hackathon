@@ -2,15 +2,40 @@ import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { WebNavbarBreadcrumbs } from './WebNavbarBreadcrumbs';
 import { WebMenuButton } from './WebMenuButton';
-import { WebBreadcrumbsData } from './';
+import { WebHeaderProps } from './';
+import React from 'react';
 
-interface WebHeaderProps {
-  breadcrumbs: WebBreadcrumbsData;
-}
+export function WebHeader({
+  breadcrumbs,
+  notifications,
+  onNotificationRead,
+}: WebHeaderProps) {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
-export function WebHeader({ breadcrumbs }: WebHeaderProps) {
+  const handleNotificationClick = (notification: {
+    id: string;
+    title: string;
+    isRead?: boolean;
+  }) => {
+    if (onNotificationRead && !notification.isRead) {
+      onNotificationRead(notification.id);
+    }
+    handleMenuClose();
+  };
+
+  // Count unread notifications for badge
+  const unreadCount = notifications?.filter(n => !n.isRead).length || 0;
   return (
     <AppBar
       position="fixed"
@@ -51,10 +76,32 @@ export function WebHeader({ breadcrumbs }: WebHeaderProps) {
               pr: 1, // Add right padding for badge
             }}
           >
-            {/* <CustomDatePicker /> */}
-            <WebMenuButton showBadge aria-label="Open notifications">
+            <WebMenuButton showBadge={unreadCount > 0} onClick={handleMenuOpen}>
               <NotificationsRoundedIcon />
             </WebMenuButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleMenuClose}
+              disableScrollLock
+            >
+              {notifications && notifications.length > 0 ? (
+                notifications.map((notification, index) => (
+                  <MenuItem
+                    key={notification.id || index}
+                    onClick={() => handleNotificationClick(notification)}
+                    sx={{
+                      fontWeight: notification.isRead ? 'normal' : 'bold',
+                      opacity: notification.isRead ? 0.7 : 1,
+                    }}
+                  >
+                    {notification.title}
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem disabled>No new notifications</MenuItem>
+              )}
+            </Menu>
           </Stack>
         </Stack>
       </Toolbar>
