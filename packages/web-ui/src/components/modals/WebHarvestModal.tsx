@@ -105,7 +105,7 @@ export function WebHarvestModal({
             >
               <Typography variant="body2">
                 <strong>Note:</strong> The harvest date will be set to today (
-                {new Date().toLocaleDateString()}).
+                {new Date().toLocaleDateString('en-US')}).
               </Typography>
             </Box>
           </Box>

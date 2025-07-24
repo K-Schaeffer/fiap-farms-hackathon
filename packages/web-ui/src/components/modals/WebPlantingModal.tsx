@@ -158,7 +158,7 @@ export function WebPlantingModal({
               >
                 <Typography variant="body2">
                   <strong>Note:</strong> The planted date will be set to today (
-                  {new Date().toLocaleDateString()}).
+                  {new Date().toLocaleDateString('en-US')}).
                 </Typography>
               </Box>
             </Box>

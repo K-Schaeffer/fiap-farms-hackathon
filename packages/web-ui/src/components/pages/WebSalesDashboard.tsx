@@ -92,7 +92,7 @@ export function WebSalesDashboard({
       minWidth: 150,
       renderCell: params => {
         const date = new Date(params.value);
-        return date.toLocaleString('default', {
+        return date.toLocaleString('en-US', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
