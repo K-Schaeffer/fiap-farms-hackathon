@@ -6,4 +6,4 @@ export { MobileProductsWelcome } from './MobileProductsWelcome';
 
 // Export types
 export type { MobileLoginFormData, MobileLoginProps } from './MobileLogin';
-export type { MobileSignUpFormData, MobileSignUpProps } from './MobileSignUp'; 
+export type { MobileSignUpFormData, MobileSignUpProps } from './MobileSignUp';

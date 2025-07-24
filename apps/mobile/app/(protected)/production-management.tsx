@@ -21,7 +21,8 @@ export default function ProductionManagementPage() {
               Coming Soon
             </Text>
             <Text variant="bodyMedium" style={styles.comingSoonDescription}>
-              Manage your production cycles, track planting and harvesting schedules, and monitor crop health and yields.
+              Manage your production cycles, track planting and harvesting
+              schedules, and monitor crop health and yields.
             </Text>
           </Surface>
         </View>
@@ -30,7 +31,7 @@ export default function ProductionManagementPage() {
           <Text variant="titleLarge" style={styles.featuresTitle}>
             Features You'll See Here:
           </Text>
-          
+
           <Card style={styles.featureCard} mode="outlined">
             <Card.Content>
               <View style={styles.featureRow}>
@@ -130,4 +131,4 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#333',
   },
-}); 
+});
