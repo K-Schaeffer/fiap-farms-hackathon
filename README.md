@@ -30,7 +30,7 @@ A plataforma FIAP Farms é uma solução completa para gestão de cooperativas a
 
 - **Dashboard de Vendas**: Visualização em tempo real dos produtos com maior lucratividade e dados de venda
 - **Dashboard de Produção**: Visualização em tempo real dos dados de produção
-- **Controle de Produção**: Quadro Kanban para acompanhar e gerenciar o ciclo de vida da produção (`planted`, `in_production`, `harvested`) (que afeta o inventário)
+- **Controle de Produção**: Quadro Kanban para acompanhar e gerenciar o ciclo de vida da produção (que afeta o inventário)
 - **Controle de Vendas**: Formulários para registrar novas vendas (que consomem o inventário)
 - **Sistema de Metas e Alertas**: Sistema de alertas que notifica o usuário na UI quando metas de produção ou vendas são atingidas
 - **Autenticação**: Sistema completo de autenticação de usuários para proteger os dados de cada cooperado
