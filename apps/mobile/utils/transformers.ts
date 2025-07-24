@@ -45,7 +45,7 @@ function formatMonthName(monthString: string): string {
   // Create a date object and use native API to get month name
   const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1);
 
-  // Use Intl API to get short month name (e.g., "Jan", "Feb")
+  // Use Intl API to get long month name (e.g., "January", "February")
   return date.toLocaleDateString('en-US', { month: 'long' });
 }
 
