@@ -152,13 +152,13 @@ O pacote `@fiap-farms/core` implementa os princípios da **Clean Architecture** 
 ```
 packages/core/src/
 ├── domain/                # Lógica de negócio pura (sem dependências externas)
-│   ├── entities/          # Entidades de negócio (Product, Sale, Production, etc.)
-│   └── repositories/      # Interfaces dos repositórios (contratos)
+│   ├── entities/           # Entidades de negócio (Product, Sale, Production, etc.)
+│   └── repositories/       # Interfaces dos repositórios (contratos)
 ├── application/           # Regras de negócio da aplicação
-│   └── use-cases/         # Casos de uso orquestrando lógica de domínio
+│   └── use-cases/          # Casos de uso orquestrando lógica de domínio
 └── infrastructure/        # Preocupações externas (bancos, APIs)
-    └── repositories/      # Implementações concretas (Firestore)
-        └── firestore/     # Implementações específicas do Firestore
+    └── repositories/       # Implementações concretas (Firestore)
+        └── firestore/      # Implementações específicas do Firestore
 ```
 
 #### Regra de Dependência
