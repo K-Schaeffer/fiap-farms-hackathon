@@ -471,12 +471,6 @@ export function MobileSaleForm({
                   {' — '}
                   {item.quantity} {product?.unit || ''} × ${item.pricePerUnit}
                 </Text>
-                <Text variant="bodyMedium" style={styles.reviewProductTotal}>
-                  $
-                  {(Number(item.quantity) * Number(item.pricePerUnit)).toFixed(
-                    2
-                  )}
-                </Text>
               </View>
             );
           })}

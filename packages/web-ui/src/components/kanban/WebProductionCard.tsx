@@ -22,11 +22,7 @@ export interface WebProductionCardProps {
 }
 
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
+  return new Date(dateString).toLocaleDateString('en-US');
 };
 
 export function WebProductionCard({ productionItem }: WebProductionCardProps) {
