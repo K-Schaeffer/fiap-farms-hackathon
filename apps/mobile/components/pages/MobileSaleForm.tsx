@@ -285,39 +285,54 @@ export function MobileSaleForm({
       {/* Available Products View */}
       {productView === 'available' && (
         <View style={styles.productsGrid}>
-          {products.map(product => {
-            const selected = isProductSelected(product.id);
-            return (
-              <Card
-                key={product.id}
-                style={[
-                  styles.productCard,
-                  selected && styles.productCardSelected,
-                ]}
-                mode="outlined"
-              >
-                <Card.Content style={styles.productCardContent}>
-                  <View style={styles.productHeader}>
-                    <Text variant="titleMedium" style={styles.productName}>
-                      {product.name}
+          {products.length === 0 ? (
+            <View style={styles.emptyProductsState}>
+              <MaterialIcons name="inventory-2" size={64} color="#ccc" />
+              <Text variant="headlineSmall" style={styles.emptyProductsTitle}>
+                No Products Available
+              </Text>
+              <Text variant="bodyLarge" style={styles.emptyProductsText}>
+                There are currently no products in stock to sell.
+              </Text>
+              <Text variant="bodyMedium" style={styles.emptyProductsSubtext}>
+                Harvest items from production to start making sales.
+              </Text>
+            </View>
+          ) : (
+            products.map(product => {
+              const selected = isProductSelected(product.id);
+              return (
+                <Card
+                  key={product.id}
+                  style={[
+                    styles.productCard,
+                    selected && styles.productCardSelected,
+                  ]}
+                  mode="outlined"
+                >
+                  <Card.Content style={styles.productCardContent}>
+                    <View style={styles.productHeader}>
+                      <Text variant="titleMedium" style={styles.productName}>
+                        {product.name}
+                      </Text>
+                    </View>
+                    <Text variant="bodyMedium" style={styles.productStock}>
+                      Stock: {product.quantity} ({product.unit})
                     </Text>
-                  </View>
-                  <Text variant="bodyMedium" style={styles.productStock}>
-                    Stock: {product.quantity} ({product.unit})
-                  </Text>
-                  <Button
-                    mode={selected ? 'contained' : 'outlined'}
-                    onPress={() => handleProductToggle(product)}
-                    icon={selected ? 'minus' : 'plus'}
-                    style={styles.productButton}
-                    disabled={!selected && product.quantity === 0}
-                  >
-                    {selected ? 'Remove' : 'Add to Sale'}
-                  </Button>
-                </Card.Content>
-              </Card>
-            );
-          })}
+                    <Button
+                      mode={selected ? 'contained' : 'outlined'}
+                      onPress={() => handleProductToggle(product)}
+                      icon={selected ? 'minus' : 'plus'}
+                      style={styles.productButton}
+                      disabled={!selected && product.quantity === 0}
+                    >
+                      {selected ? 'Remove' : 'Add to Sale'}
+                    </Button>
+                  </Card.Content>
+                </Card>
+              );
+            })
+          )}
         </View>
       )}
 
@@ -826,5 +841,32 @@ const styles = StyleSheet.create({
   },
   snackbar: {
     backgroundColor: '#d32f2f',
+  },
+  emptyProductsState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 48,
+    minHeight: 300,
+  },
+  emptyProductsTitle: {
+    fontWeight: '600',
+    color: '#666',
+    marginTop: 16,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  emptyProductsText: {
+    color: '#666',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  emptyProductsSubtext: {
+    color: '#999',
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 24,
+  },
+  refreshButton: {
+    paddingHorizontal: 24,
   },
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Text, Card } from 'react-native-paper';
 import { BarChart } from 'react-native-gifted-charts';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export interface ProductionChartTrendData {
   months: string[];
@@ -19,6 +20,14 @@ export function MobileProductionChart({
   const screenWidth = Dimensions.get('window').width;
   const chartWidth = screenWidth - 64; // Account for padding and margins
 
+  // Check if there's no data to display
+  const hasNoData =
+    !trendData ||
+    !trendData.months ||
+    trendData.months.length === 0 ||
+    (trendData.planted.every(val => val === 0) &&
+      trendData.harvested.every(val => val === 0));
+
   // Combine data for grouped bars
   const combinedData: {
     value: number;
@@ -26,19 +35,6 @@ export function MobileProductionChart({
     label?: string;
     spacing: number;
   }[] = [];
-  trendData.months.forEach((month, index) => {
-    combinedData.push({
-      value: trendData.planted[index] || 0,
-      frontColor: '#388e3c',
-      label: month.includes('-') ? month.substring(5) : month,
-      spacing: 2,
-    });
-    combinedData.push({
-      value: trendData.harvested[index] || 0,
-      frontColor: '#1976d2',
-      spacing: index === trendData.months.length - 1 ? 0 : calculatedSpacing,
-    });
-  });
 
   const maxValue = Math.max(...trendData.planted, ...trendData.harvested);
 
@@ -53,6 +49,20 @@ export function MobileProductionChart({
     8 // Minimum spacing
   );
 
+  trendData.months.forEach((month, index) => {
+    combinedData.push({
+      value: trendData.planted[index] || 0,
+      frontColor: '#388e3c',
+      label: month.includes('-') ? month.substring(5) : month,
+      spacing: 2,
+    });
+    combinedData.push({
+      value: trendData.harvested[index] || 0,
+      frontColor: '#1976d2',
+      spacing: index === trendData.months.length - 1 ? 0 : calculatedSpacing,
+    });
+  });
+
   return (
     <Card style={styles.chartCard} mode="outlined">
       <Card.Content style={styles.chartContent}>
@@ -63,47 +73,62 @@ export function MobileProductionChart({
           Planted vs Harvested Over Time
         </Text>
 
-        <View style={styles.chartContainer}>
-          <BarChart
-            data={combinedData}
-            width={chartWidth - 60}
-            height={220}
-            barWidth={calculatedBarWidth}
-            spacing={calculatedSpacing}
-            yAxisColor="#e0e0e0"
-            xAxisColor="#e0e0e0"
-            hideRules={false}
-            rulesColor="#f0f0f0"
-            rulesType="solid"
-            yAxisTextStyle={{
-              fontSize: 10,
-              color: '#666',
-            }}
-            xAxisLabelTextStyle={{
-              fontSize: 10,
-              color: '#666',
-            }}
-            noOfSections={4}
-            maxValue={maxValue * 1.1}
-            isAnimated
-            animationDuration={1000}
-          />
-        </View>
+        {hasNoData ? (
+          <View style={styles.emptyState}>
+            <MaterialIcons name="bar-chart" size={48} color="#ccc" />
+            <Text variant="bodyMedium" style={styles.emptyText}>
+              No data to display
+            </Text>
+          </View>
+        ) : (
+          <>
+            <View style={styles.chartContainer}>
+              <BarChart
+                data={combinedData}
+                width={chartWidth - 60}
+                height={220}
+                barWidth={calculatedBarWidth}
+                spacing={calculatedSpacing}
+                yAxisColor="#e0e0e0"
+                xAxisColor="#e0e0e0"
+                hideRules={false}
+                rulesColor="#f0f0f0"
+                rulesType="solid"
+                yAxisTextStyle={{
+                  fontSize: 10,
+                  color: '#666',
+                }}
+                xAxisLabelTextStyle={{
+                  fontSize: 10,
+                  color: '#666',
+                }}
+                noOfSections={4}
+                maxValue={maxValue * 1.1}
+                isAnimated
+                animationDuration={1000}
+              />
+            </View>
 
-        <View style={styles.legend}>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: '#388e3c' }]} />
-            <Text variant="bodySmall" style={styles.legendText}>
-              Planted
-            </Text>
-          </View>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: '#1976d2' }]} />
-            <Text variant="bodySmall" style={styles.legendText}>
-              Harvested
-            </Text>
-          </View>
-        </View>
+            <View style={styles.legend}>
+              <View style={styles.legendItem}>
+                <View
+                  style={[styles.legendDot, { backgroundColor: '#388e3c' }]}
+                />
+                <Text variant="bodySmall" style={styles.legendText}>
+                  Planted
+                </Text>
+              </View>
+              <View style={styles.legendItem}>
+                <View
+                  style={[styles.legendDot, { backgroundColor: '#1976d2' }]}
+                />
+                <Text variant="bodySmall" style={styles.legendText}>
+                  Harvested
+                </Text>
+              </View>
+            </View>
+          </>
+        )}
       </Card.Content>
     </Card>
   );
@@ -156,5 +181,15 @@ const styles = StyleSheet.create({
   },
   legendText: {
     color: '#666',
+  },
+  emptyState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
+  },
+  emptyText: {
+    marginTop: 12,
+    color: '#666',
+    textAlign: 'center',
   },
 });

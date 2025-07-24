@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Text, Card } from 'react-native-paper';
 import { LineChart } from 'react-native-gifted-charts';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export interface ChartTrendData {
   months: string[];
@@ -16,6 +17,14 @@ export interface MobileRevenueChartProps {
 export function MobileRevenueChart({ trendData }: MobileRevenueChartProps) {
   const screenWidth = Dimensions.get('window').width;
   const chartWidth = screenWidth - 64; // Account for padding and margins
+
+  // Check if there's no data to display
+  const hasNoData =
+    !trendData ||
+    !trendData.months ||
+    trendData.months.length === 0 ||
+    (trendData.revenue.every(val => val === 0) &&
+      trendData.liquidRevenue.every(val => val === 0));
 
   // Transform data for react-native-gifted-charts
   const lineData = trendData.months.map((month, index) => ({
@@ -68,65 +77,80 @@ export function MobileRevenueChart({ trendData }: MobileRevenueChartProps) {
           Total vs Liquid Revenue Over Time
         </Text>
 
-        <View style={styles.chartContainer}>
-          <LineChart
-            data={lineData}
-            data2={lineData2}
-            width={chartWidth - 20}
-            height={220}
-            spacing={calculatedSpacing}
-            initialSpacing={calculatedInitialSpacing}
-            endSpacing={calculatedEndSpacing}
-            color1="#2e7d32"
-            color2="#1976d2"
-            thickness1={3}
-            thickness2={3}
-            startFillColor1="rgba(46, 125, 50, 0.3)"
-            startFillColor2="rgba(25, 118, 210, 0.3)"
-            endFillColor1="rgba(46, 125, 50, 0.1)"
-            endFillColor2="rgba(25, 118, 210, 0.1)"
-            areaChart
-            curved
-            animateOnDataChange
-            animationDuration={1000}
-            hideDataPoints={false}
-            dataPointsColor1="#2e7d32"
-            dataPointsColor2="#1976d2"
-            dataPointsRadius={4}
-            yAxisColor="#e0e0e0"
-            xAxisColor="#e0e0e0"
-            hideRules={false}
-            rulesColor="#f0f0f0"
-            rulesType="solid"
-            yAxisTextStyle={{
-              fontSize: 10,
-              color: '#666',
-            }}
-            formatYLabel={(value: string) => {
-              const numValue = parseFloat(value);
-              return formatCurrency(numValue);
-            }}
-            noOfSections={4}
-            maxValue={maxValue * 1.1}
-            showVerticalLines={false}
-            stepValue={maxValue / 4}
-          />
-        </View>
+        {hasNoData ? (
+          <View style={styles.emptyState}>
+            <MaterialIcons name="trending-up" size={48} color="#ccc" />
+            <Text variant="bodyMedium" style={styles.emptyText}>
+              No data to display
+            </Text>
+          </View>
+        ) : (
+          <>
+            <View style={styles.chartContainer}>
+              <LineChart
+                data={lineData}
+                data2={lineData2}
+                width={chartWidth - 20}
+                height={220}
+                spacing={calculatedSpacing}
+                initialSpacing={calculatedInitialSpacing}
+                endSpacing={calculatedEndSpacing}
+                color1="#2e7d32"
+                color2="#1976d2"
+                thickness1={3}
+                thickness2={3}
+                startFillColor1="rgba(46, 125, 50, 0.3)"
+                startFillColor2="rgba(25, 118, 210, 0.3)"
+                endFillColor1="rgba(46, 125, 50, 0.1)"
+                endFillColor2="rgba(25, 118, 210, 0.1)"
+                areaChart
+                curved
+                animateOnDataChange
+                animationDuration={1000}
+                hideDataPoints={false}
+                dataPointsColor1="#2e7d32"
+                dataPointsColor2="#1976d2"
+                dataPointsRadius={4}
+                yAxisColor="#e0e0e0"
+                xAxisColor="#e0e0e0"
+                hideRules={false}
+                rulesColor="#f0f0f0"
+                rulesType="solid"
+                yAxisTextStyle={{
+                  fontSize: 10,
+                  color: '#666',
+                }}
+                formatYLabel={(value: string) => {
+                  const numValue = parseFloat(value);
+                  return formatCurrency(numValue);
+                }}
+                noOfSections={4}
+                maxValue={maxValue * 1.1}
+                showVerticalLines={false}
+                stepValue={maxValue / 4}
+              />
+            </View>
 
-        <View style={styles.legend}>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: '#2e7d32' }]} />
-            <Text variant="bodySmall" style={styles.legendText}>
-              Total Revenue
-            </Text>
-          </View>
-          <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: '#1976d2' }]} />
-            <Text variant="bodySmall" style={styles.legendText}>
-              Liquid Revenue
-            </Text>
-          </View>
-        </View>
+            <View style={styles.legend}>
+              <View style={styles.legendItem}>
+                <View
+                  style={[styles.legendDot, { backgroundColor: '#2e7d32' }]}
+                />
+                <Text variant="bodySmall" style={styles.legendText}>
+                  Total Revenue
+                </Text>
+              </View>
+              <View style={styles.legendItem}>
+                <View
+                  style={[styles.legendDot, { backgroundColor: '#1976d2' }]}
+                />
+                <Text variant="bodySmall" style={styles.legendText}>
+                  Liquid Revenue
+                </Text>
+              </View>
+            </View>
+          </>
+        )}
       </Card.Content>
     </Card>
   );
@@ -172,5 +196,15 @@ const styles = StyleSheet.create({
   },
   legendText: {
     color: '#666',
+  },
+  emptyState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
+  },
+  emptyText: {
+    marginTop: 12,
+    color: '#666',
+    textAlign: 'center',
   },
 });

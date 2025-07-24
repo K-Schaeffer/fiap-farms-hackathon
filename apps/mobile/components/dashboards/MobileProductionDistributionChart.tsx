@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Card } from 'react-native-paper';
 import { PieChart } from 'react-native-gifted-charts';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export interface ProductionChartDistributionData {
   label: string;
@@ -16,6 +17,9 @@ export interface MobileProductionDistributionChartProps {
 export function MobileProductionDistributionChart({
   distributionData,
 }: MobileProductionDistributionChartProps) {
+  // Check if there's no data to display
+  const hasNoData = !distributionData || distributionData.length === 0;
+
   // Transform data for react-native-gifted-charts
   const pieData = distributionData.map(item => ({
     value: item.value,
@@ -54,25 +58,34 @@ export function MobileProductionDistributionChart({
           Distribution by product types in production
         </Text>
 
-        <View style={styles.chartSection}>
-          <View style={styles.pieContainer}>
-            <PieChart
-              data={pieData}
-              radius={80}
-              innerRadius={50}
-              strokeColor="#fff"
-              strokeWidth={2}
-              textColor="#fff"
-              textSize={10}
-              fontWeight="bold"
-              focusOnPress
-              toggleFocusOnPress={false}
-              sectionAutoFocus
-            />
+        {hasNoData ? (
+          <View style={styles.emptyState}>
+            <MaterialIcons name="donut-large" size={48} color="#ccc" />
+            <Text variant="bodyMedium" style={styles.emptyText}>
+              No data to display
+            </Text>
           </View>
+        ) : (
+          <View style={styles.chartSection}>
+            <View style={styles.pieContainer}>
+              <PieChart
+                data={pieData}
+                radius={80}
+                innerRadius={50}
+                strokeColor="#fff"
+                strokeWidth={2}
+                textColor="#fff"
+                textSize={10}
+                fontWeight="bold"
+                focusOnPress
+                toggleFocusOnPress={false}
+                sectionAutoFocus
+              />
+            </View>
 
-          {renderLegend()}
-        </View>
+            {renderLegend()}
+          </View>
+        )}
       </Card.Content>
     </Card>
   );
@@ -134,5 +147,15 @@ const styles = StyleSheet.create({
   legendValue: {
     fontWeight: '600',
     color: '#666',
+  },
+  emptyState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
+  },
+  emptyText: {
+    marginTop: 12,
+    color: '#666',
+    textAlign: 'center',
   },
 });
