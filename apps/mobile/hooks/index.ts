@@ -1,4 +1,5 @@
-export { useSalesDashboard } from './useSalesDashboard';
+export * from './useSalesDashboard';
+export * from './useProductionDashboard';
 export type {
   MobileSalesDashboardStats,
   MobileChartTrendData,

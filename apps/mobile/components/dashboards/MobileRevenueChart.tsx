@@ -33,6 +33,22 @@ export function MobileRevenueChart({ trendData }: MobileRevenueChartProps) {
 
   const maxValue = Math.max(...trendData.revenue, ...trendData.liquidRevenue);
 
+  // Dynamic spacing calculation to maximize available space
+  const availableWidth = chartWidth - 60; // Maximum space utilization
+  const dataPoints = trendData.months.length;
+  const calculatedSpacing = Math.max(
+    Math.floor(availableWidth / Math.max(1, dataPoints - 1)),
+    20 // Minimum spacing for readability
+  );
+  const calculatedInitialSpacing = Math.max(
+    Math.floor(availableWidth * 0.02), // Minimal initial spacing (2%)
+    8 // Very small initial spacing
+  );
+  const calculatedEndSpacing = Math.max(
+    Math.floor(availableWidth * 0.005), // Ultra-minimal end spacing (0.5%)
+    2 // Absolute minimal end spacing
+  );
+
   const formatCurrency = (value: number) => {
     if (value >= 1000000) {
       return `$${(value / 1000000).toFixed(1)}M`;
@@ -56,14 +72,11 @@ export function MobileRevenueChart({ trendData }: MobileRevenueChartProps) {
           <LineChart
             data={lineData}
             data2={lineData2}
-            width={chartWidth - 60}
+            width={chartWidth - 20}
             height={220}
-            spacing={Math.max(
-              40,
-              (chartWidth - 120) / Math.max(1, trendData.months.length - 1)
-            )}
-            initialSpacing={20}
-            endSpacing={20}
+            spacing={calculatedSpacing}
+            initialSpacing={calculatedInitialSpacing}
+            endSpacing={calculatedEndSpacing}
             color1="#2e7d32"
             color2="#1976d2"
             thickness1={3}

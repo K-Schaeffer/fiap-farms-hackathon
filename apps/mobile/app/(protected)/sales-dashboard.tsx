@@ -32,7 +32,7 @@ export default function SalesDashboardPage() {
       <View style={styles.centerContainer}>
         <ActivityIndicator size="large" />
         <Text variant="bodyLarge" style={styles.loadingText}>
-          Loading sales...
+          Loading sales dashboard...
         </Text>
       </View>
     );

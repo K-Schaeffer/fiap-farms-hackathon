@@ -2,6 +2,9 @@ export { MobileSalesCards } from './MobileSalesCards';
 export { MobileSalesHistory } from './MobileSalesHistory';
 export { MobileRevenueChart } from './MobileRevenueChart';
 export { MobileClientChart } from './MobileClientChart';
+export { MobileProductionChart } from './MobileProductionChart';
+export { MobileProductionDistributionChart } from './MobileProductionDistributionChart';
+export { MobileProductionCards } from './MobileProductionCards';
 
 // Export types from a single source to avoid conflicts
 export type {
@@ -20,3 +23,18 @@ export type {
   MobileClientChartProps,
   ChartDistributionData,
 } from './MobileClientChart';
+
+export type {
+  MobileProductionChartProps,
+  ProductionChartTrendData,
+} from './MobileProductionChart';
+
+export type {
+  MobileProductionDistributionChartProps,
+  ProductionChartDistributionData,
+} from './MobileProductionDistributionChart';
+
+export type {
+  MobileProductionCardsProps,
+  MobileProductionItem,
+} from './MobileProductionCards';
