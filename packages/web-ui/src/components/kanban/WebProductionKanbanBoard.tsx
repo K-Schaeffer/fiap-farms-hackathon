@@ -28,7 +28,7 @@ export interface WebProductionKanbanBoardProps {
 }
 
 const COLUMN_DEFINITIONS = [
-  { id: 'available', title: 'Available Products', color: '#f5f5f5' },
+  { id: 'available', title: 'Available', color: '#f5f5f5' },
   { id: 'planted', title: 'Planted', color: '#e8f5e8' },
   { id: 'in_production', title: 'In Production', color: '#fff3e0' },
   { id: 'harvested', title: 'Harvested', color: '#e3f2fd' },

@@ -160,7 +160,7 @@ export function WebProductionCard({ productionItem }: WebProductionCardProps) {
               }}
             >
               <strong>
-                Yield: {productionItem.yield} units ({productionItem.unit})
+                Yield: {productionItem.yield} ({productionItem.unit})
               </strong>
             </Typography>
           )}
