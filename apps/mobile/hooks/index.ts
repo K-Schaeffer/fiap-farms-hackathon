@@ -1,6 +1,6 @@
 export { useSalesDashboard } from './useSalesDashboard';
 export type {
   MobileSalesDashboardStats,
-  MobileChartTrendData, 
+  MobileChartTrendData,
   MobileChartDistributionData,
-} from '../utils/transformers'; 
+} from '../utils/transformers';

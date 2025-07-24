@@ -18,9 +18,7 @@ import {
 import type { MobileSaleHistoryItem } from '../components/dashboards';
 
 export function useSalesDashboard() {
-  const [salesHistory, setSalesHistory] = useState<MobileSaleHistoryItem[]>(
-    []
-  );
+  const [salesHistory, setSalesHistory] = useState<MobileSaleHistoryItem[]>([]);
   const [dashboardStats, setDashboardStats] =
     useState<MobileSalesDashboardStats | null>(null);
   const [trendData, setTrendData] = useState<MobileChartTrendData | null>(null);
@@ -51,7 +49,7 @@ export function useSalesDashboard() {
       setError(null);
       const { getSalesDashboardDataUseCase } = getRepositories();
 
-    const dashboardData: SalesDashboardData =
+      const dashboardData: SalesDashboardData =
         await getSalesDashboardDataUseCase.execute(OWNER_ID);
 
       // Transform data for mobile UI
@@ -62,7 +60,7 @@ export function useSalesDashboard() {
         dashboardData.totalRevenue
       );
       const history = transformSalesHistoryToMobile(dashboardData.salesHistory);
-      
+
       setDashboardStats(stats);
       setTrendData(trends);
       setDistributionData(distribution);

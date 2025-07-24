@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginRight: 8,
   },
-    legendText: {
+  legendText: {
     color: '#666',
   },
 });
