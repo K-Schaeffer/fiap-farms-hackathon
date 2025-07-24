@@ -45,7 +45,6 @@ export class GetSalesDashboardDataUseCase {
       0
     );
 
-    // Get recent sales (last 10)
     const salesHistory = sales.sort(
       (a, b) => b.saleDate.getTime() - a.saleDate.getTime()
     );
@@ -123,6 +122,6 @@ export class GetSalesDashboardDataUseCase {
     return Array.from(clientMap.entries())
       .map(([client, data]) => ({ client, ...data }))
       .sort((a, b) => b.totalAmount - a.totalAmount)
-      .slice(0, 10); // Top 10 clients
+      .slice(0, 4); // Top 4 clients
   }
 }
