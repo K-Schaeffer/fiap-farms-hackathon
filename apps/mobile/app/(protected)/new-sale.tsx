@@ -1,71 +1,50 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text, Card, Surface } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { Text } from 'react-native-paper';
+import { MobileSaleForm } from '../../components/pages';
+import { useSalesManagement } from '../../hooks';
+import { router } from 'expo-router';
 
 export default function NewSalePage() {
+  const { availableProducts, loading, error, registerSale, refresh } =
+    useSalesManagement();
+
+  const handleBackToSales = () => {
+    router.back();
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+        <Text variant="bodyLarge" style={styles.loadingText}>
+          Loading products...
+        </Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text variant="headlineSmall" style={styles.errorTitle}>
+          Error Loading Products
+        </Text>
+        <Text variant="bodyMedium" style={styles.errorMessage}>
+          {error}
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      {/* Content */}
-      <ScrollView
-        style={styles.content}
-        contentContainerStyle={styles.scrollContent}
-      >
-        <View style={styles.comingSoonContainer}>
-          <Surface style={styles.comingSoonCard} elevation={2}>
-            <MaterialIcons name="add-shopping-cart" size={64} color="#1976d2" />
-            <Text variant="headlineMedium" style={styles.comingSoonTitle}>
-              New Sale
-            </Text>
-            <Text variant="bodyLarge" style={styles.comingSoonSubtitle}>
-              Coming Soon
-            </Text>
-            <Text variant="bodyMedium" style={styles.comingSoonDescription}>
-              Register new sales transactions, manage customer information, and
-              track inventory changes in real-time.
-            </Text>
-          </Surface>
-        </View>
-
-        <View style={styles.featuresContainer}>
-          <Text variant="titleLarge" style={styles.featuresTitle}>
-            Features You'll See Here:
-          </Text>
-
-          <Card style={styles.featureCard} mode="outlined">
-            <Card.Content>
-              <View style={styles.featureRow}>
-                <MaterialIcons name="person-add" size={24} color="#1976d2" />
-                <Text variant="bodyMedium" style={styles.featureText}>
-                  Customer selection and management
-                </Text>
-              </View>
-            </Card.Content>
-          </Card>
-
-          <Card style={styles.featureCard} mode="outlined">
-            <Card.Content>
-              <View style={styles.featureRow}>
-                <MaterialIcons name="inventory" size={24} color="#1976d2" />
-                <Text variant="bodyMedium" style={styles.featureText}>
-                  Product selection with real-time inventory
-                </Text>
-              </View>
-            </Card.Content>
-          </Card>
-
-          <Card style={styles.featureCard} mode="outlined">
-            <Card.Content>
-              <View style={styles.featureRow}>
-                <MaterialIcons name="calculate" size={24} color="#1976d2" />
-                <Text variant="bodyMedium" style={styles.featureText}>
-                  Automatic pricing and total calculation
-                </Text>
-              </View>
-            </Card.Content>
-          </Card>
-        </View>
-      </ScrollView>
+      <MobileSaleForm
+        products={availableProducts}
+        onBack={handleBackToSales}
+        onSubmitSale={registerSale}
+        onRefreshData={refresh}
+      />
     </View>
   );
 }
@@ -75,60 +54,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  content: {
+  loadingContainer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+    gap: 16,
   },
-  scrollContent: {
-    flexGrow: 1,
+  loadingText: {
+    color: '#666',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
     padding: 24,
   },
-  comingSoonContainer: {
-    alignItems: 'center',
-    marginBottom: 32,
-  },
-  comingSoonCard: {
-    backgroundColor: '#fff',
-    padding: 32,
-    borderRadius: 16,
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: 400,
-  },
-  comingSoonTitle: {
-    fontWeight: 'bold',
-    marginTop: 16,
+  errorTitle: {
+    color: '#d32f2f',
+    marginBottom: 8,
     textAlign: 'center',
-    color: '#1976d2',
   },
-  comingSoonSubtitle: {
-    marginTop: 8,
-    textAlign: 'center',
+  errorMessage: {
     color: '#666',
-  },
-  comingSoonDescription: {
-    marginTop: 16,
     textAlign: 'center',
-    color: '#666',
-    lineHeight: 20,
-  },
-  featuresContainer: {
-    gap: 12,
-  },
-  featuresTitle: {
-    fontWeight: '600',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  featureCard: {
-    backgroundColor: '#fff',
-  },
-  featureRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  featureText: {
-    flex: 1,
-    color: '#333',
   },
 });
