@@ -1,7 +1,13 @@
-import { SalesDashboardData, Sale } from '@fiap-farms/core';
+import {
+  Sale,
+  SalesDashboardData,
+  ProductionItem,
+  ProductionDistributionItem,
+  ProductionTrends,
+} from '@fiap-farms/core';
 import type { MobileSaleHistoryItem } from '../components/dashboards';
 
-// Mobile-specific interfaces that match the UI component interfaces
+// Sales interfaces
 export interface MobileSalesDashboardStats {
   totalSales: number;
   totalRevenue: number;
@@ -21,34 +27,47 @@ export interface MobileChartDistributionData {
   color: string;
 }
 
-// Chart colors matching mobile theme
+// Production interfaces
+export interface MobileProductionDashboardStats {
+  totalProductions: number;
+  totalPlanted: number;
+  totalInProduction: number;
+  totalHarvested: number;
+  totalOverdue: number;
+}
+
+export interface MobileProductionChartTrendData {
+  months: string[];
+  planted: number[];
+  harvested: number[];
+}
+
+export interface MobileProductionChartDistributionData {
+  label: string;
+  value: number;
+  color: string;
+}
+
+// Chart colors matching web brand standards
 const MOBILE_CHART_COLORS = [
-  '#1976d2', // Primary blue
-  '#2e7d32', // Primary green
-  '#ed6c02', // Orange
-  '#9c27b0', // Purple
-  '#d32f2f', // Red
-  '#f57c00', // Amber
-  '#388e3c', // Green
-  '#7b1fa2', // Deep purple
+  '#ab47bc',
+  '#ff7043',
+  '#26a69a',
+  '#8d6e63',
+  '#42a5f5',
+  '#ffa726',
+  '#66bb6a',
+  '#d4e157',
 ];
 
-// Utility function to format month from YYYY-MM to readable format
-function formatMonthName(monthString: string): string {
-  // Handle both YYYY-MM and already formatted month strings
-  if (!monthString.includes('-')) {
-    return monthString; // Already formatted
-  }
-
-  const [year, month] = monthString.split('-');
-
-  // Create a date object and use native API to get month name
-  const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1);
-
-  // Use Intl API to get long month name (e.g., "January", "February")
+// Utility function to format month names
+export function formatMonthName(monthString: string): string {
+  const [, month] = monthString.split('-');
+  const date = new Date(2025, parseInt(month) - 1);
   return date.toLocaleDateString('en-US', { month: 'long' });
 }
 
+// Sales transformers
 export function transformSalesDashboardStats(
   data: SalesDashboardData
 ): MobileSalesDashboardStats {
@@ -56,7 +75,7 @@ export function transformSalesDashboardStats(
     totalSales: data.totalSales,
     totalRevenue: data.totalRevenue,
     totalRevenueLiquid: data.totalRevenueLiquid,
-    bestMonth: formatMonthName(data.bestMonth.month) || 'N/A',
+    bestMonth: formatMonthName(data.bestMonth.month),
   };
 }
 
@@ -103,5 +122,91 @@ export function transformSalesHistoryToMobile(
     })),
     totalSaleAmount: sale.totalSaleAmount,
     totalSaleProfit: sale.totalSaleProfit,
+  }));
+}
+
+// Production transformers
+export function transformProductionDashboardStats(data: {
+  totalProductions: number;
+  plantedItems: ProductionItem[];
+  inProductionItems: ProductionItem[];
+  harvestedItems: ProductionItem[];
+  harvestOverdue: ProductionItem[];
+}): MobileProductionDashboardStats {
+  return {
+    totalProductions: data.totalProductions,
+    totalPlanted: data.plantedItems.length,
+    totalInProduction: data.inProductionItems.length,
+    totalHarvested: data.harvestedItems.length,
+    totalOverdue: data.harvestOverdue.length,
+  };
+}
+
+export function transformProductionTrendData(
+  trends: ProductionTrends
+): MobileProductionChartTrendData {
+  // Get all unique month-year combinations from both planted and harvested
+  const allMonthYears = new Set<string>();
+
+  trends.planted.forEach(item => {
+    const monthKey = `${item.year}-${item.month.toString().padStart(2, '0')}`;
+    allMonthYears.add(monthKey);
+  });
+
+  trends.harvested.forEach(item => {
+    const monthKey = `${item.year}-${item.month.toString().padStart(2, '0')}`;
+    allMonthYears.add(monthKey);
+  });
+
+  // Sort month-year combinations chronologically
+  const sortedMonthYears = Array.from(allMonthYears).sort();
+
+  // Create data arrays for each month
+  const months = sortedMonthYears.map(monthYear => formatMonthName(monthYear));
+
+  const planted = sortedMonthYears.map(monthYear => {
+    const [year, month] = monthYear.split('-').map(Number);
+    const item = trends.planted.find(p => p.year === year && p.month === month);
+    return item ? item.count : 0;
+  });
+
+  const harvested = sortedMonthYears.map(monthYear => {
+    const [year, month] = monthYear.split('-').map(Number);
+    const item = trends.harvested.find(
+      h => h.year === year && h.month === month
+    );
+    return item ? item.count : 0;
+  });
+
+  return {
+    months,
+    planted,
+    harvested,
+  };
+}
+
+export function transformProductionDistributionData(
+  distribution: ProductionDistributionItem[]
+): MobileProductionChartDistributionData[] {
+  return distribution.map((item, idx) => ({
+    label: item.productName,
+    value: item.percentage,
+    color: MOBILE_CHART_COLORS[idx % MOBILE_CHART_COLORS.length],
+  }));
+}
+
+export function transformProductionItemsToMobile(
+  items: ProductionItem[]
+): import('../components/dashboards').MobileProductionItem[] {
+  return items.map(item => ({
+    id: item._id,
+    productName: item.productName,
+    status: item.status,
+    plantedDate: item.plantedDate.toISOString(),
+    expectedHarvestDate: item.expectedHarvestDate.toISOString(),
+    harvestedDate: item.harvestedDate?.toISOString(),
+    yield: item.yield,
+    location: item.location,
+    unit: item.productUnit,
   }));
 }
