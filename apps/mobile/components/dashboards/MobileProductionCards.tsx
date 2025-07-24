@@ -100,7 +100,7 @@ export function MobileProductionCards({
               {item.productName}
             </Text>
             <Text variant="bodyMedium" style={styles.location}>
-              📍 {item.location}
+              Location: {item.location}
             </Text>
             {item.unit && (
               <View
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
   },
   yieldValue: {
     color: '#388e3c',
-    fontWeight: '600',
+    fontWeight: '700',
     flex: 1,
     textAlign: 'right',
   },
