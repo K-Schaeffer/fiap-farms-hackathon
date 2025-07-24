@@ -15,7 +15,7 @@ import {
   type MobileChartTrendData,
   type MobileChartDistributionData,
 } from '../utils/transformers';
-import type { MobileSaleHistoryItem } from '../components/dashboards';
+import { MobileSaleHistoryItem } from '../components';
 
 export function useSalesDashboard() {
   const [salesHistory, setSalesHistory] = useState<MobileSaleHistoryItem[]>([]);

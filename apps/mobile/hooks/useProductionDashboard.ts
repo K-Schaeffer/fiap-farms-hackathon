@@ -15,11 +15,11 @@ import {
   type MobileProductionChartTrendData,
   type MobileProductionChartDistributionData,
 } from '../utils/transformers';
-import type { MobileProductionItem } from '../components/dashboards';
+import { MobileProductionItemDashboard } from '../components';
 
 export function useProductionDashboard() {
   const [productionItems, setProductionItems] = useState<
-    MobileProductionItem[]
+    MobileProductionItemDashboard[]
   >([]);
   const [dashboardStats, setDashboardStats] =
     useState<MobileProductionDashboardStats | null>(null);

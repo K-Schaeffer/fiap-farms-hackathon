@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Text } from 'react-native-paper';
-import { MobileSaleForm } from '../../components/pages';
+import { MobileSaleForm } from '../../components';
 import { useSalesManagement } from '../../hooks';
 import { router } from 'expo-router';
 

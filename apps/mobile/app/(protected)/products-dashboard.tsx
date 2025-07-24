@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, RefreshControl, StyleSheet } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
-import { MobileProductionDashboard } from '../../components/pages/MobileProductionDashboard';
+import { MobileProductionDashboard } from '../../components';
 import { useProductionDashboard } from '../../hooks/useProductionDashboard';
 
 export default function ProductsDashboardScreen() {

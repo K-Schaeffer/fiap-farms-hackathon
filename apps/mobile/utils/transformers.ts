@@ -5,8 +5,15 @@ import {
   ProductionDistributionItem,
   ProductionTrends,
   InventoryItem,
+  Product,
 } from '@fiap-farms/core';
-import type { MobileSaleHistoryItem } from '../components/dashboards';
+import {
+  MobileSaleHistoryItem,
+  MobileSaleProduct,
+  MobileProductData,
+  MobileProductionItem,
+  MobileProductionItemDashboard,
+} from '../components';
 
 // Sales interfaces
 export interface MobileSalesDashboardStats {
@@ -198,7 +205,7 @@ export function transformProductionDistributionData(
 
 export function transformProductionItemsToMobile(
   items: ProductionItem[]
-): import('../components/dashboards').MobileProductionItem[] {
+): MobileProductionItemDashboard[] {
   return items.map(item => ({
     id: item._id,
     productName: item.productName,
@@ -215,11 +222,41 @@ export function transformProductionItemsToMobile(
 // Sales transformers for mobile
 export function transformInventoryItemsToMobile(
   items: InventoryItem[]
-): import('../components/pages').MobileSaleProduct[] {
+): MobileSaleProduct[] {
   return items.map(item => ({
     id: item.productId,
     name: item.productName,
     unit: item.unit,
     quantity: item.quantity,
+  }));
+}
+
+// Production management transformers
+export function transformProductsToMobile(
+  products: Product[]
+): MobileProductData[] {
+  return products.map(product => ({
+    id: product._id,
+    name: product.name,
+    description: product.description,
+    unit: product.unit,
+    costPerUnit: product.costPerUnit,
+  }));
+}
+
+export function transformProductionItemsToMobileManagement(
+  items: ProductionItem[]
+): MobileProductionItem[] {
+  return items.map(item => ({
+    id: item._id,
+    productId: item.productId,
+    productName: item.productName,
+    status: item.status,
+    location: item.location,
+    plantedDate: item.plantedDate.toISOString(),
+    expectedHarvestDate: item.expectedHarvestDate.toISOString(),
+    harvestedDate: item.harvestedDate?.toISOString(),
+    yield: item.yield,
+    unit: item.productUnit,
   }));
 }

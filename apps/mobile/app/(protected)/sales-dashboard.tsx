@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, ActivityIndicator } from 'react-native-paper';
-import { MobileSalesDashboard } from '../../components/pages/MobileSalesDashboard';
+import { MobileSalesDashboard } from '../../components';
 import { useSalesDashboard } from '../../hooks';
 import { useAuth } from '@fiap-farms/shared-stores';
 
