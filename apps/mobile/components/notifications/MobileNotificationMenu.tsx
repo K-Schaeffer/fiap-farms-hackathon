@@ -1,12 +1,14 @@
 import React from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import {
-  View,
-  StyleSheet,
+  List,
+  Text,
+  Divider,
+  Surface,
+  IconButton,
+  Portal,
   Modal,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import { List, Text, Divider, Surface, IconButton } from 'react-native-paper';
+} from 'react-native-paper';
 
 export interface MobileNotificationData {
   id: string;
@@ -35,89 +37,82 @@ export function MobileNotificationMenu({
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType="fade"
-      transparent
-      onRequestClose={onDismiss}
-    >
-      <TouchableOpacity
-        style={styles.overlay}
-        activeOpacity={1}
-        onPress={onDismiss}
+    <Portal>
+      <Modal
+        visible={visible}
+        onDismiss={onDismiss}
+        contentContainerStyle={styles.modalContainer}
+        style={styles.modal}
       >
-        <View style={styles.modalContainer}>
-          <TouchableOpacity activeOpacity={1}>
-            <Surface style={styles.surface}>
-              <View style={styles.header}>
-                <Text variant="titleMedium" style={styles.headerText}>
-                  Notifications
-                </Text>
-                <IconButton
-                  icon="close"
-                  size={20}
-                  onPress={onDismiss}
-                  style={styles.closeButton}
-                />
-              </View>
-              <Divider />
-              {notifications.length > 0 ? (
-                <ScrollView style={styles.notificationsList}>
-                  {notifications.map((notification, index) => (
-                    <View key={notification.id}>
-                      <List.Item
-                        title={notification.title}
-                        onPress={() => handleNotificationPress(notification)}
-                        titleStyle={[
-                          styles.notificationTitle,
-                          {
-                            fontWeight: notification.isRead ? 'normal' : 'bold',
-                            opacity: notification.isRead ? 0.7 : 1,
-                          },
-                        ]}
-                        style={styles.notificationItem}
-                        left={() => (
-                          <List.Icon
-                            icon={
-                              notification.isRead ? 'check-circle' : 'circle'
-                            }
-                            color={notification.isRead ? '#4caf50' : '#2196f3'}
-                          />
-                        )}
+        <Surface style={styles.surface}>
+          <View style={styles.header}>
+            <Text variant="titleLarge" style={styles.headerText}>
+              Notifications
+            </Text>
+            <IconButton
+              icon="close"
+              size={24}
+              onPress={onDismiss}
+              style={styles.closeButton}
+            />
+          </View>
+
+          <Divider />
+
+          {notifications.length > 0 ? (
+            <ScrollView style={styles.notificationsList}>
+              {notifications.map((notification, index) => (
+                <View key={notification.id}>
+                  <List.Item
+                    title={notification.title}
+                    onPress={() => handleNotificationPress(notification)}
+                    titleStyle={[
+                      styles.notificationTitle,
+                      {
+                        fontWeight: notification.isRead ? 'normal' : 'bold',
+                        opacity: notification.isRead ? 0.7 : 1,
+                      },
+                    ]}
+                    style={styles.notificationItem}
+                    left={() => (
+                      <List.Icon
+                        icon={notification.isRead ? 'check-circle' : 'circle'}
+                        color={notification.isRead ? '#4caf50' : '#2196f3'}
                       />
-                      {index < notifications.length - 1 && <Divider />}
-                    </View>
-                  ))}
-                </ScrollView>
-              ) : (
-                <View style={styles.emptyContainer}>
-                  <List.Icon icon="bell-off" color="#9e9e9e" />
-                  <Text variant="bodyLarge" style={styles.emptyText}>
-                    No new notifications
-                  </Text>
-                  <Text variant="bodySmall" style={styles.emptySubtext}>
-                    You're all caught up!
-                  </Text>
+                    )}
+                  />
+                  {index < notifications.length - 1 && <Divider />}
                 </View>
-              )}
-            </Surface>
-          </TouchableOpacity>
-        </View>
-      </TouchableOpacity>
-    </Modal>
+              ))}
+            </ScrollView>
+          ) : (
+            <View style={styles.emptyContainer}>
+              <List.Icon icon="bell-off" color="#9e9e9e" />
+              <Text variant="bodyLarge" style={styles.emptyText}>
+                No new notifications
+              </Text>
+              <Text variant="bodySmall" style={styles.emptySubtext}>
+                You're all caught up!
+              </Text>
+            </View>
+          )}
+        </Surface>
+      </Modal>
+    </Portal>
   );
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  modal: {
+    margin: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
   },
   surface: {
     backgroundColor: '#ffffff',
