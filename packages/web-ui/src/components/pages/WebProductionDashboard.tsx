@@ -110,7 +110,7 @@ export function WebProductionDashboard({
       renderCell: params => {
         if (!params.value) return '-';
         const date = new Date(params.value);
-        return date.toLocaleString('default', {
+        return date.toLocaleString('en-US', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
@@ -127,7 +127,7 @@ export function WebProductionDashboard({
       renderCell: params => {
         if (!params.value) return '-';
         const date = new Date(params.value);
-        return date.toLocaleString('default', {
+        return date.toLocaleString('en-US', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
@@ -144,7 +144,7 @@ export function WebProductionDashboard({
       renderCell: params => {
         if (!params.value) return '-';
         const date = new Date(params.value);
-        return date.toLocaleString('default', {
+        return date.toLocaleString('en-US', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
