@@ -76,7 +76,7 @@ export function WebProductionDashboard({
       color: 'warning',
     },
     {
-      title: 'Overdue Harvests',
+      title: 'Overdue',
       value: dashboardStats.overdueHarvests.toString(),
       interval: 'Current',
       trend: 'neutral',
@@ -246,9 +246,15 @@ export function WebProductionDashboard({
                 component="h2"
                 variant="subtitle2"
                 gutterBottom
-                sx={{ px: 2, pt: 2, mb: 2 }}
+                sx={{ px: 2, pt: 2, mb: 1 }}
               >
-                Monthly Planting vs Harvesting
+                Production Trends
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ px: 2, mb: 2, color: 'text.secondary' }}
+              >
+                Planted vs Harvested Over Time
               </Typography>
               <BarChart
                 borderRadius={8}
@@ -313,9 +319,15 @@ export function WebProductionDashboard({
                 component="h2"
                 variant="subtitle2"
                 gutterBottom
-                sx={{ px: 2, pt: 2, mb: 2 }}
+                sx={{ px: 2, pt: 2, mb: 1 }}
               >
-                Production Distribution
+                Product Distribution
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ px: 2, mb: 2, color: 'text.secondary' }}
+              >
+                Distribution by product types in production
               </Typography>
               <Box
                 sx={{

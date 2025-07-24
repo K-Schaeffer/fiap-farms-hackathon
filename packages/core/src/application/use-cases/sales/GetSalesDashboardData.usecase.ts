@@ -122,6 +122,6 @@ export class GetSalesDashboardDataUseCase {
     return Array.from(clientMap.entries())
       .map(([client, data]) => ({ client, ...data }))
       .sort((a, b) => b.totalAmount - a.totalAmount)
-      .slice(0, 4); // Top 4 clients
+      .slice(0, 5); // Top 5 clients
   }
 }

@@ -205,7 +205,7 @@ export function WebSalesDashboard({
                 gutterBottom
                 sx={{ px: 2, pt: 2, mb: 1 }}
               >
-                Revenue Trend
+                Revenue Trends
               </Typography>
               <Typography
                 variant="body2"
