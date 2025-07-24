@@ -17,19 +17,19 @@ interface WebSignUpFormData {
   confirmPassword: string;
 }
 
-interface WebSignUpPageProps {
+interface WebSignUpProps {
   onSignUp: (name: string, email: string, password: string) => Promise<void>;
   onLoginRedirect: () => void;
   error: string | null;
   isLoading: boolean;
 }
 
-export function WebSignUpPage({
+export function WebSignUp({
   onSignUp,
   onLoginRedirect,
   error,
   isLoading,
-}: WebSignUpPageProps) {
+}: WebSignUpProps) {
   const { control, handleSubmit, watch } = useForm<WebSignUpFormData>({
     defaultValues: {
       name: '',

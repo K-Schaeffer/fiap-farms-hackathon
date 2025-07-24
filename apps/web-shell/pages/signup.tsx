@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@fiap-farms/shared-stores';
-import { WebSignUpPage } from '@fiap-farms/web-ui';
+import { WebSignUp } from '@fiap-farms/web-ui';
 
 export default function SignUpPage() {
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +31,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <WebSignUpPage
+    <WebSignUp
       onSignUp={handleSignUp}
       onLoginRedirect={handleLoginRedirect}
       error={error}
