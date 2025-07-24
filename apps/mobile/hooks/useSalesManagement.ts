@@ -12,7 +12,7 @@ import type {
   MobileSaleProduct,
   MobileSaleFormData,
   MobileSaleItemFormData,
-} from '../components/pages';
+} from '../components';
 
 export function useSalesManagement() {
   const [availableProducts, setAvailableProducts] = useState<

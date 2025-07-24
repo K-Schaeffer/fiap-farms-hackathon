@@ -1,71 +1,62 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text, Card, Surface } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native-paper';
+import { MobileProductionManagement } from '../../components';
+import { useProductionManagement } from '../../hooks';
 
 export default function ProductionManagementPage() {
+  const {
+    availableProducts,
+    productionItems,
+    loading,
+    error,
+    startProduction,
+    updateStatus,
+    harvestItem,
+    refresh,
+  } = useProductionManagement();
+
+  const handleRefresh = () => {
+    refresh();
+  };
+
+  if (loading) {
+    return (
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.loadingContainer}
+      >
+        <ActivityIndicator size="large" />
+        <Text style={styles.loadingText}>Loading production management...</Text>
+      </ScrollView>
+    );
+  }
+
+  if (error) {
+    return (
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.errorContainer}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
+        }
+      >
+        <Text style={styles.errorText}>Error: {error}</Text>
+        <Text style={styles.retryText}>Pull to refresh and try again</Text>
+      </ScrollView>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      {/* Content */}
-      <ScrollView
-        style={styles.content}
-        contentContainerStyle={styles.scrollContent}
-      >
-        <View style={styles.comingSoonContainer}>
-          <Surface style={styles.comingSoonCard} elevation={2}>
-            <MaterialIcons name="agriculture" size={64} color="#388e3c" />
-            <Text variant="headlineMedium" style={styles.comingSoonTitle}>
-              Production Management
-            </Text>
-            <Text variant="bodyLarge" style={styles.comingSoonSubtitle}>
-              Coming Soon
-            </Text>
-            <Text variant="bodyMedium" style={styles.comingSoonDescription}>
-              Manage your production cycles, track planting and harvesting
-              schedules, and monitor crop health and yields.
-            </Text>
-          </Surface>
-        </View>
-
-        <View style={styles.featuresContainer}>
-          <Text variant="titleLarge" style={styles.featuresTitle}>
-            Features You'll See Here:
-          </Text>
-
-          <Card style={styles.featureCard} mode="outlined">
-            <Card.Content>
-              <View style={styles.featureRow}>
-                <MaterialIcons name="event" size={24} color="#388e3c" />
-                <Text variant="bodyMedium" style={styles.featureText}>
-                  Production scheduling and planning
-                </Text>
-              </View>
-            </Card.Content>
-          </Card>
-
-          <Card style={styles.featureCard} mode="outlined">
-            <Card.Content>
-              <View style={styles.featureRow}>
-                <MaterialIcons name="nature" size={24} color="#388e3c" />
-                <Text variant="bodyMedium" style={styles.featureText}>
-                  Crop health monitoring and alerts
-                </Text>
-              </View>
-            </Card.Content>
-          </Card>
-
-          <Card style={styles.featureCard} mode="outlined">
-            <Card.Content>
-              <View style={styles.featureRow}>
-                <MaterialIcons name="bar-chart" size={24} color="#388e3c" />
-                <Text variant="bodyMedium" style={styles.featureText}>
-                  Yield tracking and performance metrics
-                </Text>
-              </View>
-            </Card.Content>
-          </Card>
-        </View>
-      </ScrollView>
+      <MobileProductionManagement
+        availableProducts={availableProducts}
+        productionItems={productionItems}
+        onStartProduction={startProduction}
+        onUpdateStatus={updateStatus}
+        onHarvestItem={harvestItem}
+        onRefresh={handleRefresh}
+      />
     </View>
   );
 }
@@ -75,60 +66,32 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  content: {
+  loadingContainer: {
     flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
-    padding: 24,
-  },
-  comingSoonContainer: {
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 32,
+    padding: 20,
   },
-  comingSoonCard: {
-    backgroundColor: '#fff',
-    padding: 32,
-    borderRadius: 16,
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-    maxWidth: 400,
+    padding: 20,
   },
-  comingSoonTitle: {
-    fontWeight: 'bold',
+  loadingText: {
     marginTop: 16,
-    textAlign: 'center',
-    color: '#388e3c',
-  },
-  comingSoonSubtitle: {
-    marginTop: 8,
-    textAlign: 'center',
+    fontSize: 16,
     color: '#666',
   },
-  comingSoonDescription: {
-    marginTop: 16,
+  errorText: {
+    fontSize: 16,
+    color: '#d32f2f',
     textAlign: 'center',
-    color: '#666',
-    lineHeight: 20,
+    marginBottom: 8,
   },
-  featuresContainer: {
-    gap: 12,
-  },
-  featuresTitle: {
-    fontWeight: '600',
-    marginBottom: 16,
+  retryText: {
+    fontSize: 14,
+    color: '#999',
     textAlign: 'center',
-  },
-  featureCard: {
-    backgroundColor: '#fff',
-  },
-  featureRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  featureText: {
-    flex: 1,
-    color: '#333',
   },
 });
