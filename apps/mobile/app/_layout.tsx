@@ -8,6 +8,10 @@ import {
   useSalesGoalListener,
 } from '@fiap-farms/shared-stores';
 
+import { registerTranslation, en } from 'react-native-paper-dates';
+
+registerTranslation('en', en);
+
 const theme = {
   ...MD3LightTheme,
 };
