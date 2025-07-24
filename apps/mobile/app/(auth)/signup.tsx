@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Keyboard } from 'react-native';
-import { useRouter, useFocusEffect } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { MobileSignUp } from '../../components';
 import { useAuth } from '@fiap-farms/shared-stores';
-import { MobileSignUpPage } from '../../components/MobileSignUpPage';
+import { Keyboard } from 'react-native';
 
 export default function SignUpScreen() {
   const [error, setError] = useState<string | null>(null);
@@ -10,18 +10,11 @@ export default function SignUpScreen() {
   const { signUp, clearError } = useAuth();
   const router = useRouter();
 
-  // Clear any existing auth errors when component mounts or comes into focus
   React.useEffect(() => {
     clearError();
     setError(null);
   }, [clearError]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      clearError();
-      setError(null);
-    }, [clearError])
-  );
+  // Clear any existing auth errors when component mounts or comes into focus
 
   const handleSignUp = async (
     name: string,
@@ -30,7 +23,7 @@ export default function SignUpScreen() {
   ) => {
     try {
       setError(null);
-      clearError(); // Clear any previous auth store errors
+      clearError();
       setIsLoading(true);
       await signUp(name, email, password);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,16 +36,15 @@ export default function SignUpScreen() {
 
   const handleLoginRedirect = () => {
     setError(null);
-    clearError(); // Clear errors when navigating
-    Keyboard.dismiss(); // Dismiss keyboard before navigation
-    // Small delay to ensure keyboard is fully dismissed
+    clearError();
+    Keyboard.dismiss();
     setTimeout(() => {
       router.push('/(auth)/login');
     }, 100);
   };
 
   return (
-    <MobileSignUpPage
+    <MobileSignUp
       onSignUp={handleSignUp}
       onLoginRedirect={handleLoginRedirect}
       error={error}

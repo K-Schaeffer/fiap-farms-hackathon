@@ -1,39 +1,8 @@
-// ===== MOBILE COMPONENT EXPORTS =====
-
-// Authentication components
-export { MobileLoginPage } from './MobileLoginPage';
-export { MobileSignUpPage } from './MobileSignUpPage';
-
-// Dashboard components
-export { MobileMainGrid } from './MobileMainGrid';
-export { MobileStatCard } from './MobileStatCard';
-export { MobileCustomizedDataGrid } from './MobileCustomizedDataGrid';
-
-// Chart components
-export { MobileSessionsChart } from './MobileSessionsChart';
-export { MobilePageViewsBarChart } from './MobilePageViewsBarChart';
-export { MobileUserByCountryChart } from './MobileUserByCountryChart';
-
-// Data table components
-export { MobileProductsTable } from './MobileProductsTable';
+// Page components
+export * from './pages';
 
 // Notification components
-export { MobileNotificationBadge } from './MobileNotificationBadge';
-export { MobileNotificationMenu } from './MobileNotificationMenu';
+export * from './notifications';
 
-// ===== TYPE EXPORTS =====
-
-// Authentication types
-export type { MobileLoginPageProps } from './MobileLoginPage';
-export type { MobileSignUpPageProps } from './MobileSignUpPage';
-
-// Dashboard types
-export type { MobileStatCardProps } from './MobileStatCard';
-export type { MobileProductsTableProps } from './MobileProductsTable';
-
-// Notification types
-export type { MobileNotificationBadgeProps } from './MobileNotificationBadge';
-export type {
-  MobileNotificationMenuProps,
-  MobileNotificationData,
-} from './MobileNotificationMenu';
+// Note: Data grid, charts, and other components mentioned in the original index.ts
+// don't exist in the actual components directory, so they're excluded from this reorganization.

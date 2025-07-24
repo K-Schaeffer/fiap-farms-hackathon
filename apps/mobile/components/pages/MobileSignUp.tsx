@@ -10,38 +10,46 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { Text, TextInput, Button, Card, Snackbar } from 'react-native-paper';
 
-export interface MobileLoginFormData {
+export interface MobileSignUpFormData {
+  name: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
-export interface MobileLoginPageProps {
-  onLogin: (email: string, password: string) => Promise<void>;
-  onSignUpRedirect: () => void;
+export interface MobileSignUpProps {
+  onSignUp: (name: string, email: string, password: string) => Promise<void>;
+  onLoginRedirect: () => void;
   error: string | null;
   isLoading: boolean;
 }
 
-export function MobileLoginPage({
-  onLogin,
-  onSignUpRedirect,
+export function MobileSignUp({
+  onSignUp,
+  onLoginRedirect,
   error,
   isLoading,
-}: MobileLoginPageProps) {
+}: MobileSignUpProps) {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showError, setShowError] = useState(false);
 
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
-  } = useForm<MobileLoginFormData>({
+  } = useForm<MobileSignUpFormData>({
     mode: 'onChange',
     defaultValues: {
+      name: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
   });
+
+  const password = watch('password');
 
   React.useEffect(() => {
     if (error) {
@@ -54,8 +62,8 @@ export function MobileLoginPage({
     Keyboard.dismiss();
   }, []);
 
-  const onSubmit = async (data: MobileLoginFormData) => {
-    await onLogin(data.email, data.password);
+  const onSubmit = async (data: MobileSignUpFormData) => {
+    await onSignUp(data.name, data.email, data.password);
   };
 
   return (
@@ -70,14 +78,48 @@ export function MobileLoginPage({
       >
         <View style={styles.content}>
           <Text variant="headlineMedium" style={styles.title}>
-            Welcome Back
+            Create Account
           </Text>
           <Text variant="bodyLarge" style={styles.subtitle}>
-            Sign in to your account
+            Sign up to get started
           </Text>
 
           <Card style={styles.card}>
             <Card.Content>
+              <Controller
+                control={control}
+                name="name"
+                rules={{
+                  required: 'Name is required',
+                  minLength: {
+                    value: 2,
+                    message: 'Name must be at least 2 characters',
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z\s]+$/,
+                    message: 'Name can only contain letters and spaces',
+                  },
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    label="Name"
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    mode="outlined"
+                    autoCapitalize="words"
+                    error={!!errors.name}
+                    style={styles.input}
+                    disabled={isLoading}
+                  />
+                )}
+              />
+              {errors.name && (
+                <Text variant="bodySmall" style={styles.errorText}>
+                  {errors.name.message}
+                </Text>
+              )}
+
               <Controller
                 control={control}
                 name="email"
@@ -114,6 +156,10 @@ export function MobileLoginPage({
                 name="password"
                 rules={{
                   required: 'Password is required',
+                  minLength: {
+                    value: 6,
+                    message: 'Password must be at least 6 characters',
+                  },
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
@@ -141,23 +187,59 @@ export function MobileLoginPage({
                 </Text>
               )}
 
+              <Controller
+                control={control}
+                name="confirmPassword"
+                rules={{
+                  required: 'Please confirm your password',
+                  validate: value =>
+                    value === password || 'Passwords do not match',
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    label="Confirm Password"
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    mode="outlined"
+                    secureTextEntry={!showConfirmPassword}
+                    error={!!errors.confirmPassword}
+                    style={styles.input}
+                    disabled={isLoading}
+                    right={
+                      <TextInput.Icon
+                        icon={showConfirmPassword ? 'eye-off' : 'eye'}
+                        onPress={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      />
+                    }
+                  />
+                )}
+              />
+              {errors.confirmPassword && (
+                <Text variant="bodySmall" style={styles.errorText}>
+                  {errors.confirmPassword.message}
+                </Text>
+              )}
+
               <Button
                 mode="contained"
                 onPress={handleSubmit(onSubmit)}
-                style={styles.loginButton}
+                style={styles.signUpButton}
                 disabled={!isValid || isLoading}
                 loading={isLoading}
               >
-                {isLoading ? 'Signing In...' : 'Sign In'}
+                {isLoading ? 'Creating Account...' : 'Sign Up'}
               </Button>
 
               <Button
                 mode="text"
-                onPress={onSignUpRedirect}
-                style={styles.signUpButton}
+                onPress={onLoginRedirect}
+                style={styles.loginButton}
                 disabled={isLoading}
               >
-                Don't have an account? Sign Up
+                Already have an account? Sign In
               </Button>
             </Card.Content>
           </Card>
@@ -217,12 +299,12 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     marginLeft: 12,
   },
-  loginButton: {
+  signUpButton: {
     marginTop: 24,
     marginBottom: 16,
     paddingVertical: 8,
   },
-  signUpButton: {
+  loginButton: {
     marginBottom: 8,
   },
   snackbar: {
