@@ -74,20 +74,12 @@ const CHART_COLORS = [
   '#d4e157',
 ];
 
-const MONTHS = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
+// Utility function to format month names using native API
+function formatMonthName(monthString: string): string {
+  const [, month] = monthString.split('-');
+  const date = new Date(2025, parseInt(month) - 1);
+  return date.toLocaleDateString('en-US', { month: 'long' });
+}
 
 export function transformProductionDashboardStats(
   productionItems: ProductionItem[]
@@ -127,27 +119,41 @@ export function transformProductionTrendData(
   plantedTrend: ProductionTrendItem[],
   harvestedTrend: ProductionTrendItem[]
 ): ChartTrendData {
-  const currentYear = new Date().getFullYear();
-
-  const plantedByMonth = Array(12).fill(0);
-  const harvestedByMonth = Array(12).fill(0);
+  // Get all unique month-year combinations from both trends
+  const allMonthYears = new Set<string>();
 
   plantedTrend.forEach(item => {
-    if (item.year === currentYear && item.month >= 1 && item.month <= 12) {
-      plantedByMonth[item.month - 1] = item.count;
-    }
+    const monthKey = `${item.year}-${item.month.toString().padStart(2, '0')}`;
+    allMonthYears.add(monthKey);
   });
 
   harvestedTrend.forEach(item => {
-    if (item.year === currentYear && item.month >= 1 && item.month <= 12) {
-      harvestedByMonth[item.month - 1] = item.count;
-    }
+    const monthKey = `${item.year}-${item.month.toString().padStart(2, '0')}`;
+    allMonthYears.add(monthKey);
+  });
+
+  // Sort month-year combinations chronologically
+  const sortedMonthYears = Array.from(allMonthYears).sort();
+
+  // Create data arrays for each month
+  const months = sortedMonthYears.map(monthYear => formatMonthName(monthYear));
+
+  const planted = sortedMonthYears.map(monthYear => {
+    const [year, month] = monthYear.split('-').map(Number);
+    const item = plantedTrend.find(p => p.year === year && p.month === month);
+    return item ? item.count : 0;
+  });
+
+  const harvested = sortedMonthYears.map(monthYear => {
+    const [year, month] = monthYear.split('-').map(Number);
+    const item = harvestedTrend.find(h => h.year === year && h.month === month);
+    return item ? item.count : 0;
   });
 
   return {
-    planted: plantedByMonth,
-    harvested: harvestedByMonth,
-    months: MONTHS,
+    planted,
+    harvested,
+    months,
   };
 }
 
