@@ -4,6 +4,7 @@ import {
   ProductionItem,
   ProductionDistributionItem,
   ProductionTrends,
+  InventoryItem,
 } from '@fiap-farms/core';
 import type { MobileSaleHistoryItem } from '../components/dashboards';
 
@@ -208,5 +209,17 @@ export function transformProductionItemsToMobile(
     yield: item.yield,
     location: item.location,
     unit: item.productUnit,
+  }));
+}
+
+// Sales transformers for mobile
+export function transformInventoryItemsToMobile(
+  items: InventoryItem[]
+): import('../components/pages').MobileSaleProduct[] {
+  return items.map(item => ({
+    id: item.productId,
+    name: item.productName,
+    unit: item.unit,
+    quantity: item.quantity,
   }));
 }
