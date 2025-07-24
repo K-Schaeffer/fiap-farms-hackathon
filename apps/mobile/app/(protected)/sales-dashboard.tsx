@@ -7,7 +7,15 @@ import { useAuth } from '@fiap-farms/shared-stores';
 
 export default function SalesDashboardPage() {
   const { user } = useAuth();
-  const { salesHistory, dashboardStats, trendData, distributionData, loading, error, refresh } = useSalesDashboard();
+  const {
+    salesHistory,
+    dashboardStats,
+    trendData,
+    distributionData,
+    loading,
+    error,
+    refresh,
+  } = useSalesDashboard();
 
   if (!user) {
     return (

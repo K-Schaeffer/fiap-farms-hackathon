@@ -113,9 +113,7 @@ export function MobileSalesCards({ salesHistory }: MobileSalesCardsProps) {
   }
 
   return (
-    <View style={styles.container}>
-      {salesHistory.map(renderSaleCard)}
-    </View>
+    <View style={styles.container}>{salesHistory.map(renderSaleCard)}</View>
   );
 }
 
@@ -210,4 +208,4 @@ const styles = StyleSheet.create({
     color: '#999',
     textAlign: 'center',
   },
-}); 
+});
