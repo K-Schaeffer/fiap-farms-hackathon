@@ -157,4 +157,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     minWidth: 160,
   },
-}); 
+});

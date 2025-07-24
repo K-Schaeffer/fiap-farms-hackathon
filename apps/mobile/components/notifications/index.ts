@@ -4,7 +4,7 @@ export { MobileNotificationMenu } from './MobileNotificationMenu';
 
 // Export types
 export type { MobileNotificationBadgeProps } from './MobileNotificationBadge';
-export type { 
-  MobileNotificationData, 
-  MobileNotificationMenuProps 
-} from './MobileNotificationMenu'; 
+export type {
+  MobileNotificationData,
+  MobileNotificationMenuProps,
+} from './MobileNotificationMenu';

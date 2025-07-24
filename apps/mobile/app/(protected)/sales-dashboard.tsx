@@ -31,7 +31,7 @@ export default function SalesDashboardPage() {
           <Text variant="titleLarge" style={styles.featuresTitle}>
             Features You'll See Here:
           </Text>
-          
+
           <Card style={styles.featureCard} mode="outlined">
             <Card.Content>
               <View style={styles.featureRow}>
@@ -131,4 +131,4 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#333',
   },
-}); 
+});

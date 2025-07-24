@@ -3,4 +3,4 @@ import { MobileSalesWelcome } from '../../../components';
 
 export default function SalesPage() {
   return <MobileSalesWelcome />;
-} 
+}
