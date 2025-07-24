@@ -105,10 +105,13 @@ export function WebSalesDashboard({
       field: 'items',
       headerName: 'Items',
       flex: 1,
-      minWidth: 150,
+      minWidth: 200,
       renderCell: params => {
         return params.value
-          .map((item: { productName: string }) => item.productName)
+          .map(
+            (item: { productName: string; quantity: number }) =>
+              `${item.productName} (${item.quantity})`
+          )
           .join(', ');
       },
     },

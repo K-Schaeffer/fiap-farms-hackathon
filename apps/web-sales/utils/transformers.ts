@@ -54,6 +54,7 @@ export function transformSalesDashboardToUI(
       totalSaleProfit: sale.totalSaleProfit,
       items: sale.items.map(item => ({
         productName: item.productName,
+        quantity: item.quantity,
       })),
     })),
   };
