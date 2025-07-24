@@ -1,9 +1,10 @@
 // Page components
 export { MobileLogin } from './MobileLogin';
 export { MobileSignUp } from './MobileSignUp';
-export { MobileSalesWelcome } from './MobileSalesWelcome';
 export { MobileProductsWelcome } from './MobileProductsWelcome';
+export { MobileSalesWelcome } from './MobileSalesWelcome';
 export { MobileSalesDashboard } from './MobileSalesDashboard';
+export { MobileProductionDashboard } from './MobileProductionDashboard';
 
 // Export types
 export type { MobileLoginProps, MobileLoginFormData } from './MobileLogin';
@@ -16,3 +17,5 @@ export type {
   ChartTrendData,
   ChartDistributionData,
 } from './MobileSalesDashboard';
+
+export type { MobileProductionDashboardProps } from './MobileProductionDashboard';

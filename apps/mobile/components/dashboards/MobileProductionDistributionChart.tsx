@@ -3,19 +3,19 @@ import { View, StyleSheet } from 'react-native';
 import { Text, Card } from 'react-native-paper';
 import { PieChart } from 'react-native-gifted-charts';
 
-export interface ChartDistributionData {
+export interface ProductionChartDistributionData {
   label: string;
   value: number;
   color: string;
 }
 
-export interface MobileClientChartProps {
-  distributionData: ChartDistributionData[];
+export interface MobileProductionDistributionChartProps {
+  distributionData: ProductionChartDistributionData[];
 }
 
-export function MobileClientChart({
+export function MobileProductionDistributionChart({
   distributionData,
-}: MobileClientChartProps) {
+}: MobileProductionDistributionChartProps) {
   // Transform data for react-native-gifted-charts
   const pieData = distributionData.map(item => ({
     value: item.value,
@@ -48,10 +48,10 @@ export function MobileClientChart({
     <Card style={styles.chartCard} mode="outlined">
       <Card.Content style={styles.chartContent}>
         <Text variant="titleMedium" style={styles.chartTitle}>
-          Best Clients
+          Product Distribution
         </Text>
         <Text variant="bodyMedium" style={styles.chartSubtitle}>
-          Client distribution by sales volume
+          Distribution by product types in production
         </Text>
 
         <View style={styles.chartSection}>
