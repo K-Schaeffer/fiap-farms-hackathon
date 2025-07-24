@@ -1,71 +1,67 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text, Card, Surface } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, StyleSheet } from 'react-native';
+import { Text, ActivityIndicator } from 'react-native-paper';
+import { MobileSalesDashboard } from '../../components/pages/MobileSalesDashboard';
+import { useSalesDashboard } from '../../hooks';
+import { useAuth } from '@fiap-farms/shared-stores';
 
 export default function SalesDashboardPage() {
+  const { user } = useAuth();
+  const { salesHistory, dashboardStats, trendData, distributionData, loading, error, refresh } = useSalesDashboard();
+
+  if (!user) {
+    return (
+      <View style={styles.centerContainer}>
+        <Text variant="headlineSmall" style={styles.messageText}>
+          Please log in to view sales dashboard
+        </Text>
+      </View>
+    );
+  }
+
+  if (loading) {
+    return (
+      <View style={styles.centerContainer}>
+        <ActivityIndicator size="large" />
+        <Text variant="bodyLarge" style={styles.loadingText}>
+          Loading sales data...
+        </Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.centerContainer}>
+        <Text variant="headlineSmall" style={styles.errorText}>
+          Error loading dashboard
+        </Text>
+        <Text variant="bodyMedium" style={styles.errorMessage}>
+          {error}
+        </Text>
+      </View>
+    );
+  }
+
+  if (!dashboardStats || !trendData || !distributionData) {
+    return (
+      <View style={styles.centerContainer}>
+        <Text variant="headlineSmall" style={styles.messageText}>
+          No sales data available
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      {/* Dashboard Content */}
-      <ScrollView
-        style={styles.content}
-        contentContainerStyle={styles.scrollContent}
-      >
-        <View style={styles.comingSoonContainer}>
-          <Surface style={styles.comingSoonCard} elevation={2}>
-            <MaterialIcons name="assessment" size={64} color="#1976d2" />
-            <Text variant="headlineMedium" style={styles.comingSoonTitle}>
-              Sales Dashboard
-            </Text>
-            <Text variant="bodyLarge" style={styles.comingSoonSubtitle}>
-              Coming Soon
-            </Text>
-            <Text variant="bodyMedium" style={styles.comingSoonDescription}>
-              View comprehensive sales analytics, revenue trends, and
-              performance metrics to track your business growth.
-            </Text>
-          </Surface>
-        </View>
-
-        <View style={styles.featuresContainer}>
-          <Text variant="titleLarge" style={styles.featuresTitle}>
-            Features You'll See Here:
-          </Text>
-
-          <Card style={styles.featureCard} mode="outlined">
-            <Card.Content>
-              <View style={styles.featureRow}>
-                <MaterialIcons name="trending-up" size={24} color="#1976d2" />
-                <Text variant="bodyMedium" style={styles.featureText}>
-                  Revenue trends and growth charts
-                </Text>
-              </View>
-            </Card.Content>
-          </Card>
-
-          <Card style={styles.featureCard} mode="outlined">
-            <Card.Content>
-              <View style={styles.featureRow}>
-                <MaterialIcons name="pie-chart" size={24} color="#1976d2" />
-                <Text variant="bodyMedium" style={styles.featureText}>
-                  Sales distribution by clients
-                </Text>
-              </View>
-            </Card.Content>
-          </Card>
-
-          <Card style={styles.featureCard} mode="outlined">
-            <Card.Content>
-              <View style={styles.featureRow}>
-                <MaterialIcons name="history" size={24} color="#1976d2" />
-                <Text variant="bodyMedium" style={styles.featureText}>
-                  Recent sales transactions
-                </Text>
-              </View>
-            </Card.Content>
-          </Card>
-        </View>
-      </ScrollView>
+      <MobileSalesDashboard
+        salesHistory={salesHistory}
+        dashboardStats={dashboardStats}
+        trendData={trendData}
+        distributionData={distributionData}
+        onRefresh={refresh}
+      />
     </View>
   );
 }
@@ -75,60 +71,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  content: {
+  centerContainer: {
     flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
-    padding: 24,
-  },
-  comingSoonContainer: {
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 32,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
   },
-  comingSoonCard: {
-    backgroundColor: '#fff',
-    padding: 32,
-    borderRadius: 16,
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: 400,
-  },
-  comingSoonTitle: {
-    fontWeight: 'bold',
-    marginTop: 16,
-    textAlign: 'center',
-    color: '#1976d2',
-  },
-  comingSoonSubtitle: {
-    marginTop: 8,
-    textAlign: 'center',
+  messageText: {
     color: '#666',
+    textAlign: 'center',
   },
-  comingSoonDescription: {
+  loadingText: {
     marginTop: 16,
-    textAlign: 'center',
     color: '#666',
-    lineHeight: 20,
-  },
-  featuresContainer: {
-    gap: 12,
-  },
-  featuresTitle: {
-    fontWeight: '600',
-    marginBottom: 16,
     textAlign: 'center',
   },
-  featureCard: {
-    backgroundColor: '#fff',
+  errorText: {
+    color: '#d32f2f',
+    textAlign: 'center',
+    marginBottom: 8,
   },
-  featureRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  featureText: {
-    flex: 1,
-    color: '#333',
+  errorMessage: {
+    color: '#666',
+    textAlign: 'center',
   },
 });
