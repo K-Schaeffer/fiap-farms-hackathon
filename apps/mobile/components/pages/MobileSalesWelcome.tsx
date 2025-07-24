@@ -22,7 +22,7 @@ export function MobileSalesWelcome({
         <View style={styles.headerContent}>
           <MaterialIcons name="shopping-cart" size={48} color="white" />
           <Text variant="headlineMedium" style={styles.headerTitle}>
-            Sales Management
+            Sales
           </Text>
           <Text variant="bodyLarge" style={styles.headerSubtitle}>
             Track your sales performance and create new sales transactions
