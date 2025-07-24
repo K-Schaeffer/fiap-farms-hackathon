@@ -12,7 +12,7 @@ A plataforma FIAP Farms é uma solução completa para gestão de cooperativas a
 
 - [Resumo](#resumo)
 - [Demonstração da Aplicação](#demonstração-da-aplicação)
-- [Features Principais](features-principais)
+- [Features Principais](#features-principais)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Arquitetura do Projeto](#arquitetura-do-projeto)
   - [Visão Geral da Arquitetura](#visão-geral-da-arquitetura)
