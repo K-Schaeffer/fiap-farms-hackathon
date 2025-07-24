@@ -63,200 +63,220 @@ export function MobileSignUp({
   }, []);
 
   const onSubmit = async (data: MobileSignUpFormData) => {
+    Keyboard.dismiss();
     await onSignUp(data.name, data.email, data.password);
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const handleLoginPress = () => {
+    onLoginRedirect();
+  };
+
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
-    >
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled"
+    <>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <View style={styles.content}>
-          <Text variant="headlineMedium" style={styles.title}>
-            Create Account
-          </Text>
-          <Text variant="bodyLarge" style={styles.subtitle}>
-            Sign up to get started
-          </Text>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.content}>
+            <View style={styles.header}>
+              <Text variant="headlineLarge" style={styles.title}>
+                Create Account
+              </Text>
+              <Text variant="bodyLarge" style={styles.subtitle}>
+                Sign up to get started with FIAP Farms
+              </Text>
+            </View>
 
-          <Card style={styles.card}>
-            <Card.Content>
-              <Controller
-                control={control}
-                name="name"
-                rules={{
-                  required: 'Name is required',
-                  minLength: {
-                    value: 2,
-                    message: 'Name must be at least 2 characters',
-                  },
-                  pattern: {
-                    value: /^[a-zA-Z\s]+$/,
-                    message: 'Name can only contain letters and spaces',
-                  },
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextInput
-                    label="Name"
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    mode="outlined"
-                    autoCapitalize="words"
-                    error={!!errors.name}
-                    style={styles.input}
-                    disabled={isLoading}
-                  />
-                )}
-              />
-              {errors.name && (
-                <Text variant="bodySmall" style={styles.errorText}>
-                  {errors.name.message}
-                </Text>
-              )}
-
-              <Controller
-                control={control}
-                name="email"
-                rules={{
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Please enter a valid email address',
-                  },
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextInput
-                    label="Email"
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    mode="outlined"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    error={!!errors.email}
-                    style={styles.input}
-                    disabled={isLoading}
-                  />
-                )}
-              />
-              {errors.email && (
-                <Text variant="bodySmall" style={styles.errorText}>
-                  {errors.email.message}
-                </Text>
-              )}
-
-              <Controller
-                control={control}
-                name="password"
-                rules={{
-                  required: 'Password is required',
-                  minLength: {
-                    value: 6,
-                    message: 'Password must be at least 6 characters',
-                  },
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextInput
-                    label="Password"
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    mode="outlined"
-                    secureTextEntry={!showPassword}
-                    error={!!errors.password}
-                    style={styles.input}
-                    disabled={isLoading}
-                    right={
-                      <TextInput.Icon
-                        icon={showPassword ? 'eye-off' : 'eye'}
-                        onPress={() => setShowPassword(!showPassword)}
+            <Card style={styles.card} mode="elevated">
+              <Card.Content style={styles.cardContent}>
+                <View style={styles.form}>
+                  <Controller
+                    control={control}
+                    name="name"
+                    rules={{
+                      required: 'Name is required',
+                      minLength: {
+                        value: 2,
+                        message: 'Name must be at least 2 characters',
+                      },
+                      pattern: {
+                        value: /^[a-zA-Z\s]+$/,
+                        message: 'Name can only contain letters and spaces',
+                      },
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <TextInput
+                        label="Name"
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        mode="outlined"
+                        autoCapitalize="words"
+                        error={!!errors.name}
+                        style={styles.input}
+                        disabled={isLoading}
                       />
-                    }
+                    )}
                   />
-                )}
-              />
-              {errors.password && (
-                <Text variant="bodySmall" style={styles.errorText}>
-                  {errors.password.message}
-                </Text>
-              )}
+                  {errors.name && (
+                    <Text variant="bodySmall" style={styles.errorText}>
+                      {errors.name.message}
+                    </Text>
+                  )}
 
-              <Controller
-                control={control}
-                name="confirmPassword"
-                rules={{
-                  required: 'Please confirm your password',
-                  validate: value =>
-                    value === password || 'Passwords do not match',
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TextInput
-                    label="Confirm Password"
-                    value={value}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    mode="outlined"
-                    secureTextEntry={!showConfirmPassword}
-                    error={!!errors.confirmPassword}
-                    style={styles.input}
-                    disabled={isLoading}
-                    right={
-                      <TextInput.Icon
-                        icon={showConfirmPassword ? 'eye-off' : 'eye'}
-                        onPress={() =>
-                          setShowConfirmPassword(!showConfirmPassword)
+                  <Controller
+                    control={control}
+                    name="email"
+                    rules={{
+                      required: 'Email is required',
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: 'Please enter a valid email address',
+                      },
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <TextInput
+                        label="Email"
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        mode="outlined"
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoComplete="email"
+                        error={!!errors.email}
+                        style={styles.input}
+                        disabled={isLoading}
+                      />
+                    )}
+                  />
+                  {errors.email && (
+                    <Text variant="bodySmall" style={styles.errorText}>
+                      {errors.email.message}
+                    </Text>
+                  )}
+
+                  <Controller
+                    control={control}
+                    name="password"
+                    rules={{
+                      required: 'Password is required',
+                      minLength: {
+                        value: 6,
+                        message: 'Password must be at least 6 characters',
+                      },
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <TextInput
+                        label="Password"
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        mode="outlined"
+                        secureTextEntry={!showPassword}
+                        error={!!errors.password}
+                        style={styles.input}
+                        disabled={isLoading}
+                        right={
+                          <TextInput.Icon
+                            icon={showPassword ? 'eye-off' : 'eye'}
+                            onPress={togglePasswordVisibility}
+                          />
                         }
                       />
-                    }
+                    )}
                   />
-                )}
-              />
-              {errors.confirmPassword && (
-                <Text variant="bodySmall" style={styles.errorText}>
-                  {errors.confirmPassword.message}
-                </Text>
-              )}
+                  {errors.password && (
+                    <Text variant="bodySmall" style={styles.errorText}>
+                      {errors.password.message}
+                    </Text>
+                  )}
 
-              <Button
-                mode="contained"
-                onPress={handleSubmit(onSubmit)}
-                style={styles.signUpButton}
-                disabled={!isValid || isLoading}
-                loading={isLoading}
-              >
-                {isLoading ? 'Creating Account...' : 'Sign Up'}
-              </Button>
+                  <Controller
+                    control={control}
+                    name="confirmPassword"
+                    rules={{
+                      required: 'Please confirm your password',
+                      validate: value =>
+                        value === password || 'Passwords do not match',
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <TextInput
+                        label="Confirm Password"
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        mode="outlined"
+                        secureTextEntry={!showConfirmPassword}
+                        error={!!errors.confirmPassword}
+                        style={styles.input}
+                        disabled={isLoading}
+                        right={
+                          <TextInput.Icon
+                            icon={showConfirmPassword ? 'eye-off' : 'eye'}
+                            onPress={toggleConfirmPasswordVisibility}
+                          />
+                        }
+                      />
+                    )}
+                  />
+                  {errors.confirmPassword && (
+                    <Text variant="bodySmall" style={styles.errorText}>
+                      {errors.confirmPassword.message}
+                    </Text>
+                  )}
 
-              <Button
-                mode="text"
-                onPress={onLoginRedirect}
-                style={styles.loginButton}
-                disabled={isLoading}
-              >
-                Already have an account? Sign In
-              </Button>
-            </Card.Content>
-          </Card>
-        </View>
-      </ScrollView>
+                  <Button
+                    mode="contained"
+                    onPress={handleSubmit(onSubmit)}
+                    style={styles.submitButton}
+                    disabled={!isValid || isLoading}
+                    loading={isLoading}
+                  >
+                    {isLoading ? 'Creating Account...' : 'Sign Up'}
+                  </Button>
+
+                  <View style={styles.loginContainer}>
+                    <Text variant="bodyMedium" style={styles.loginText}>
+                      Already have an account?
+                    </Text>
+                    <Button
+                      mode="text"
+                      onPress={handleLoginPress}
+                      disabled={isLoading}
+                      style={styles.loginButton}
+                    >
+                      Sign In
+                    </Button>
+                  </View>
+                </View>
+              </Card.Content>
+            </Card>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       <Snackbar
         visible={showError && !!error}
-        onDismiss={() => {
-          setShowError(false);
-        }}
+        onDismiss={() => setShowError(false)}
         duration={4000}
         style={styles.snackbar}
       >
         {error}
       </Snackbar>
-    </KeyboardAvoidingView>
+    </>
   );
 }
 
@@ -268,44 +288,58 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 16,
+    padding: 24,
   },
   content: {
-    flex: 1,
-    justifyContent: 'center',
-    maxWidth: 400,
-    alignSelf: 'center',
-    width: '100%',
+    alignItems: 'center',
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 32,
   },
   title: {
-    textAlign: 'center',
-    marginBottom: 8,
     fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 8,
   },
   subtitle: {
+    color: '#666',
     textAlign: 'center',
-    marginBottom: 32,
-    opacity: 0.7,
   },
   card: {
-    elevation: 4,
-    borderRadius: 12,
+    width: '100%',
+    maxWidth: 400,
+    backgroundColor: '#fff',
+  },
+  cardContent: {
+    padding: 24,
+  },
+  form: {
+    gap: 16,
   },
   input: {
-    marginBottom: 8,
+    backgroundColor: '#fff',
   },
   errorText: {
     color: '#d32f2f',
-    marginBottom: 16,
-    marginLeft: 12,
+    marginTop: -12,
+    marginBottom: 4,
   },
-  signUpButton: {
-    marginTop: 24,
-    marginBottom: 16,
-    paddingVertical: 8,
+  submitButton: {
+    marginTop: 8,
+    paddingVertical: 4,
+  },
+  loginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  loginText: {
+    color: '#666',
   },
   loginButton: {
-    marginBottom: 8,
+    marginLeft: 4,
   },
   snackbar: {
     backgroundColor: '#d32f2f',
