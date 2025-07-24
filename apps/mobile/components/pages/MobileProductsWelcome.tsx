@@ -3,22 +3,16 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, Button } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
 
-export function MobileProductsWelcome() {
-  const router = useRouter();
+export interface MobileProductsWelcomeProps {
+  onNavigateToManagement: () => void;
+  onNavigateToDashboard: () => void;
+}
 
-  const handleNavigate = (path: string) => {
-    if (path === '/products/dashboard') {
-      router.push('/(protected)/products-dashboard');
-    } else if (path === '/products/management') {
-      router.push('/(protected)/production-management');
-    } else {
-      // For other routes, we'll implement later
-      console.log(`Navigate to: ${path}`);
-    }
-  };
-
+export function MobileProductsWelcome({
+  onNavigateToManagement,
+  onNavigateToDashboard,
+}: MobileProductsWelcomeProps) {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <LinearGradient
@@ -56,7 +50,7 @@ export function MobileProductsWelcome() {
               <Button
                 mode="contained"
                 style={styles.cardButton}
-                onPress={() => handleNavigate('/products/management')}
+                onPress={onNavigateToManagement}
               >
                 Manage Production
               </Button>
@@ -77,7 +71,7 @@ export function MobileProductsWelcome() {
               <Button
                 mode="contained"
                 style={styles.cardButton}
-                onPress={() => handleNavigate('/products/dashboard')}
+                onPress={onNavigateToDashboard}
               >
                 Open Dashboard
               </Button>

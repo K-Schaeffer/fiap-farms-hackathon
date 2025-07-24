@@ -3,22 +3,16 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, Button } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
 
-export function MobileSalesWelcome() {
-  const router = useRouter();
+export interface MobileSalesWelcomeProps {
+  onNavigateToNewSale: () => void;
+  onNavigateToDashboard: () => void;
+}
 
-  const handleNavigate = (path: string) => {
-    if (path === '/sales/dashboard') {
-      router.push('/(protected)/sales-dashboard');
-    } else if (path === '/sales/new') {
-      router.push('/(protected)/new-sale');
-    } else {
-      // For other routes, we'll implement later
-      console.log(`Navigate to: ${path}`);
-    }
-  };
-
+export function MobileSalesWelcome({
+  onNavigateToNewSale,
+  onNavigateToDashboard,
+}: MobileSalesWelcomeProps) {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <LinearGradient
@@ -60,7 +54,7 @@ export function MobileSalesWelcome() {
               <Button
                 mode="contained"
                 style={styles.cardButton}
-                onPress={() => handleNavigate('/sales/new')}
+                onPress={onNavigateToNewSale}
               >
                 Start New Sale
               </Button>
@@ -81,7 +75,7 @@ export function MobileSalesWelcome() {
               <Button
                 mode="contained"
                 style={styles.cardButton}
-                onPress={() => handleNavigate('/sales/dashboard')}
+                onPress={onNavigateToDashboard}
               >
                 Open Dashboard
               </Button>
