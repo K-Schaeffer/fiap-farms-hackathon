@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Card, Text, Chip } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export interface MobileProductionItem {
+export interface MobileProductionItemDashboard {
   id: string;
   productName: string;
   status: 'planted' | 'in_production' | 'harvested' | 'overdue';
@@ -16,7 +16,7 @@ export interface MobileProductionItem {
 }
 
 export interface MobileProductionCardsProps {
-  productionItems: MobileProductionItem[];
+  productionItems: MobileProductionItemDashboard[];
 }
 
 export function MobileProductionCards({
@@ -91,7 +91,7 @@ export function MobileProductionCards({
     }
   };
 
-  const renderProductionCard = (item: MobileProductionItem) => (
+  const renderProductionCard = (item: MobileProductionItemDashboard) => (
     <Card key={item.id} style={styles.card} mode="outlined">
       <Card.Content style={styles.cardContent}>
         <View style={styles.header}>

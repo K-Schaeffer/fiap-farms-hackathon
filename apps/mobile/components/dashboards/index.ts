@@ -33,5 +33,5 @@ export type {
 
 export type {
   MobileProductionCardsProps,
-  MobileProductionItem,
+  MobileProductionItemDashboard,
 } from './MobileProductionCards';

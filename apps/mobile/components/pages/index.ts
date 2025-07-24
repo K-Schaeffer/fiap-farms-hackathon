@@ -6,6 +6,7 @@ export { MobileSalesWelcome } from './MobileSalesWelcome';
 export { MobileProductionDashboard } from './MobileProductionDashboard';
 export { MobileSalesDashboard } from './MobileSalesDashboard';
 export { MobileSaleForm } from './MobileSaleForm';
+export { MobileProductionManagement } from './MobileProductionManagement';
 
 // Export types
 export type { MobileLoginProps } from './MobileLogin';
@@ -20,3 +21,8 @@ export type {
   MobileSaleProduct,
   MobileSaleItemFormData,
 } from './MobileSaleForm';
+export type {
+  MobileProductionManagementProps,
+  MobileProductData,
+  MobileProductionItem,
+} from './MobileProductionManagement';

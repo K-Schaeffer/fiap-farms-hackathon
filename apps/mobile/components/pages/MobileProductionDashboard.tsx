@@ -6,11 +6,11 @@ import {
   MobileProductionCards,
   MobileProductionChart,
   MobileProductionDistributionChart,
-  MobileProductionItem,
 } from '../dashboards';
+import type { MobileProductionItemDashboard } from '../dashboards';
 
 export interface MobileProductionDashboardProps {
-  productionItems: MobileProductionItem[];
+  productionItems: MobileProductionItemDashboard[];
   dashboardStats: import('../../utils/transformers').MobileProductionDashboardStats;
   trendData: import('../../utils/transformers').MobileProductionChartTrendData;
   distributionData: import('../../utils/transformers').MobileProductionChartDistributionData[];
