@@ -97,33 +97,49 @@ export function transformSalesDashboardStats(
     totalSales: data.totalSales,
     totalRevenue: data.totalRevenue,
     totalRevenueLiquid: data.totalRevenueLiquid,
-    bestMonth: data.bestMonth.month,
+    bestMonth: formatMonthName(data.bestMonth.month),
   };
 }
 
+// Utility function to format month from YYYY-MM to readable format
+function formatMonthName(monthString: string): string {
+  // Handle both YYYY-MM and already formatted month strings
+  if (!monthString.includes('-')) {
+    return monthString; // Already formatted
+  }
+
+  const [year, month] = monthString.split('-');
+
+  // Create a date object and use native API to get month name
+  const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1);
+
+  // Use Intl API to get short month name (e.g., "Jan", "Feb")
+  return date.toLocaleDateString('en-US', { month: 'long' });
+}
+
 export function transformSalesTrendData(
-  salesByMonth: Array<{
+  salesByMonth: {
     month: string;
     amount: number;
     liquidAmount: number;
     count: number;
-  }>
+  }[]
 ): ChartTrendData {
   // Use direct data mapping instead of filling array with 0s
   // This preserves the actual months that have data
   return {
-    months: salesByMonth.map(item => item.month),
+    months: salesByMonth.map(item => formatMonthName(item.month)),
     revenue: salesByMonth.map(item => item.amount ?? 0),
     liquidRevenue: salesByMonth.map(item => item.liquidAmount ?? 0),
   };
 }
 
 export function transformSalesDistributionData(
-  topClients: Array<{
+  topClients: {
     client: string;
     totalAmount: number;
     salesCount: number;
-  }>,
+  }[],
   totalRevenue: number
 ): ChartDistributionData[] {
   return topClients.map((client, idx) => ({

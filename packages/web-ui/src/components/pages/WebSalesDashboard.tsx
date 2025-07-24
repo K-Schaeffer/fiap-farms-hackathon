@@ -79,7 +79,7 @@ export function WebSalesDashboard({
       value: dashboardStats.bestMonth || 'N/A',
       interval: 'This Year',
       trend: 'neutral',
-      color: 'default',
+      color: 'warning',
     },
   ];
 
@@ -203,9 +203,15 @@ export function WebSalesDashboard({
                 component="h2"
                 variant="subtitle2"
                 gutterBottom
-                sx={{ px: 2, pt: 2, mb: 2 }}
+                sx={{ px: 2, pt: 2, mb: 1 }}
               >
                 Revenue Trend
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ px: 2, mb: 2, color: 'text.secondary' }}
+              >
+                Total vs Liquid Revenue Over Time
               </Typography>
               <LineChart
                 xAxis={[
@@ -215,7 +221,13 @@ export function WebSalesDashboard({
                     height: 24,
                   },
                 ]}
-                yAxis={[{ width: 50 }]}
+                yAxis={[
+                  {
+                    width: 50,
+                    valueFormatter: (value: number) =>
+                      `$${value.toLocaleString()}`,
+                  },
+                ]}
                 series={[
                   {
                     id: 'revenue',
@@ -233,7 +245,7 @@ export function WebSalesDashboard({
                   },
                 ]}
                 height={250}
-                margin={{ left: 0, right: 0, top: 20, bottom: 0 }}
+                margin={{ left: 0, right: 20, top: 20, bottom: 20 }}
                 grid={{ horizontal: true }}
                 hideLegend={false}
               />
@@ -266,9 +278,15 @@ export function WebSalesDashboard({
                 component="h2"
                 variant="subtitle2"
                 gutterBottom
-                sx={{ px: 2, pt: 2, mb: 2 }}
+                sx={{ px: 2, pt: 2, mb: 1 }}
               >
                 Best Clients
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ px: 2, mb: 2, color: 'text.secondary' }}
+              >
+                Client distribution by sales volume
               </Typography>
               <Box
                 sx={{
