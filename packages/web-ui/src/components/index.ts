@@ -31,8 +31,8 @@ export {
   WebProductionManagement,
   WebSalesDashboard,
   WebSaleForm,
-  WebLoginPage,
-  WebSignUpPage,
+  WebLogin,
+  WebSignUp,
 } from './pages';
 
 // Kanban components - Production board and cards

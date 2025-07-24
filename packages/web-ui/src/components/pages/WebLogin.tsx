@@ -15,19 +15,19 @@ interface WebLoginFormData {
   password: string;
 }
 
-interface WebLoginPageProps {
+interface WebLoginProps {
   onLogin: (email: string, password: string) => Promise<void>;
   onSignUpRedirect: () => void;
   error: string | null;
   isLoading: boolean;
 }
 
-export function WebLoginPage({
+export function WebLogin({
   onLogin,
   onSignUpRedirect,
   error,
   isLoading,
-}: WebLoginPageProps) {
+}: WebLoginProps) {
   const { control, handleSubmit } = useForm<WebLoginFormData>({
     defaultValues: {
       email: '',
