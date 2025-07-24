@@ -60,8 +60,23 @@ export function useSalesManagement() {
   }, [user, OWNER_ID]);
 
   const refreshData = useCallback(async () => {
-    await loadData();
-  }, [loadData]);
+    if (!user) {
+      return;
+    }
+
+    try {
+      const { getInventoryOverviewUseCase } = getRepositories();
+      const inventoryOverview =
+        await getInventoryOverviewUseCase.execute(OWNER_ID);
+
+      const products = transformInventoryItemsToUI(inventoryOverview.items);
+      setAvailableProducts(products);
+    } catch (err) {
+      console.error('Error refreshing data:', err);
+      // Don't set main error state during refresh
+      throw err; // Let the form handle the error
+    }
+  }, [user, OWNER_ID]);
 
   const handleRegisterSale = useCallback(
     async (data: WebSaleFormData) => {

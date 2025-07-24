@@ -88,7 +88,7 @@ export default function NewSale() {
       <WebSaleForm
         products={availableProducts}
         onSubmitSale={registerSale}
-        loadData={refresh}
+        onRefresh={refresh}
       />
     </Box>
   );
