@@ -22,7 +22,17 @@ export interface WebProductionCardProps {
 }
 
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('en-US');
+  if (!dateString) return 'N/A';
+
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return 'N/A';
+
+    return date.toLocaleDateString('en-US');
+  } catch (error) {
+    console.warn('Error formatting date:', error);
+    return 'N/A';
+  }
 };
 
 export function WebProductionCard({ productionItem }: WebProductionCardProps) {

@@ -70,9 +70,27 @@ const MOBILE_CHART_COLORS = [
 
 // Utility function to format month names
 export function formatMonthName(monthString: string): string {
-  const [, month] = monthString.split('-');
-  const date = new Date(2025, parseInt(month) - 1);
-  return date.toLocaleDateString('en-US', { month: 'long' });
+  if (!monthString || typeof monthString !== 'string') {
+    return 'N/A';
+  }
+
+  try {
+    const [, month] = monthString.split('-');
+    if (!month) {
+      return 'N/A';
+    }
+
+    const monthNumber = parseInt(month, 10);
+    if (isNaN(monthNumber) || monthNumber < 1 || monthNumber > 12) {
+      return 'N/A';
+    }
+
+    const date = new Date(2025, monthNumber - 1);
+    return date.toLocaleDateString('en-US', { month: 'long' });
+  } catch (error) {
+    console.warn('Error formatting month name:', error);
+    return 'N/A';
+  }
 }
 
 // Sales transformers
@@ -83,7 +101,9 @@ export function transformSalesDashboardStats(
     totalSales: data.totalSales,
     totalRevenue: data.totalRevenue,
     totalRevenueLiquid: data.totalRevenueLiquid,
-    bestMonth: formatMonthName(data.bestMonth.month),
+    bestMonth: data.bestMonth?.month
+      ? formatMonthName(data.bestMonth.month)
+      : 'N/A',
   };
 }
 

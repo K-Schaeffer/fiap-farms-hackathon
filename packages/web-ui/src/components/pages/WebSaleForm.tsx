@@ -191,9 +191,14 @@ export function WebSaleForm({
                       Available Products
                     </Typography>
                     {products.length === 0 ? (
-                      <Typography color="text.secondary" sx={{ mb: 2 }}>
-                        No products are available for sale at this time.
-                      </Typography>
+                      <>
+                        <Typography color="text.secondary" variant="body1">
+                          There are currently no products in stock to sell.
+                        </Typography>
+                        <Typography color="text.secondary" variant="body2">
+                          Harvest items from production to start making sales.
+                        </Typography>
+                      </>
                     ) : (
                       <>
                         <Grid container spacing={2}>

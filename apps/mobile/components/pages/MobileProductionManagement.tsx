@@ -9,6 +9,7 @@ import {
   Chip,
 } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
+import dayjs from 'dayjs';
 import {
   MobilePlantingModal,
   MobileHarvestModal,
@@ -82,6 +83,15 @@ export function MobileProductionManagement({
   const [refreshing, setRefreshing] = useState(false);
   const [plantingLoading, setPlantingLoading] = useState(false);
   const [harvestLoading, setHarvestLoading] = useState(false);
+
+  // Check if a production item is overdue
+  const isOverdue = (item: MobileProductionItem) => {
+    return (
+      item.status !== 'harvested' &&
+      item.expectedHarvestDate &&
+      dayjs(item.expectedHarvestDate).isBefore(dayjs(), 'day')
+    );
+  };
 
   // Filter production items by status
   const plantedItems = productionItems.filter(
@@ -255,107 +265,133 @@ export function MobileProductionManagement({
           </Text>
         </Surface>
       ) : (
-        items.map(item => (
-          <Card key={item.id} style={styles.productionCard} mode="outlined">
-            <Card.Content style={styles.cardContent}>
-              <View style={styles.productionHeader}>
-                <Text variant="titleMedium" style={styles.productionTitle}>
-                  Production #{item.id.slice(-6)}
-                </Text>
-                <Chip
-                  mode="flat"
-                  style={[
-                    styles.statusChip,
-                    { backgroundColor: getStatusColor(status) },
-                  ]}
-                  textStyle={styles.statusChipText}
-                >
-                  {getStatusLabel(status)}
-                </Chip>
-              </View>
+        items.map(item => {
+          const itemIsOverdue = isOverdue(item);
 
-              <View style={styles.productionDetails}>
-                <View style={styles.detailRow}>
-                  <Text variant="bodyMedium" style={styles.detailLabel}>
-                    Product:
+          return (
+            <Card
+              key={item.id}
+              style={[
+                styles.productionCard,
+                itemIsOverdue && styles.overdueCard,
+              ]}
+              mode="outlined"
+            >
+              <Card.Content style={styles.cardContent}>
+                <View style={styles.productionHeader}>
+                  <Text variant="titleMedium" style={styles.productionTitle}>
+                    Production #{item.id.slice(-6)}
                   </Text>
-                  <Text variant="bodyMedium" style={styles.detailValue}>
-                    {item.productName}
-                  </Text>
+                  <Chip
+                    mode="flat"
+                    style={[
+                      styles.statusChip,
+                      { backgroundColor: getStatusColor(status) },
+                    ]}
+                    textStyle={styles.statusChipText}
+                  >
+                    {getStatusLabel(status)}
+                  </Chip>
                 </View>
-                <View style={styles.detailRow}>
-                  <Text variant="bodyMedium" style={styles.detailLabel}>
-                    Location:
-                  </Text>
-                  <Text variant="bodyMedium" style={styles.detailValue}>
-                    {item.location}
-                  </Text>
-                </View>
-                <View style={styles.detailRow}>
-                  <Text variant="bodySmall" style={styles.detailLabel}>
-                    Planted:
-                  </Text>
-                  <Text variant="bodySmall" style={styles.detailValue}>
-                    {new Date(item.plantedDate).toLocaleDateString('en-US')}
-                  </Text>
-                </View>
-                <View style={styles.detailRow}>
-                  <Text variant="bodySmall" style={styles.detailLabel}>
-                    Expected:
-                  </Text>
-                  <Text variant="bodySmall" style={styles.detailValue}>
-                    {new Date(item.expectedHarvestDate).toLocaleDateString(
-                      'en-US'
-                    )}
-                  </Text>
-                </View>
-                {item.harvestedDate && (
+
+                <View style={styles.productionDetails}>
+                  <View style={styles.detailRow}>
+                    <Text variant="bodyMedium" style={styles.detailLabel}>
+                      Product:
+                    </Text>
+                    <Text variant="bodyMedium" style={styles.detailValue}>
+                      {item.productName}
+                    </Text>
+                  </View>
+                  <View style={styles.detailRow}>
+                    <Text variant="bodyMedium" style={styles.detailLabel}>
+                      Location:
+                    </Text>
+                    <Text variant="bodyMedium" style={styles.detailValue}>
+                      {item.location}
+                    </Text>
+                  </View>
                   <View style={styles.detailRow}>
                     <Text variant="bodySmall" style={styles.detailLabel}>
-                      Harvested:
+                      Planted:
                     </Text>
                     <Text variant="bodySmall" style={styles.detailValue}>
-                      {new Date(item.harvestedDate).toLocaleDateString('en-US')}
+                      {new Date(item.plantedDate).toLocaleDateString('en-US')}
                     </Text>
                   </View>
-                )}
-                {item.yield && (
                   <View style={styles.detailRow}>
-                    <Text variant="bodyMedium" style={styles.yieldLabel}>
-                      Yield:
+                    <Text
+                      variant="bodySmall"
+                      style={[
+                        styles.detailLabel,
+                        itemIsOverdue && styles.overdueLabel,
+                      ]}
+                    >
+                      Expected:
                     </Text>
-                    <Text variant="bodyMedium" style={styles.yieldValue}>
-                      {item.yield} ({item.unit})
+                    <Text
+                      variant="bodySmall"
+                      style={[
+                        styles.detailValue,
+                        itemIsOverdue && styles.overdueValue,
+                      ]}
+                    >
+                      {new Date(item.expectedHarvestDate).toLocaleDateString(
+                        'en-US'
+                      )}
+                      {itemIsOverdue && ' (Overdue)'}
                     </Text>
                   </View>
+                  {item.harvestedDate && (
+                    <View style={styles.detailRow}>
+                      <Text variant="bodySmall" style={styles.detailLabel}>
+                        Harvested:
+                      </Text>
+                      <Text variant="bodySmall" style={styles.detailValue}>
+                        {new Date(item.harvestedDate).toLocaleDateString(
+                          'en-US'
+                        )}
+                      </Text>
+                    </View>
+                  )}
+                  {item.yield && (
+                    <View style={styles.detailRow}>
+                      <Text variant="bodyMedium" style={styles.yieldLabel}>
+                        Yield:
+                      </Text>
+                      <Text variant="bodyMedium" style={styles.yieldValue}>
+                        {item.yield} ({item.unit})
+                      </Text>
+                    </View>
+                  )}
+                </View>
+
+                {/* Status-specific action buttons */}
+                {status === 'planted' && (
+                  <Button
+                    mode="contained"
+                    onPress={() => handleUpdateToInProduction(item)}
+                    style={styles.actionButton}
+                    icon="clock"
+                  >
+                    Mark In Production
+                  </Button>
                 )}
-              </View>
 
-              {/* Status-specific action buttons */}
-              {status === 'planted' && (
-                <Button
-                  mode="contained"
-                  onPress={() => handleUpdateToInProduction(item)}
-                  style={styles.actionButton}
-                  icon="clock"
-                >
-                  Mark In Production
-                </Button>
-              )}
-
-              {status === 'in_production' && (
-                <Button
-                  mode="contained"
-                  onPress={() => handleReadyToHarvest(item)}
-                  style={styles.actionButton}
-                  icon="tractor"
-                >
-                  Ready to Harvest
-                </Button>
-              )}
-            </Card.Content>
-          </Card>
-        ))
+                {status === 'in_production' && (
+                  <Button
+                    mode="contained"
+                    onPress={() => handleReadyToHarvest(item)}
+                    style={styles.actionButton}
+                    icon="tractor"
+                  >
+                    Ready to Harvest
+                  </Button>
+                )}
+              </Card.Content>
+            </Card>
+          );
+        })
       )}
     </View>
   );
@@ -507,6 +543,10 @@ const styles = StyleSheet.create({
   productionCard: {
     backgroundColor: '#fff',
   },
+  overdueCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#d32f2f', // Red border for overdue items
+  },
   cardContent: {
     padding: 16,
   },
@@ -571,10 +611,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+  overdueLabel: {
+    color: '#d32f2f', // Red color for overdue labels
+  },
   detailValue: {
     color: '#333',
     flex: 1,
     textAlign: 'right',
+  },
+  overdueValue: {
+    color: '#d32f2f', // Red color for overdue values
   },
   yieldLabel: {
     fontWeight: '700',

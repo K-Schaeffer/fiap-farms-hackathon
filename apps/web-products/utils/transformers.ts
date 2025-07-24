@@ -76,9 +76,27 @@ const CHART_COLORS = [
 
 // Utility function to format month names using native API
 function formatMonthName(monthString: string): string {
-  const [, month] = monthString.split('-');
-  const date = new Date(2025, parseInt(month) - 1);
-  return date.toLocaleDateString('en-US', { month: 'long' });
+  if (!monthString || typeof monthString !== 'string') {
+    return 'N/A';
+  }
+
+  try {
+    const [, month] = monthString.split('-');
+    if (!month) {
+      return 'N/A';
+    }
+
+    const monthNumber = parseInt(month, 10);
+    if (isNaN(monthNumber) || monthNumber < 1 || monthNumber > 12) {
+      return 'N/A';
+    }
+
+    const date = new Date(2025, monthNumber - 1);
+    return date.toLocaleDateString('en-US', { month: 'long' });
+  } catch (error) {
+    console.warn('Error formatting month name:', error);
+    return 'N/A';
+  }
 }
 
 export function transformProductionDashboardStats(
