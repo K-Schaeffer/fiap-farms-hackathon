@@ -8,7 +8,7 @@ Este projeto foi desenvolvido como a entrega final para o Hackathon da Pós-Grad
 
 A plataforma FIAP Farms é uma solução completa para gestão de cooperativas agrícolas, oferecendo dashboards inteligentes de vendas e produção, controle de ciclo de vida de produção, sistema de metas e alertas, tudo isso em uma arquitetura robusta e escalável que funciona tanto na web quanto em dispositivos móveis.
 
-## 📱 Demonstração da Aplicação
+## Demonstração da Aplicação
 
 ### Dashboard de Vendas
 
@@ -26,7 +26,7 @@ A plataforma FIAP Farms é uma solução completa para gestão de cooperativas a
 
 ![New Sale Form](.github/sale-new.png)
 
-## ✨ Features Principais
+## Features Principais
 
 - **Dashboard de Vendas**: Visualização em tempo real dos produtos com maior lucratividade e dados de venda
 - **Dashboard de Produção**: Visualização em tempo real dos dados de produção
