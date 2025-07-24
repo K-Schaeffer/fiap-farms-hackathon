@@ -8,6 +8,27 @@ Este projeto foi desenvolvido como a entrega final para o Hackathon da Pós-Grad
 
 A plataforma FIAP Farms é uma solução completa para gestão de cooperativas agrícolas, oferecendo dashboards inteligentes de vendas e produção, controle de ciclo de vida de produção, sistema de metas e alertas, tudo isso em uma arquitetura robusta e escalável que funciona tanto na web quanto em dispositivos móveis.
 
+## Seções
+
+- [Resumo](#resumo)
+- [Demonstração da Aplicação](#demonstração-da-aplicação)
+- [Features Principais](features-principais)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Arquitetura do Projeto](#arquitetura-do-projeto)
+  - [Visão Geral da Arquitetura](#visão-geral-da-arquitetura)
+  - [Microfrontends com Module Federation](#microfrontends-com-module-federation)
+  - [Clean Architecture no Core](#clean-architecture-no-core)
+  - [Gerenciamento de Estado Global](#gerenciamento-de-estado-global)
+  - [Estratégia Cross-Platform](#estratégia-cross-platform)
+  - [Backend e Automações com Firebase](#backend-e-automações-com-firebase)
+- [Stack Tecnológica](#stack-tecnológica)
+- [Como Executar](#como-executar)
+  - [Pré-requisitos](#pré-requisitos)
+  - [Configuração do Ambiente de Desenvolvimento](#configuração-do-ambiente-de-desenvolvimento)
+- [Conceitos Aplicados](#conceitos-aplicados)
+- [Base de Dados (Firestore)](#base-de-dados-firestore)
+- [Otimizações de Performance](#otimizações-de-performance)
+
 ## Demonstração da Aplicação
 
 ### Dashboard de Vendas
@@ -36,26 +57,45 @@ A plataforma FIAP Farms é uma solução completa para gestão de cooperativas a
 - **Autenticação**: Sistema completo de autenticação de usuários para proteger os dados de cada cooperado
 - **Cross-Platform**: Aplicação web responsiva e aplicativo móvel nativo com React Native
 
-## Seções
+## Estrutura do Projeto
 
-- [Resumo](#resumo)
-- [Demonstração da Aplicação](#-demonstração-da-aplicação)
-- [Features Principais](#-features-principais)
-- [Arquitetura do Projeto](#arquitetura-do-projeto)
-  - [Visão Geral da Arquitetura](#visão-geral-da-arquitetura)
-  - [Microfrontends com Module Federation](#microfrontends-com-module-federation)
-  - [Clean Architecture no Core](#clean-architecture-no-core)
-  - [Gerenciamento de Estado Global](#gerenciamento-de-estado-global)
-  - [Estratégia Cross-Platform](#estratégia-cross-platform)
-  - [Backend e Automações com Firebase](#backend-e-automações-com-firebase)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-- [Stack Tecnológica](#stack-tecnológica)
-- [Como Executar](#como-executar)
-  - [Pré-requisitos](#pré-requisitos)
-  - [Configuração do Ambiente de Desenvolvimento](#configuração-do-ambiente-de-desenvolvimento)
-- [Conceitos Aplicados](#conceitos-aplicados)
-- [Base de Dados (Firestore)](#base-de-dados-firestore)
-- [Otimizações de Performance](#otimizações-de-performance)
+```
+fiap-farms-hackathon/
+├── apps/                           # Aplicações
+│   ├── web-shell/                    # Container app (Next.js)
+│   │   ├── pages/                      # Páginas e roteamento
+│   │   ├── components/                 # Componentes específicos do shell
+│   │   └── hooks/                      # Hooks de navegação e breadcrumbs
+│   ├── web-sales/                    # Microfrontend de vendas (Next.js)
+│   │   ├── pages/                      # Dashboard e formulário de vendas
+│   │   ├── hooks/                      # useSalesManagement, useSalesDashboard
+│   │   └── utils/                      # Transformers específicos de vendas
+│   ├── web-products/                 # Microfrontend de produção (Next.js)
+│   │   ├── pages/                      # Dashboard e gestão de produção
+│   │   ├── hooks/                        # useProductionManagement, useProductionDashboard
+│   │   └── utils/                      # Transformers específicos de produção
+│   └── mobile/                       # App React Native
+│       ├── app/                        # Estrutura do Expo Router
+│       ├── components/                 # Componentes mobile (Paper)
+│       ├── hooks/                      # Hooks mobile
+│       └── utils/                      # Transformers mobile
+├── packages/                       # Packages compartilhados
+│   ├── core/                         # Clean Architecture - Lógica de negócio
+│   │   ├── src/domain/                 # Entidades e interfaces de repositórios
+│   │   ├── src/application/            # Casos de uso
+│   │   └── src/infrastructure/         # Implementações Firestore
+│   ├── shared-stores/                # Estado global (Zustand)
+│   │   ├── src/stores/                 # Auth, goals, notifications
+│   │   └── src/hooks/                  # Hooks para consumir as stores
+│   ├── web-ui/                       # Biblioteca de componentes web (MUI)
+│   │   └── src/components/             # Componentes web reutilizáveis
+│   ├── firebase/                     # Configuração do Firebase
+│   │   └── src/                        # Configuração client Firebase
+│   ├── functions/                    # Firebase Cloud Functions
+│   │   └── src/                        # Funções serverless
+│   └── typescript-config/            # Configurações TypeScript compartilhadas
+└── turbo.json                      # Configuração do Turborepo
+```
 
 ## Arquitetura do Projeto
 
@@ -111,7 +151,7 @@ O pacote `@fiap-farms/core` implementa os princípios da **Clean Architecture** 
 
 ```
 packages/core/src/
-├── domain/                 # Lógica de negócio pura (sem dependências externas)
+├── domain/                # Lógica de negócio pura (sem dependências externas)
 │   ├── entities/          # Entidades de negócio (Product, Sale, Production, etc.)
 │   └── repositories/      # Interfaces dos repositórios (contratos)
 ├── application/           # Regras de negócio da aplicação
@@ -328,46 +368,6 @@ exports.decrementInventory = functions.firestore
   });
 ```
 
-## Estrutura do Projeto
-
-```
-fiap-farms-hackathon/
-├── apps/                           # Aplicações
-│   ├── web-shell/                  # Container app (Next.js)
-│   │   ├── pages/                  # Páginas e roteamento
-│   │   ├── components/             # Componentes específicos do shell
-│   │   └── hooks/                  # Hooks de navegação e breadcrumbs
-│   ├── web-sales/                  # Microfrontend de vendas (Next.js)
-│   │   ├── pages/                  # Dashboard e formulário de vendas
-│   │   ├── hooks/                  # useSalesManagement, useSalesDashboard
-│   │   └── utils/                  # Transformers específicos de vendas
-│   ├── web-products/               # Microfrontend de produção (Next.js)
-│   │   ├── pages/                  # Dashboard e gestão de produção
-│   │   ├── hooks/                  # useProductionManagement, useProductionDashboard
-│   │   └── utils/                  # Transformers específicos de produção
-│   └── mobile/                     # App React Native
-│       ├── app/                    # Expo Router estruture
-│       ├── components/             # Componentes mobile (Paper)
-│       ├── hooks/                  # Hooks adaptados para mobile
-│       └── utils/                  # Transformers mobile
-├── packages/                       # Packages compartilhados
-│   ├── core/                       # Clean Architecture - Lógica de negócio
-│   │   ├── src/domain/            # Entidades e interfaces de repositórios
-│   │   ├── src/application/       # Casos de uso
-│   │   └── src/infrastructure/    # Implementações Firestore
-│   ├── shared-stores/             # Estado global (Zustand)
-│   │   ├── src/stores/           # Auth, goals, notifications
-│   │   └── src/hooks/            # Hooks para consumir as stores
-│   ├── web-ui/                    # Biblioteca de componentes web (MUI)
-│   │   └── src/components/       # Componentes web reutilizáveis
-│   ├── firebase/                  # Configuração do Firebase
-│   │   └── src/                  # Configuração client Firebase
-│   ├── functions/                 # Firebase Cloud Functions
-│   │   └── src/                  # Funções serverless
-│   └── typescript-config/         # Configurações TypeScript compartilhadas
-└── turbo.json                     # Configuração do Turborepo
-```
-
 ## Stack Tecnológica
 
 ### Frontend
@@ -378,7 +378,7 @@ fiap-farms-hackathon/
 - **[Material-UI (MUI)](https://mui.com/)**: Biblioteca de componentes web seguindo Material Design
   - **[MUI X Charts](https://mui.com/x/react-charts/)**: Componentes de gráficos avançados
   - **[MUI X Data Grid](https://mui.com/x/react-data-grid/)**: Tabelas e grids de dados complexos
-  - **[React Hook Form MUI](https://react-hook-form-mui.com/)**: Wrapper para integração com MUI
+  - **[React Hook Form MUI](https://www.npmjs.com/package/react-hook-form-mui)**: Wrapper para integração do React Hook Form com MUI
 - **[React Native Paper](https://reactnativepaper.com/)**: Biblioteca de componentes mobile Material Design
 - **[React Native Gifted Charts](https://github.com/Abhinandan-Kushwaha/react-native-gifted-charts)**: Biblioteca de gráficos otimizada para React Native
 - **[Zustand](https://zustand-demo.pmnd.rs/)**: Gerenciamento de estado global leve e performático
