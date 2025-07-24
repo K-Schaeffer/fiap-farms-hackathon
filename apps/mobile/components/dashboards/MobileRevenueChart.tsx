@@ -64,21 +64,21 @@ export function MobileRevenueChart({ trendData }: MobileRevenueChartProps) {
             )}
             initialSpacing={20}
             endSpacing={20}
-            color1="#1976d2"
-            color2="#2e7d32"
+            color1="#2e7d32"
+            color2="#1976d2"
             thickness1={3}
             thickness2={3}
-            startFillColor1="rgba(25, 118, 210, 0.3)"
-            startFillColor2="rgba(46, 125, 50, 0.3)"
-            endFillColor1="rgba(25, 118, 210, 0.1)"
-            endFillColor2="rgba(46, 125, 50, 0.1)"
+            startFillColor1="rgba(46, 125, 50, 0.3)"
+            startFillColor2="rgba(25, 118, 210, 0.3)"
+            endFillColor1="rgba(46, 125, 50, 0.1)"
+            endFillColor2="rgba(25, 118, 210, 0.1)"
             areaChart
             curved
             animateOnDataChange
             animationDuration={1000}
             hideDataPoints={false}
-            dataPointsColor1="#1976d2"
-            dataPointsColor2="#2e7d32"
+            dataPointsColor1="#2e7d32"
+            dataPointsColor2="#1976d2"
             dataPointsRadius={4}
             yAxisColor="#e0e0e0"
             xAxisColor="#e0e0e0"
@@ -102,13 +102,13 @@ export function MobileRevenueChart({ trendData }: MobileRevenueChartProps) {
 
         <View style={styles.legend}>
           <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: '#1976d2' }]} />
+            <View style={[styles.legendDot, { backgroundColor: '#2e7d32' }]} />
             <Text variant="bodySmall" style={styles.legendText}>
               Total Revenue
             </Text>
           </View>
           <View style={styles.legendItem}>
-            <View style={[styles.legendDot, { backgroundColor: '#2e7d32' }]} />
+            <View style={[styles.legendDot, { backgroundColor: '#1976d2' }]} />
             <Text variant="bodySmall" style={styles.legendText}>
               Liquid Revenue
             </Text>
