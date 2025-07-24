@@ -43,7 +43,7 @@ export interface WebSaleFormData {
 export interface WebSaleFormProps {
   products: WebSaleProduct[];
   onSubmitSale: (data: WebSaleFormData) => Promise<boolean>;
-  loadData: () => Promise<void>;
+  onRefresh: () => Promise<void>;
 }
 
 const steps = ['Client', 'Products', 'Checkout', 'Success'];
@@ -51,7 +51,7 @@ const steps = ['Client', 'Products', 'Checkout', 'Success'];
 export function WebSaleForm({
   products,
   onSubmitSale,
-  loadData,
+  onRefresh,
 }: WebSaleFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
@@ -104,9 +104,12 @@ export function WebSaleForm({
   const handleStartNewSale = async () => {
     setIsRefreshing(true);
     try {
-      await loadData();
+      await onRefresh();
       reset();
       setActiveStep(0);
+    } catch (err) {
+      console.error('Error refreshing data:', err);
+      // Could add error handling here if needed
     } finally {
       setIsRefreshing(false);
     }
@@ -185,7 +188,7 @@ export function WebSaleForm({
                 {activeStep === 1 && (
                   <>
                     <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
-                      Select Products
+                      Available Products
                     </Typography>
                     {products.length === 0 ? (
                       <Typography color="text.secondary" sx={{ mb: 2 }}>
@@ -233,8 +236,7 @@ export function WebSaleForm({
                                       color="text.secondary"
                                       sx={{ fontSize: '0.95rem' }}
                                     >
-                                      <b>Available:</b> {product.quantity} (
-                                      {product.unit})
+                                      Stock: {product.quantity} ({product.unit})
                                     </Typography>
                                   </CardContent>
                                   <CardActions>
@@ -582,14 +584,7 @@ export function WebSaleForm({
                 disabled={isRefreshing}
                 sx={{ mt: 2, fontSize: '0.95rem' }}
               >
-                {isRefreshing ? (
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <CircularProgress size={20} color="inherit" />
-                    <span>Updating inventory...</span>
-                  </Stack>
-                ) : (
-                  'Register Another Sale'
-                )}
+                Register Another Sale
               </Button>
             </Stack>
           )}
