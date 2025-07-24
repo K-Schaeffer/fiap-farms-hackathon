@@ -1,5 +1,4 @@
 export { MobileSalesCards } from './MobileSalesCards';
-export { MobileSalesHistory } from './MobileSalesHistory';
 export { MobileRevenueChart } from './MobileRevenueChart';
 export { MobileClientChart } from './MobileClientChart';
 export { MobileProductionChart } from './MobileProductionChart';
@@ -11,8 +10,6 @@ export type {
   MobileSaleHistoryItem,
   MobileSalesCardsProps,
 } from './MobileSalesCards';
-
-export type { MobileSalesHistoryProps } from './MobileSalesHistory';
 
 export type {
   MobileRevenueChartProps,

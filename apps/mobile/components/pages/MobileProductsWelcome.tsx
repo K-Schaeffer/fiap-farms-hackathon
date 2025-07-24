@@ -22,7 +22,7 @@ export function MobileProductsWelcome({
         <View style={styles.headerContent}>
           <MaterialIcons name="inventory" size={48} color="white" />
           <Text variant="headlineMedium" style={styles.headerTitle}>
-            Production Management
+            Products
           </Text>
           <Text variant="bodyLarge" style={styles.headerSubtitle}>
             Manage your farm production lifecycle from planting to harvest
