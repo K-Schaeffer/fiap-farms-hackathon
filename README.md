@@ -103,7 +103,7 @@ A arquitetura deste projeto foi cuidadosamente planejada para ser robusta, escal
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    APLICAÇÕES                           │
+│                      APPLICATIONS                       │
 ├─────────────────┬─────────────────┬─────────────────────┤
 │   Web Shell     │  Sales Module   │  Products Module    │
 │ (Container App) │ (Microfrontend) │  (Microfrontend)    │
@@ -113,7 +113,7 @@ A arquitetura deste projeto foi cuidadosamente planejada para ser robusta, escal
 └─────────────────────────────────────────────────────────┘
                               │
 ┌─────────────────────────────────────────────────────────┐
-│                   PACKAGES CORE                         │
+│                       PACKAGES                          │
 ├─────────────────┬─────────────────┬─────────────────────┤
 │   @core         │ @shared-stores  │     @web-ui         │
 │ (Clean Arch)    │   (Zustand)     │  (MUI Components)   │
@@ -123,7 +123,7 @@ A arquitetura deste projeto foi cuidadosamente planejada para ser robusta, escal
 └─────────────────┴─────────────────┴─────────────────────┘
                               │
 ┌─────────────────────────────────────────────────────────┐
-│                 FIREBASE BACKEND                        │
+│                   FIREBASE BACKEND                      │
 ├─────────────────┬─────────────────┬─────────────────────┤
 │ Authentication  │    Firestore    │  Cloud Functions    │
 │                 │   (Database)    │   (Automations)     │
@@ -173,65 +173,34 @@ Infrastructure → Application → Domain
 
 #### Entidades de Domínio
 
-**Product** (Entidade Global)
-
-```typescript
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  unit: 'kg' | 'unity' | 'box';
-  costPerUnit: number;
-}
-```
-
-**ProductionItem** (Por Usuário)
-
-```typescript
-interface ProductionItem {
-  _id: string;
-  productId: string;
-  ownerId: string;
-  status: 'planted' | 'in_production' | 'harvested';
-  plantedDate: Date;
-  expectedHarvestDate: Date;
-  harvestedDate?: Date;
-  yield?: number;
-  location: string;
-  updatedAt: Date;
-}
-```
-
-**Sale** (Por Usuário)
-
-```typescript
-interface Sale {
-  _id: string;
-  ownerId: string;
-  saleDate: Date;
-  items: SaleItem[];
-  totalSaleAmount: number;
-  totalSaleProfit?: number;
-  client: string;
-}
-```
+- **Product**: Um produto da cooperativa.
+- **InventoryItem**: Um item de inventário da cooperativa.
+- **ProductionItem**: Um item de produção da cooperativa.
+- **ProductionStatus**: Status possíveis de um item de produção da cooperativa.
+- **Sale**: Uma venda da cooperativa.
+- **SaleItem**: Um item de uma venda da cooperativa.
 
 #### Casos de Uso Implementados
 
-**Gestão de Produção**
+**Gestão de Produtos**
 
-- `StartNewProductionUseCase` - Criar novos itens de produção
-- `HarvestProductionItemUseCase` - Marcar produção como colhida com rendimento
-- `GetProductionOverviewUseCase` - Obter dados do dashboard de produção
-
-**Gestão de Vendas**
-
-- `RegisterSaleUseCase` - Registrar novas vendas com validação de inventário
-- `GetSalesDashboardDataUseCase` - Obter analytics e dados do dashboard de vendas
+- `GetProductsUseCase` - Obter listagem de produtos
 
 **Gestão de Inventário**
 
 - `GetInventoryOverviewUseCase` - Obter status atual do inventário
+
+**Gestão de Produção**
+
+- `StartNewProductionUseCase` - Criar novos itens de produção
+- `UpdateProductionStatusUseCase` - Atualizar status de produção de um item
+- `GetProductionOverviewUseCase` - Obter dados gerais de produção atuais
+- `GetSalesDashboardDataUseCase` - Obter dados do dashboard de produção
+
+**Gestão de Vendas**
+
+- `RegisterSaleUseCase` - Registrar novas vendas
+- `GetSalesDashboardDataUseCase` - Obter dados do dashboard de vendas
 
 #### Exemplo de Uso
 
@@ -293,7 +262,6 @@ As aplicações web e mobile utilizam o React Hook Form para padronizar a aborda
 ##### Datas
 
 Todas as aplicações utilizam o DayJS e APIs nativas como `toLocaleString` para padronizar as tratativas de apresentação e formatação de datas.
-
 
 #### Reutilização de Código
 
