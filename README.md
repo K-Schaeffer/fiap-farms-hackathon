@@ -226,11 +226,33 @@ Para o gerenciamento de estado global, foi escolhido o **Zustand** em vez da Con
 - **`useAuthStore`**: Gerencia o estado de autenticação
 - **`useSalesGoal`**: Gerencia metas de vendas e notificações de conquista
 - **`useProductionGoal`**: Gerencia metas de produção e notificações de conquista
-- **`useNotificationReadState`**: Gerencia estado de leitura das notificações
+
+##### Sistema de Notificações de Metas
+
+O **shared-stores** implementa um sistema completo de notificações baseado em conquistas de metas de vendas e produção, que funciona de forma consistente tanto na web quanto no mobile.
+
+###### Arquitetura do Sistema de Notificações
+
+1. Stores de Metas (Goal Stores)
+
+As stores `useSalesGoalStore` e `useProductionGoalStore` funcionam com listeners em tempo real do Firestore.
+
+2. Detecção Automática de Conquistas
+
+As stores monitoram automaticamente quando uma meta é atingida:
+
+- **Meta de Vendas**: Monitora o `totalSaleProfit` agregado de todas as vendas do usuário
+- **Meta de Produção**: Monitora o `yield` agregado de todos os itens colhidos (`status: 'harvested'`)
+
+Quando `currentProfit >= targetProfit` ou `currentYield >= targetYield`, a flag `isGoalAchieved` é automaticamente ativada e uma notificação é renderizada.
+
+3. Persistência Cross-Platform do Status de Leitura
+
+O hook `useNotificationReadState` gerencia o estado de leitura das notificações com persistência automática.
 
 #### Padrão "Orchestrator Hook"
 
-Foi criado um padrão único através dos hooks listeners que orquestra o ciclo de vida de todos os listeners da aplicação:
+Foi criado um padrão através dos hooks listeners que orquestra o ciclo de vida de todos os listeners da aplicação:
 
 ```typescript
 // No root da aplicação
@@ -317,6 +339,8 @@ A base de dados foi modelada seguindo práticas de desnormalização para otimiz
   _id: "production_id",
   productId: "product_id",
   ownerId: "user_id",
+  productName: "Tomate",
+  productUnit: "kg",
   status: "planted|in_production|harvested",
   plantedDate: "2024-01-15",
   expectedHarvestDate: "2024-04-15",
@@ -334,7 +358,7 @@ A base de dados foi modelada seguindo práticas de desnormalização para otimiz
   productName: "Tomate",
   quantity: 150,
   unit: "kg",
-  updatedAt: "2024-04-10"
+  lastUpdated: "2024-04-10"
 }
 
 // sales - Histórico de vendas (por usuário)
@@ -395,6 +419,7 @@ export const onSaleCreated = onDocumentCreated(
 **Incremento de Inventário**
 
 ```typescript
+// Acionada onUpdated em status de produções
 export const onProductionHarvested = onDocumentUpdated(
   'production_items/{itemId}',
   async event => {
