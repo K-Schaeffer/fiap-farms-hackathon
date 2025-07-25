@@ -47,6 +47,18 @@ export function useBreadcrumbs(): WebBreadcrumbsData {
           ],
         };
 
+      case '/login':
+        return {
+          title: 'Login',
+          items: [],
+        };
+
+      case '/signup':
+        return {
+          title: 'Sign Up',
+          items: [],
+        };
+
       default:
         return {
           title: 'Unknown',
