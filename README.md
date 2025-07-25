@@ -72,7 +72,7 @@ fiap-farms-hackathon/
 │   │   └── utils/                      # Transformers específicos de vendas
 │   ├── web-products/                 # Microfrontend de produção (Next.js)
 │   │   ├── pages/                      # Dashboard e gestão de produção
-│   │   ├── hooks/                        # useProductionManagement, useProductionDashboard
+│   │   ├── hooks/                      # useProductionManagement, useProductionDashboard
 │   │   └── utils/                      # Transformers específicos de produção
 │   └── mobile/                       # App React Native
 │       ├── app/                        # Estrutura do Expo Router
