@@ -49,9 +49,9 @@ A plataforma FIAP Farms é uma solução completa para gestão de cooperativas a
 
 - **Dashboard de Vendas**: Visualização em tempo real dos produtos com maior lucratividade e dados de venda
 - **Dashboard de Produção**: Visualização em tempo real dos dados de produção
-- **Controle de Produção**: Quadro Kanban para acompanhar e gerenciar o ciclo de vida da produção (que afeta o inventário)
-- **Controle de Vendas**: Formulários para registrar novas vendas (que consomem o inventário)
-- **Sistema de Metas e Alertas**: Sistema de alertas que notifica o usuário na UI quando metas de produção ou vendas são atingidas
+- **Controle de Produção**: Quadro Kanban para acompanhar e gerenciar o ciclo de vida da produção (que gera inventário de produtos)
+- **Controle de Vendas**: Formulários para registrar novas vendas (que consomem o inventário de produtos)
+- **Sistema de Metas e Alertas**: Sistema de alertas que notifica o usuário na UI quando metas de produção ou vendas são atingidas (meta global fixa de 5000 de lucro de vendas e 2000 itens produzidos)
 - **Autenticação**: Sistema completo de autenticação de usuários para proteger os dados de cada cooperado
 - **Cross-Platform**: Aplicação web responsiva e aplicativo móvel nativo com React Native
 
@@ -263,7 +263,6 @@ As aplicações web e mobile utilizam o React Hook Form para padronizar a aborda
 
 Todas as aplicações utilizam o DayJS e APIs nativas como `toLocaleString` para padronizar as tratativas de apresentação e formatação de datas.
 
-
 #### Reutilização de Código
 
 - **`@fiap-farms/core`**: Lógica de negócio compartilhada entre web e mobile
@@ -361,10 +360,10 @@ A base de dados foi modelada seguindo práticas de desnormalização para otimiz
 {
   _id: "goal_id",
   type: "sales|production",
-  targetValue: 10000,
-  currentValue: 8500, // atualizado em tempo real
-  period: "monthly",
-  isActive: true
+  // Um dos:
+  targetProfit: 2000,
+  // ou
+  targetYield: 5000
 }
 ```
 
@@ -379,35 +378,30 @@ A base de dados foi modelada seguindo práticas de desnormalização para otimiz
 
 Funções serverless para lógicas críticas e seguras:
 
-**Cálculo de Lucro**
+**Cálculo de Lucro e Decremento de Inventário**
 
 ```typescript
 // Acionada onCreate de uma nova venda
-exports.calculateSaleProfit = functions.firestore
-  .document('sales/{saleId}')
-  .onCreate(async (snap, context) => {
+export const onSaleCreated = onDocumentCreated(
+  'sales/{saleId}',
+  async event => {
     // Busca custo do produto e "carimba" o lucro no documento
     // Garante integridade histórica e segurança dos dados de custo
-  });
+    // Decrementa quantities do inventory baseado nos itens vendidos
+  }
+);
 ```
 
-**Atualização de Inventário**
+**Incremento de Inventário**
 
 ```typescript
-// Incrementa estoque quando produção é colhida
-exports.incrementInventory = functions.firestore
-  .document('production_items/{itemId}')
-  .onUpdate(async (change, context) => {
+export const onProductionHarvested = onDocumentUpdated(
+  'production_items/{itemId}',
+  async event => {
     // Detecta mudança para status "harvested"
     // Incrementa inventory baseado no yield
-  });
-
-// Decrementa estoque quando venda é realizada
-exports.decrementInventory = functions.firestore
-  .document('sales/{saleId}')
-  .onCreate(async (snap, context) => {
-    // Decrementa quantities do inventory baseado nos itens vendidos
-  });
+  }
+);
 ```
 
 ## Stack Tecnológica
