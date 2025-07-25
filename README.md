@@ -26,8 +26,6 @@ A plataforma FIAP Farms é uma solução completa para gestão de cooperativas a
   - [Pré-requisitos](#pré-requisitos)
   - [Configuração do Ambiente de Desenvolvimento](#configuração-do-ambiente-de-desenvolvimento)
 - [Conceitos Aplicados](#conceitos-aplicados)
-- [Base de Dados (Firestore)](#base-de-dados-firestore)
-- [Otimizações de Performance](#otimizações-de-performance)
 
 ## Demonstração da Aplicação
 
@@ -280,31 +278,30 @@ Este padrão garante que todos os listeners sejam ativados no login e desativado
 
 ### Estratégia Cross-Platform
 
-#### Web
+#### Consistência
 
-A stack para a web é **Next.js** com a biblioteca de componentes **MUI (Material-UI)**, garantindo uma UI rica e consistente em todos os microfrontends. Utilizamos também:
+##### Visual
 
-- **MUI X Charts**: Para visualizações de dados avançadas nos dashboards
-- **MUI X Data Grid**: Para tabelas complexas e manipulação de dados
-- **React Hook Form + MUI**: Wrapper do react-hook-form integrado com componentes MUI para formulários performáticos
-- **DayJS**: Para manipulação de datas de forma leve e consistente
+Tanto as aplicações web quanto a aplicação mobile foram construídas com componentes baseados no Material Design da Google (MUI x Native Paper).
 
-#### Mobile
+Além disso, a mesma nomenclatura e estrutura visual foi utilizada na construção de componentes, calls to action, ícones, cores, linguagem e demais blocos que formam a identidade das aplicações.
 
-A aplicação mobile foi desenvolvida em **React Native**, utilizando **React Native Paper** como biblioteca de UI. A escolha do Paper foi estratégica para manter a consistência visual com o Material Design da aplicação web, com mínimo esforço. Utilizamos também:
+##### Formulários
 
-- **React Native Gifted Charts**: Para gráficos e visualizações de dados otimizados para mobile
-- **React Hook Form**: Diretamente integrado com React Native Paper para formulários performáticos
-- **DayJS**: Mesma biblioteca de datas usada na web para consistência
+As aplicações web e mobile utilizam o React Hook Form para padronizar a abordagem de validação de formulários.
+
+##### Datas
+
+Todas as aplicações utilizam o DayJS e APIs nativas como `toLocaleString` para padronizar as tratativas de apresentação e formatação de datas.
+
 
 #### Reutilização de Código
 
 - **`@fiap-farms/core`**: Lógica de negócio compartilhada entre web e mobile
-- **`@fiap-farms/shared-stores`**: Estado global compartilhado
+- **`@fiap-farms/shared-stores`**: Estado global consumido por ambas as plataformas
   - Persistência automática de dados salvos pela store: `localStorage` na web e `AsyncStorage` no React Native
 - **`@fiap-farms/firebase`**: Configuração do Firebase para ambas as plataformas
-  - Persistência automática: `localStorage` na web e `AsyncStorage` no React Native
-  - Configuração unificada de autenticação com persistência cross-platform
+  - Configuração unificada de autenticação com persistência cross-platform (`localStorage` x `AsyncStorage`)
 
 #### Separação de Responsabilidades
 
@@ -332,6 +329,82 @@ Banco de dados NoSQL em tempo real com as seguintes coleções:
 - `inventory` - Inventário agregado por usuário
 - `sales` - Histórico de vendas por usuário
 - `goals` - Metas configuradas globalmente
+
+A base de dados foi modelada seguindo práticas de desnormalização para otimizar a performance de leitura, com um fluxo de dados causal: **Produção → Inventário → Vendas**.
+
+##### Estrutura das Collections
+
+```javascript
+// products - Catálogo global de produtos
+{
+  _id: "product_id",
+  name: "Tomate",
+  description: "Tomate orgânico",
+  unit: "kg",
+  costPerUnit: 5.50
+}
+
+// production_items - Itens em produção (por usuário)
+{
+  _id: "production_id",
+  productId: "product_id",
+  ownerId: "user_id",
+  status: "planted|in_production|harvested",
+  plantedDate: "2024-01-15",
+  expectedHarvestDate: "2024-04-15",
+  harvestedDate: "2024-04-10", // opcional
+  yield: 150, // kg colhidos
+  location: "Campo A",
+  updatedAt: "2024-04-10"
+}
+
+// inventory - Estoque disponível (por usuário, atualizado por Cloud Functions)
+{
+  _id: "inventory_id",
+  ownerId: "user_id",
+  productId: "product_id",
+  productName: "Tomate",
+  quantity: 150,
+  unit: "kg",
+  updatedAt: "2024-04-10"
+}
+
+// sales - Histórico de vendas (por usuário)
+{
+  _id: "sale_id",
+  ownerId: "user_id",
+  saleDate: "2024-04-12",
+  items: [
+    {
+      productId: "product_id",
+      productName: "Tomate",
+      quantity: 50,
+      pricePerUnit: 8.50,
+      totalProfit: 150.00 // calculado por Cloud Function
+    }
+  ],
+  totalSaleAmount: 425.00,
+  totalSaleProfit: 150.00, // calculado por Cloud Function
+  client: "Restaurante ABC"
+}
+
+// goals - Metas globais configuradas
+{
+  _id: "goal_id",
+  type: "sales|production",
+  targetValue: 10000,
+  currentValue: 8500, // atualizado em tempo real
+  period: "monthly",
+  isActive: true
+}
+```
+
+##### Fluxo de Dados
+
+1. **Produção**: Agricultor planta → `production_items` status `planted`
+2. **Colheita**: Status muda para `harvested` → Cloud Function incrementa `inventory`
+3. **Venda**: Venda registrada → Cloud Function decrementa `inventory` e calcula lucro
+4. **Metas**: Listeners monitoram vendas/produção em tempo real para notificações
 
 #### Cloud Functions
 
@@ -527,85 +600,7 @@ npm run deploy:functions
 - **[Repository Pattern](https://martinfowler.com/eaaCatalog/repository.html)**: Abstração da camada de dados
 - **[Use Case Pattern](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)**: Orquestração de regras de negócio
 
-## Base de Dados (Firestore)
-
-A base de dados foi modelada seguindo práticas de desnormalização para otimizar a performance de leitura, com um fluxo de dados causal: **Produção → Inventário → Vendas**.
-
-### Estrutura das Collections
-
-```javascript
-// products - Catálogo global de produtos
-{
-  _id: "product_id",
-  name: "Tomate",
-  description: "Tomate orgânico",
-  unit: "kg",
-  costPerUnit: 5.50
-}
-
-// production_items - Itens em produção (por usuário)
-{
-  _id: "production_id",
-  productId: "product_id",
-  ownerId: "user_id",
-  status: "planted|in_production|harvested",
-  plantedDate: "2024-01-15",
-  expectedHarvestDate: "2024-04-15",
-  harvestedDate: "2024-04-10", // opcional
-  yield: 150, // kg colhidos
-  location: "Campo A",
-  updatedAt: "2024-04-10"
-}
-
-// inventory - Estoque disponível (por usuário, atualizado por Cloud Functions)
-{
-  _id: "inventory_id",
-  ownerId: "user_id",
-  productId: "product_id",
-  productName: "Tomate",
-  quantity: 150,
-  unit: "kg",
-  updatedAt: "2024-04-10"
-}
-
-// sales - Histórico de vendas (por usuário)
-{
-  _id: "sale_id",
-  ownerId: "user_id",
-  saleDate: "2024-04-12",
-  items: [
-    {
-      productId: "product_id",
-      productName: "Tomate",
-      quantity: 50,
-      pricePerUnit: 8.50,
-      totalProfit: 150.00 // calculado por Cloud Function
-    }
-  ],
-  totalSaleAmount: 425.00,
-  totalSaleProfit: 150.00, // calculado por Cloud Function
-  client: "Restaurante ABC"
-}
-
-// goals - Metas globais configuradas
-{
-  _id: "goal_id",
-  type: "sales|production",
-  targetValue: 10000,
-  currentValue: 8500, // atualizado em tempo real
-  period: "monthly",
-  isActive: true
-}
-```
-
-### Fluxo de Dados
-
-1. **Produção**: Agricultor planta → `production_items` status `planted`
-2. **Colheita**: Status muda para `harvested` → Cloud Function incrementa `inventory`
-3. **Venda**: Venda registrada → Cloud Function decrementa `inventory` e calcula lucro
-4. **Metas**: Listeners monitoram vendas/produção em tempo real para notificações
-
-## Otimizações de Performance
+### Otimizações de Performance
 
 - **Lazy Loading**: Microfrontends carregados sob demanda via Module Federation
 - **Code Splitting**: Chunks automáticos gerados pelo Next.js
