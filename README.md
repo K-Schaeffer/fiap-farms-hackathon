@@ -263,6 +263,7 @@ As aplicações web e mobile utilizam o React Hook Form para padronizar a aborda
 
 Todas as aplicações utilizam o DayJS e APIs nativas como `toLocaleString` para padronizar as tratativas de apresentação e formatação de datas.
 
+
 #### Reutilização de Código
 
 - **`@fiap-farms/core`**: Lógica de negócio compartilhada entre web e mobile
